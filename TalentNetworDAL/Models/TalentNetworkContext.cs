@@ -24,8 +24,12 @@ public partial class TalentNetworkContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-MNQDAU5\\SQLEXPRESS;Initial Catalog=TalentNetwork;Integrated Security=True; trustservercertificate=true");
+    {
+       // optionsBuilder.EnableSensitiveDataLogging();
+
+        optionsBuilder.UseSqlServer("Data Source=DESKTOP-MNQDAU5\\SQLEXPRESS;Initial Catalog=TalentNetwork;Integrated Security=True; trustservercertificate=true");
+
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -85,11 +89,18 @@ public partial class TalentNetworkContext : DbContext
                 .HasMaxLength(10)
                 .IsFixedLength();
         });
-        modelBuilder.Entity<User>().HasData(new User[]
+       modelBuilder.Entity<User>().HasData(new User[]
      {
-            //password=1111
-            new User { UserId = 1, UserName = "admin", Password = "AQAAAAEAACcQAAAAEF0yg+txDUNebuNSw+ieaIC/H0Xeu+MUqB/doLTDmBR59cwAl+QwMkMftjY2SMh7ww==", IsAdmin = 1 },
+     //       password=1111
+          new User { UserId = 1, UserName = "admin", Password = "AQAAAAEAACcQAAAAEF0yg+txDUNebuNSw+ieaIC/H0Xeu+MUqB/doLTDmBR59cwAl+QwMkMftjY2SMh7ww==", IsAdmin = 1 },
             new User { UserId =11, UserName = "u1", Password = "AQAAAAEAACcQAAAAEF0yg+txDUNebuNSw+ieaIC/H0Xeu+MUqB/doLTDmBR59cwAl+QwMkMftjY2SMh7ww==", IsAdmin = 2},
+     });
+       modelBuilder.Entity<TalentUser>().HasData(new TalentUser[]
+     {
+           
+            new TalentUser { UserId=1, City = "Jerusalem", ContactPhone = 0528887454, Talent = "javaScript devloper" },
+            new TalentUser { UserId=11, City = "Tel-Aviv", ContactPhone = 1354550453, Talent = "AI devlopper"},
+
      });
         OnModelCreatingPartial(modelBuilder);
     }

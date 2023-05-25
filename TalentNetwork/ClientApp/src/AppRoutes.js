@@ -18,18 +18,18 @@ const AppRoutes = [
       element: <Login />
     },
 
-    {
-        path: '/users',
-        element: <UsersTable />
-    },
-    {
-        path: '/admin-home-page',
-        element: <AdminHomePage />
-    },
-    {
-        path: '/users-home-page',
-        element: <UsersHomePage />
-    },
+    //{
+        //path: '/users',
+     //   element: <UsersTable />
+   // },
+   // {
+     //   path: '/admin-home-page',
+       // element: <AdminHomePage />
+    //},
+    //{
+      //  path: '/users-home-page',
+       // element: <UsersHomePage />
+    //},
 ];
 
 export default AppRoutes;

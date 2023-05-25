@@ -12,8 +12,8 @@ using TalentNetworDAL.Models;
 namespace TalentNetworDAL.Migrations
 {
     [DbContext(typeof(TalentNetworkContext))]
-    [Migration("20230508161514_'update user table'")]
-    partial class updateusertable
+    [Migration("20230524225152_w")]
+    partial class w
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,9 +88,28 @@ namespace TalentNetworDAL.Migrations
                     b.Property<int?>("ContactPhone")
                         .HasColumnType("int");
 
+                    b.Property<string>("Talent")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("UserId");
 
                     b.ToTable("TalentUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            City = "Jerusalem",
+                            ContactPhone = 528887454,
+                            Talent = "javaScript devloper"
+                        },
+                        new
+                        {
+                            UserId = 11,
+                            City = "Tel-Aviv",
+                            ContactPhone = 1354550453,
+                            Talent = "AI devlopper"
+                        });
                 });
 
             modelBuilder.Entity("TalentNetworDAL.Models.User", b =>

@@ -1,12 +1,17 @@
-﻿import { useContext } from "react";
+﻿import React from 'react';
+import useContext from 'react';
 import { Navigate } from "react-router-dom";
-import AuthContext from "../components/AuthoContext";
+import { Route, Redirect } from 'react-router-dom';
+import { UsersHomePage } from './UsersHomePage';
 
-export function ProtectedRoute({ children }) {
-    let { isLoggedIn } = useContext(AuthContext);
-    if (isLoggedIn) {
-        return children;
-    } else {
-        return <Navigate to="/login" />;
-    }
-}
+
+
+const ProtectedRoute = () => {
+
+   
+};
+
+
+
+
+export default ProtectedRoute;

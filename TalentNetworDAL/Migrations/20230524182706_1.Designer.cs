@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TalentNetworDAL.Models;
 
@@ -11,9 +12,11 @@ using TalentNetworDAL.Models;
 namespace TalentNetworDAL.Migrations
 {
     [DbContext(typeof(TalentNetworkContext))]
-    partial class TalentNetworkContextModelSnapshot : ModelSnapshot
+    [Migration("20230524182706_1")]
+    partial class _1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,9 +88,6 @@ namespace TalentNetworDAL.Migrations
                     b.Property<int?>("ContactPhone")
                         .HasColumnType("int");
 
-                    b.Property<string>("Talent")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("UserId");
 
                     b.ToTable("TalentUsers");
@@ -97,15 +97,13 @@ namespace TalentNetworDAL.Migrations
                         {
                             UserId = 1,
                             City = "Jerusalem",
-                            ContactPhone = 528887454,
-                            Talent = "javaScript devloper"
+                            ContactPhone = 528887454
                         },
                         new
                         {
                             UserId = 11,
                             City = "Tel-Aviv",
-                            ContactPhone = 1354550453,
-                            Talent = "AI devlopper"
+                            ContactPhone = 1354550453
                         });
                 });
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace TalentNetworDAL.Models;
 
 public partial class User
-{
+{   
     public int UserId { get; set; }
 
     public string? UserName { get; set; }

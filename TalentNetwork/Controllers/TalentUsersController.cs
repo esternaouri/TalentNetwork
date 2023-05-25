@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TalentNetworDAL.Models;
 
-namespace TalentNetwork.Controllers.TalentUsers
+namespace TalentNetwork.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class TalentUsersController : ControllerBase
     {
@@ -22,23 +22,36 @@ namespace TalentNetwork.Controllers.TalentUsers
 
         // GET: api/TalentUsers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TalentUser>>> GetTalentUsers()
+        public IActionResult GetTalentUsers()
         {
-          if (_context.TalentUsers == null)
-          {
-              return NotFound();
-          }
-            return await _context.TalentUsers.ToListAsync();
+            if (_context.TalentUsers == null)
+            {
+                return NotFound();
+            }
+             var result = _context.TalentUsers.Join(_context.Users,
+                          TalentUser => TalentUser.UserId,
+                          user => user.UserId,
+                          (TalentUser, user) => new
+                          {
+                              TalentUser.UserId,
+                              user.UserName,
+                              TalentUser.Talent,
+                              TalentUser.City,
+                              TalentUser.ContactPhone
+
+                          }).ToList();
+
+            return Ok(result);
         }
 
         // GET: api/TalentUsers/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TalentUser>> GetTalentUser(int id)
         {
-          if (_context.TalentUsers == null)
-          {
-              return NotFound();
-          }
+            if (_context.TalentUsers == null)
+            {
+                return NotFound();
+            }
             var talentUser = await _context.TalentUsers.FindAsync(id);
 
             if (talentUser == null)
@@ -85,10 +98,10 @@ namespace TalentNetwork.Controllers.TalentUsers
         [HttpPost]
         public async Task<ActionResult<TalentUser>> PostTalentUser(TalentUser talentUser)
         {
-          if (_context.TalentUsers == null)
-          {
-              return Problem("Entity set 'TalentNetworkContext.TalentUsers'  is null.");
-          }
+            if (_context.TalentUsers == null)
+            {
+                return Problem("Entity set 'TalentNetworkContext.TalentUsers'  is null.");
+            }
             _context.TalentUsers.Add(talentUser);
             try
             {

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TalentNetworDAL.Migrations
 {
     /// <inheritdoc />
-    public partial class updateusertable : Migration
+    public partial class _1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -93,6 +93,15 @@ namespace TalentNetworDAL.Migrations
                 {
                     { 1, 1, "AQAAAAEAACcQAAAAEF0yg+txDUNebuNSw+ieaIC/H0Xeu+MUqB/doLTDmBR59cwAl+QwMkMftjY2SMh7ww==", null, null, null, "admin" },
                     { 11, 2, "AQAAAAEAACcQAAAAEF0yg+txDUNebuNSw+ieaIC/H0Xeu+MUqB/doLTDmBR59cwAl+QwMkMftjY2SMh7ww==", null, null, null, "u1" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "TalentUsers",
+                columns: new[] { "UserId", "City", "ContactPhone" },
+                values: new object[,]
+                {
+                    { 1, "Jerusalem", 528887454 },
+                    { 11, "Tel-Aviv", 1354550453 }
                 });
 
             migrationBuilder.CreateIndex(
