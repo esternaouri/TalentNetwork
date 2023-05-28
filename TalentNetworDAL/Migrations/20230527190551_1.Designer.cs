@@ -12,8 +12,8 @@ using TalentNetworDAL.Models;
 namespace TalentNetworDAL.Migrations
 {
     [DbContext(typeof(TalentNetworkContext))]
-    [Migration("20230524225152_w")]
-    partial class w
+    [Migration("20230527190551_1")]
+    partial class _1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,6 +49,36 @@ namespace TalentNetworDAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Faqs");
+
+                    b.HasData(
+                        new
+                        {
+                            FaqId = 1,
+                            Answer = "2 weeks",
+                            Question = "How long does it take to finsh project? ",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            FaqId = 2,
+                            Answer = "2 years",
+                            Question = "How much experience do you have? ",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            FaqId = 3,
+                            Answer = "4 weeks",
+                            Question = "How long does it take to finsh project? ",
+                            UserId = 11
+                        },
+                        new
+                        {
+                            FaqId = 4,
+                            Answer = "2 years",
+                            Question = "How long does it take to finsh project? ",
+                            UserId = 11
+                        });
                 });
 
             modelBuilder.Entity("TalentNetworDAL.Models.ProjectsForTalent", b =>
@@ -57,8 +87,8 @@ namespace TalentNetworDAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ProjectName")
-                        .HasMaxLength(10)
-                        .HasColumnType("nchar(10)")
+                        .HasMaxLength(1423654)
+                        .HasColumnType("nchar(1423654)")
                         .IsFixedLength();
 
                     b.Property<int?>("ProjectPrice")

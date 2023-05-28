@@ -39,10 +39,10 @@ public partial class TalentNetworkContext : DbContext
                 .ValueGeneratedNever()
                 .HasColumnName("FaqID");
             entity.Property(e => e.Answer)
-                .HasMaxLength(68)
+                .HasMaxLength(1213565468)
                 .IsFixedLength();
             entity.Property(e => e.Question)
-                .HasMaxLength(68)
+                .HasMaxLength(1213565468)
                 .IsFixedLength();
 
             entity.HasOne(d => d.User).WithMany(p => p.Faqs)
@@ -57,7 +57,7 @@ public partial class TalentNetworkContext : DbContext
 
             entity.Property(e => e.ProjectId).ValueGeneratedNever();
             entity.Property(e => e.ProjectName)
-                .HasMaxLength(10)
+                .HasMaxLength(1423654)
                 .IsFixedLength();
             entity.Property(e => e.UserId).HasColumnName("UserID");
 
@@ -92,7 +92,7 @@ public partial class TalentNetworkContext : DbContext
        modelBuilder.Entity<User>().HasData(new User[]
      {
      //       password=1111
-          new User { UserId = 1, UserName = "admin", Password = "AQAAAAEAACcQAAAAEF0yg+txDUNebuNSw+ieaIC/H0Xeu+MUqB/doLTDmBR59cwAl+QwMkMftjY2SMh7ww==", IsAdmin = 1 },
+          new User {  UserId = 1, UserName = "admin", Password = "AQAAAAEAACcQAAAAEF0yg+txDUNebuNSw+ieaIC/H0Xeu+MUqB/doLTDmBR59cwAl+QwMkMftjY2SMh7ww==", IsAdmin = 1 },
             new User { UserId =11, UserName = "u1", Password = "AQAAAAEAACcQAAAAEF0yg+txDUNebuNSw+ieaIC/H0Xeu+MUqB/doLTDmBR59cwAl+QwMkMftjY2SMh7ww==", IsAdmin = 2},
      });
        modelBuilder.Entity<TalentUser>().HasData(new TalentUser[]
@@ -102,6 +102,25 @@ public partial class TalentNetworkContext : DbContext
             new TalentUser { UserId=11, City = "Tel-Aviv", ContactPhone = 1354550453, Talent = "AI devlopper"},
 
      });
+        modelBuilder.Entity<Faq>().HasData(new Faq[]
+    {
+
+            new Faq {FaqId=15, UserId=1, Question="How-long does it take to fins project? ",Answer="4 weeks" },
+            new Faq {FaqId=5, UserId=1, Question="How--much experience do you have?",Answer="7 years" },
+            new Faq {FaqId=6, UserId=11, Question="How-long does it take to finsh projec? ",Answer="8 weeks" },
+            new Faq {FaqId=7, UserId=11, Question="Ho-long does it take to finsh projec? ",Answer="17 years" },
+            new Faq {FaqId=59, UserId=11, Question="Ho-long finsh projec? ",Answer="17 years" },
+
+    });
+       modelBuilder.Entity<ProjectsForTalent>().HasData(new ProjectsForTalent[]
+    {
+
+            new ProjectsForTalent {ProjectId=1, UserId=1, ProjectName="a proj", ProjectPrice=10000 },
+            new ProjectsForTalent { ProjectId=2,UserId=1, ProjectName="b proj" ,ProjectPrice=5000 },
+            new ProjectsForTalent { ProjectId=3,UserId=11, ProjectName="c proj ", ProjectPrice =14000 },
+            new ProjectsForTalent { ProjectId=4,UserId=11, ProjectName="d proj", ProjectPrice=54 },
+            
+    });
         OnModelCreatingPartial(modelBuilder);
     }
 

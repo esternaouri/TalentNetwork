@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TalentNetworDAL.Models;
 
@@ -11,9 +12,11 @@ using TalentNetworDAL.Models;
 namespace TalentNetworDAL.Migrations
 {
     [DbContext(typeof(TalentNetworkContext))]
-    partial class TalentNetworkContextModelSnapshot : ModelSnapshot
+    [Migration("20230527194056_99")]
+    partial class _99
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,35 +53,35 @@ namespace TalentNetworDAL.Migrations
                     b.HasData(
                         new
                         {
-                            FaqId = 15,
+                            FaqId = 1,
                             Answer = "4 weeks",
                             Question = "How-long does it take to fins project? ",
                             UserId = 1
                         },
                         new
                         {
-                            FaqId = 5,
+                            FaqId = 2,
                             Answer = "7 years",
                             Question = "How--much experience do you have?",
                             UserId = 1
                         },
                         new
                         {
-                            FaqId = 6,
+                            FaqId = 3,
                             Answer = "8 weeks",
                             Question = "How-long does it take to finsh projec? ",
                             UserId = 11
                         },
                         new
                         {
-                            FaqId = 7,
+                            FaqId = 4,
                             Answer = "17 years",
                             Question = "Ho-long does it take to finsh projec? ",
                             UserId = 11
                         },
                         new
                         {
-                            FaqId = 59,
+                            FaqId = 5,
                             Answer = "17 years",
                             Question = "Ho-long finsh projec? ",
                             UserId = 11

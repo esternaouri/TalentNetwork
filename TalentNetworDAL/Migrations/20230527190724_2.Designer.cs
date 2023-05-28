@@ -12,8 +12,8 @@ using TalentNetworDAL.Models;
 namespace TalentNetworDAL.Migrations
 {
     [DbContext(typeof(TalentNetworkContext))]
-    [Migration("20230524182706_1")]
-    partial class _1
+    [Migration("20230527190724_2")]
+    partial class _2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,6 +49,36 @@ namespace TalentNetworDAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Faqs");
+
+                    b.HasData(
+                        new
+                        {
+                            FaqId = 1,
+                            Answer = "4 weeks",
+                            Question = "How long does it take to fins project? ",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            FaqId = 2,
+                            Answer = "7 years",
+                            Question = "How much experience do you have?",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            FaqId = 3,
+                            Answer = "8 weeks",
+                            Question = "How long does it take to finsh projec? ",
+                            UserId = 11
+                        },
+                        new
+                        {
+                            FaqId = 4,
+                            Answer = "17 years",
+                            Question = "How long does it take to finsh projec? ",
+                            UserId = 11
+                        });
                 });
 
             modelBuilder.Entity("TalentNetworDAL.Models.ProjectsForTalent", b =>
@@ -57,8 +87,8 @@ namespace TalentNetworDAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ProjectName")
-                        .HasMaxLength(10)
-                        .HasColumnType("nchar(10)")
+                        .HasMaxLength(1423654)
+                        .HasColumnType("nchar(1423654)")
                         .IsFixedLength();
 
                     b.Property<int?>("ProjectPrice")
@@ -88,6 +118,9 @@ namespace TalentNetworDAL.Migrations
                     b.Property<int?>("ContactPhone")
                         .HasColumnType("int");
 
+                    b.Property<string>("Talent")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("UserId");
 
                     b.ToTable("TalentUsers");
@@ -97,13 +130,15 @@ namespace TalentNetworDAL.Migrations
                         {
                             UserId = 1,
                             City = "Jerusalem",
-                            ContactPhone = 528887454
+                            ContactPhone = 528887454,
+                            Talent = "javaScript devloper"
                         },
                         new
                         {
                             UserId = 11,
                             City = "Tel-Aviv",
-                            ContactPhone = 1354550453
+                            ContactPhone = 1354550453,
+                            Talent = "AI devlopper"
                         });
                 });
 

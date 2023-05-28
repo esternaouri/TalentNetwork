@@ -33,20 +33,20 @@ namespace TalentNetwork.Controllers.Faqs
 
         // GET: api/Faqs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Faq>> GetFaq(int id)
+        public IActionResult GetFaq(int id)
         {
           if (_context.Faqs == null)
           {
               return NotFound();
           }
-            var faq = await _context.Faqs.FindAsync(id);
+            var Faqs = _context.Faqs.Where(ID => ID.UserId == id).ToList();
 
-            if (faq == null)
+            if (Faqs == null)
             {
                 return NotFound();
             }
 
-            return faq;
+            return Ok(Faqs);
         }
 
         // PUT: api/Faqs/5

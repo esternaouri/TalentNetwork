@@ -9,7 +9,7 @@ using TalentNetworDAL.Models;
 
 namespace TalentNetwork.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ProjectsForTalentsController : ControllerBase
     {
@@ -33,20 +33,20 @@ namespace TalentNetwork.Controllers
 
         // GET: api/ProjectsForTalents/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ProjectsForTalent>> GetProjectsForTalent(int id)
+        public IActionResult GetProjectsForTalent(int id)
         {
           if (_context.ProjectsForTalents == null)
           {
               return NotFound();
           }
-            var projectsForTalent = await _context.ProjectsForTalents.FindAsync(id);
+            var projectsForTalent =  _context.ProjectsForTalents.Where(ID => ID.UserId == id).ToList();
 
             if (projectsForTalent == null)
             {
                 return NotFound();
             }
 
-            return projectsForTalent;
+            return Ok(projectsForTalent);
         }
 
         // PUT: api/ProjectsForTalents/5

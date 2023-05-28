@@ -4,6 +4,7 @@ import  Home from "./components/Home";
 import { UsersTable } from "./components/UsersTable"
 import { AdminHomePage } from "./components/AdminHomePage"
 import { UsersHomePage } from "./components/UsersHomePage"
+import  ManageUser  from "./components/ManageUser"
 const AppRoutes = [
   {
     index: true,
@@ -16,6 +17,10 @@ const AppRoutes = [
   {
       path: '/login',
       element: <Login />
+    },
+    {
+        path: '/manage-user',
+        element: <ManageUser />
     },
 
     //{
