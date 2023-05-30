@@ -1,5 +1,9 @@
 ﻿import { Component } from "react";
 import { NavLink } from "react-router-dom";
+import { Navigate } from "../../../../node_modules/react-router-dom/dist/index";
+import { useNavigate } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
+
 
 
 export class UsersHomePage extends Component {
@@ -13,7 +17,6 @@ export class UsersHomePage extends Component {
             moreDetailsProj: [],
             moreDetailsFaqs: [],
             currentItem: 0,
-            currentUser:0
 
         };
     }
@@ -39,6 +42,7 @@ export class UsersHomePage extends Component {
         this.setState({ currentUser : this.props.id})
     }
     //
+   
     render() {
         let { items, loading, clickForMoreDetails, moreDetailsProj, moreDetailsFaqs } = this.state
         if (loading)
@@ -72,11 +76,12 @@ export class UsersHomePage extends Component {
             </ul>);
         });
         //
+
         return (
             <>
                 <h1>Hello User num : {this.props.id}  </h1>
                 <hr />
-                <NavLink to="manage-user">Mange Your Profile</NavLink>
+                <NavLink to="manage-user">Mange Your Profile</NavLink >
                 <table className="table">
                     {clickForMoreDetails && <div className="alert alert-info">
                         Projects|

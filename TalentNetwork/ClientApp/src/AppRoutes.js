@@ -18,10 +18,10 @@ const AppRoutes = [
       path: '/login',
       element: <Login />
     },
-    {
-        path: '/manage-user',
-        element: <ManageUser />
-    },
+   // {
+     //   path: 'users-home-page/manage-user',
+       // element: <ManageUser />
+    //},
 
     //{
         //path: '/users',

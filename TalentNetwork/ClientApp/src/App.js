@@ -7,6 +7,8 @@ import { UsersHomePage } from "./components/UsersHomePage"
 import { UsersTable } from "./components/UsersTable"
 import './custom.css';
 import Login from './components/Login';
+import ManageUser from"./components/ManageUser"
+import { Counter } from './components/Counter';
 
 export const Context = createContext();
 export const UContext = createContext();
@@ -39,13 +41,20 @@ function App () {
                 <Route
                     path='/admin-home-page'
                         element={isLogin ? <AdminHomePage /> : <Login />}
-                ></Route>
+                        ></Route>
+                        <Route
+                            path='users-home-page/manage-user'
+                            element={
+                                <ManageUser id={userId} />
+                            }
+                        ></Route>
                 <Route
                     path='/users'
                     element={
                         <UsersTable />
                     }
-                ></Route>
+                   ></Route>
+
                   </Routes>
 
       </Layout>

@@ -24,7 +24,7 @@ namespace TalentNetwork.Controllers
         public UsersController(TalentNetworkContext context, TokensManager tokensManager)
         {
             _context = context;
-            _TokensManager = tokensManager; 
+            _TokensManager = tokensManager;
         }
 
         // GET: api/Users
@@ -84,7 +84,7 @@ namespace TalentNetwork.Controllers
                     return Unauthorized("invalid user name or password");
                 else
                 {
-                    
+
                     TokensData td = td = CreateTokens(userInDb);
                     return Ok(td);
                 }
@@ -97,8 +97,8 @@ namespace TalentNetwork.Controllers
 
             var isAdmine = userInDb.IsAdmin;
 
-                return Ok(isAdmine.ToString());
-            
+            return Ok(isAdmine.ToString());
+
         }
         [HttpPost("refreshToken")]
         public IActionResult RefreshToken(TokensData td)
@@ -162,10 +162,10 @@ namespace TalentNetwork.Controllers
             userInDb.RefreshTokenExpires = td.RefreshTokenExpires;
             _context.SaveChanges();
         }
-    
 
-    // GET: api/Users/5
-    [HttpGet("{id}")]
+
+        // GET: api/Users/5
+        [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
             if (_context.Users == null)

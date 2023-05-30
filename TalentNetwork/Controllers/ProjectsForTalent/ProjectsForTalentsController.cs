@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using TalentNetworDAL.Models;
-
+using TalentNetwork.DTO;
 namespace TalentNetwork.Controllers
 {
     [Route("[controller]")]
@@ -83,30 +84,37 @@ namespace TalentNetwork.Controllers
         // POST: api/ProjectsForTalents
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<ProjectsForTalent>> PostProjectsForTalent(ProjectsForTalent projectsForTalent)
+        public IActionResult PostProjectsForTalent(NewProjectDetails newProjectDetails)
         {
-          if (_context.ProjectsForTalents == null)
-          {
-              return Problem("Entity set 'TalentNetworkContext.ProjectsForTalents'  is null.");
-          }
-            _context.ProjectsForTalents.Add(projectsForTalent);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (ProjectsForTalentExists(projectsForTalent.ProjectId))
+            try {
+                if (_context.ProjectsForTalents == null)
                 {
-                    return Conflict();
+                    return Problem("Entity set 'TalentNetworkContext.ProjectsForTalents'  is null.");
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return CreatedAtAction("GetProjectsForTalent", new { id = projectsForTalent.ProjectId }, projectsForTalent);
+                var user = _context.Users.FirstOrDefault(u => u.UserId == newProjectDetails.UserId);
+                if (user == null)
+                {
+                    return NotFound("User not found");
+                }
+
+                var post = new ProjectsForTalent
+                {
+                    ProjectId = newProjectDetails.ProjectId,
+                    UserId = newProjectDetails.UserId,
+                    ProjectName = newProjectDetails.ProjectName,
+                    ProjectPrice = newProjectDetails.ProjectPrice,
+                    User = user
+                };
+                _context.ProjectsForTalents.Add(post);
+
+                _context.SaveChanges();
+
+
+                return Ok(post);
+            } catch(Exception e) {
+                 return BadRequest(e);
+            }
         }
 
         // DELETE: api/ProjectsForTalents/5
