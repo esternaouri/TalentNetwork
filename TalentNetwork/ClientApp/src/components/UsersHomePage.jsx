@@ -21,11 +21,10 @@ export class UsersHomePage extends Component {
         };
     }
     //
-    toggleDetails = (id,i) => {
+    toggleDetails = (id) => {
         this.setState(prevState => ({
             clickForMoreDetails: !prevState.clickForMoreDetails
         }));
-        this.setState({ currentItem :i})
         fetch('https://localhost:7116/ProjectsForTalents/' + id).then(res => res.json()).
             then(json => this.setState({ moreDetailsProj: json})).
             catch(err => console.error(err));
@@ -55,7 +54,7 @@ export class UsersHomePage extends Component {
                 <td>  🔨 {p.talent}</td>
                 <td>  🌐{p.city}</td>
                 <td> 📞{p.contactPhone}</td>
-                <td><button onClick={() => this.toggleDetails(p.userId, i)}>More Information</button>
+                <td><button onClick={() => this.toggleDetails(p.userId)}>More Information</button>
 
                 </td>
 

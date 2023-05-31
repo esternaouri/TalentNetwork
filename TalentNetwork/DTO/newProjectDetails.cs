@@ -11,7 +11,7 @@ namespace TalentNetwork.DTO
 
         public int? ProjectPrice { get; set; }
 
-       public int  ProjectId { get; set; }
-         
+        public int ProjectId { get; set; }
+
     }
 }

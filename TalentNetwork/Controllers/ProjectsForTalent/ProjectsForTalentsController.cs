@@ -100,7 +100,8 @@ namespace TalentNetwork.Controllers
 
                 var post = new ProjectsForTalent
                 {
-                    ProjectId = newProjectDetails.ProjectId,
+
+                    ProjectId = _context.ProjectsForTalents.Max(x=> x.ProjectId) +1,
                     UserId = newProjectDetails.UserId,
                     ProjectName = newProjectDetails.ProjectName,
                     ProjectPrice = newProjectDetails.ProjectPrice,

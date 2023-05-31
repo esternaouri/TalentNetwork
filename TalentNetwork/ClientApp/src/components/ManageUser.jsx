@@ -10,7 +10,6 @@ const ManageUser = (props) =>
     const [AddProject, setAddProject] = useState(false);
     const [AddProjectName, setAddProjectName] = useState(false);
     const [AddProjectPrice, setAddProjectPrice] = useState(false);
-    const [randomId, setRandomId] = useState(uuidv4());
      const [userId, setUserId] = useState(props.id);
     //
     const fetchUserData = async () => {
@@ -31,7 +30,7 @@ const ManageUser = (props) =>
         e.preventDefault();
 
         const post = {
-            ProjectId: 44444,
+            projectId:12121,
             UserId: userId ,
             ProjectName: AddProjectName,
             ProjectPrice: AddProjectPrice
@@ -99,12 +98,9 @@ const ManageUser = (props) =>
         setAddProject(!AddProject);
     }
 
-    const toRandomId = () => {
-        setRandomId(uuidv4() + 545484);
-    }
+  
     useEffect(() => {
         fetchUserData();
-        toRandomId();
 
     }, [])
 
