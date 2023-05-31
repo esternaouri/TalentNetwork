@@ -12,7 +12,6 @@ const ManageUser = (props) =>
     const [AddProjectPrice, setAddProjectPrice] = useState(false);
     const [randomId, setRandomId] = useState(uuidv4());
      const [userId, setUserId] = useState(props.id);
-    const [fetchUser, setFetchedUser] = useState([]);
     //
     const fetchUserData = async () => {
     
@@ -32,10 +31,10 @@ const ManageUser = (props) =>
         e.preventDefault();
 
         const post = {
-            ProjectId: 85,
-            UserId: 1,
-            ProjectName: "dan",
-            ProjectPrice: 12
+            ProjectId: 44444,
+            UserId: userId ,
+            ProjectName: AddProjectName,
+            ProjectPrice: AddProjectPrice
         }
 
         fetch('https://localhost:7116/ProjectsForTalents', {
@@ -56,28 +55,29 @@ const ManageUser = (props) =>
             });
     }
     //
-    //const GetUser = async (e) => {
-       // axios.get('https://localhost:7116/USERS/1' )
-           // .then((response) => {
-         //       setFetchedUser(response.data);
-       //         setFetchedUser(response.data);
-     //       });
-    //}
-    //useEffect(() => {
-       // GetUser()
-    //}, [])
-   // console.log("heell" + AddProjectName);
-    // 
+
     const editProject = async () => { }
     //
-    const DelProject = async () => { }
+    const DelProject =  (projectId) =>
+    {       
+            axios
+                .delete('https://localhost:7116/ProjectsForTalents/' + projectId)
+                .then((res) => {
+                    console.log(res);
+                })
+                .catch((err) => {
+                    console.log(err.message);
+                });
+        
+        }
+    
     //
     let rowsProj = ProjsData.map((p, i) => {
         return (<ul className="list-group">
             <li className= "list-group-item">🆎 PROJECT: {p.projectName}
                 💳| PRICE: {p.projectPrice} <></>
                 <button className="btn btn-success">edit</button>
-                <button className="btn btn-danger">delete</button>
+                <button className="btn btn-danger" onClick={() => DelProject(p.projectId)} >delete</button>
 
                 </li>
             </ul>);
@@ -102,11 +102,9 @@ const ManageUser = (props) =>
     const toRandomId = () => {
         setRandomId(uuidv4() + 545484);
     }
-    console.log("helo props + " + userId)
     useEffect(() => {
         fetchUserData();
         toRandomId();
-        //GetUser()
 
     }, [])
 
