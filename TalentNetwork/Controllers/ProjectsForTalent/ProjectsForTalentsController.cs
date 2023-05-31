@@ -53,14 +53,24 @@ namespace TalentNetwork.Controllers
         // PUT: api/ProjectsForTalents/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProjectsForTalent(int id, ProjectsForTalent projectsForTalent)
+        public async Task<IActionResult> PutProjectsForTalent(int id, NewProjectDetails newProjectsForTalent)
         {
-            if (id != projectsForTalent.ProjectId)
+            if (id != newProjectsForTalent.ProjectId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(projectsForTalent).State = EntityState.Modified;
+
+            var existingItem = _context.ProjectsForTalents.FirstOrDefault(item => item.ProjectId == id);
+            if (existingItem == null)
+            {
+                return NotFound();
+            }
+
+            existingItem.ProjectName = newProjectsForTalent.ProjectName;
+            existingItem.ProjectPrice = newProjectsForTalent.ProjectPrice;
+
+
 
             try
             {
