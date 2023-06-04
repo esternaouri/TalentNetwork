@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TalentNetworDAL.Models;
+using System.IO;
+using TalentNetwork.DTO;
+using System.Runtime.InteropServices;
 
 namespace TalentNetwork.Controllers
 {
@@ -28,18 +31,18 @@ namespace TalentNetwork.Controllers
             {
                 return NotFound();
             }
-             var result = _context.TalentUsers.Join(_context.Users,
-                          TalentUser => TalentUser.UserId,
-                          user => user.UserId,
-                          (TalentUser, user) => new
-                          {
-                              TalentUser.UserId,
-                              user.UserName,
-                              TalentUser.Talent,
-                              TalentUser.City,
-                              TalentUser.ContactPhone
+            var result = _context.TalentUsers.Join(_context.Users,
+                         TalentUser => TalentUser.UserId,
+                         user => user.UserId,
+                         (TalentUser, user) => new
+                         {
+                             TalentUser.UserId,
+                             user.UserName,
+                             TalentUser.Talent,
+                             TalentUser.City,
+                             TalentUser.ContactPhone
 
-                          }).ToList();
+                         }).ToList();
 
             return Ok(result);
         }
@@ -141,6 +144,56 @@ namespace TalentNetwork.Controllers
 
             return NoContent();
         }
+
+
+
+
+        [HttpPost("Image")]
+        public async Task<IActionResult> UploadImage([FromForm] IFormFile image,[FromForm]int userId)
+        {
+            // Check if a file was provided
+            if (image == null || image.Length == 0)
+            {
+                return BadRequest("No file was provided.");
+            }
+            try
+            {
+                // Read the file into a byte array
+                using (var memoryStream = new MemoryStream())
+                {
+
+                await image.CopyToAsync(memoryStream);
+                var imageData = memoryStream.ToArray();
+
+                
+                 var existingItem = _context.TalentUsers.FirstOrDefault(item => item.UserId == userId);
+                 existingItem.ImageDataByte = imageData;
+
+                await _context.SaveChangesAsync();
+            }
+            }
+            catch
+            {
+                return Conflict();
+            }
+            return Ok(); // Return a success response
+        }
+
+        [HttpGet("Image/{id}")]
+        public async Task<IActionResult> GetImage(int id)
+        {
+            // Retrieve the image from the database
+            TalentUser imageEntity = await _context.TalentUsers.FindAsync(id);
+
+            if (imageEntity == null)
+            {
+                return NotFound();
+            }
+
+            return File(imageEntity.ImageDataByte, "image/jpeg"); // Return the image data
+        }
+
+
 
         private bool TalentUserExists(int id)
         {

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TalentNetworDAL.Models;
 
@@ -11,9 +12,11 @@ using TalentNetworDAL.Models;
 namespace TalentNetworDAL.Migrations
 {
     [DbContext(typeof(TalentNetworkContext))]
-    partial class TalentNetworkContextModelSnapshot : ModelSnapshot
+    [Migration("20230602123029_S")]
+    partial class S
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

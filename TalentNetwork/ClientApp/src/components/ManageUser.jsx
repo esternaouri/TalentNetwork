@@ -11,6 +11,8 @@ const ManageUser = (props) => {
     const [AddProjectPrice, setAddProjectPrice] = useState(false);
     const [userId, setUserId] = useState(props.id);
     const [idToEdit, setIdtoEdit] = useState(0);
+    const [image, setImage] = useState(null);
+    const [imageUrl, setImageUrl] = useState(null);
 
     const [editProject, setEditproject] = useState(false);
     //
@@ -119,12 +121,50 @@ const ManageUser = (props) => {
     const handleAddProject = () => {
         setAddProject(!AddProject);
     }
-  
+    //
+    async function saveImage(e) {
+        e.preventDefault();
+        {
+            const formData = new FormData();
+            formData.append("userId", userId);
+            formData.append("image", image);
+            try {
+                const response = await axios({
+                    method: "post",
+                    url: 'https://localhost:7116/TalentUsers/Image',
+                    data: formData,
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
+                alert("Saved");
+
+            } catch (error) {
+                alert(error);
+            }
+
+        }
+    }
+    //
+      
+    useEffect(() => {
+        // Fetch the image data from the API endpoint
+        fetch('https://localhost:7116/TalentUsers/Image/' + userId)
+            .then(response => response.blob())
+            .then(blob => {
+                // Create a temporary URL for the image data
+                const url = URL.createObjectURL(blob);
+                setImageUrl(url);
+            });
+
+        // Clean up the URL when the component unmounts
+        return () => URL.revokeObjectURL(imageUrl);
+    }, [userId]);
+    //
 
     useEffect(() => {
         fetchUserData();
 
     }, [])
+
 
     return (
 
@@ -134,7 +174,7 @@ const ManageUser = (props) => {
 
                 <button className="btn btn-primary" onClick={handleAddProject}>new project</button>
                 {AddProject &&
-                    <form onSubmit={addProject}                    >
+                    <form onSubmit={addProject} >
                         <lable>
                             Project Name
                             <input type="text" onChange={(e) => setAddProjectName(e.target.value)} />
@@ -161,8 +201,7 @@ const ManageUser = (props) => {
                         </lable>
                         <button type="submit">edit</button>
                     </form>
-                }
-                
+                }              
                 <ul className="list-group-item">{rowsProj}</ul>
 
 
@@ -170,6 +209,17 @@ const ManageUser = (props) => {
                 <button className="btn btn-primary">add</button>
                 <ul className="list-group-item" >{rowsFaqs}</ul>
 
+
+            </div>
+            <div className="form-group">
+                <label className="form-label">Profile Image</label>
+                <input
+                    type="file"
+                    className="form-control"
+                    onChange={(e) => setImage(e.target.files[0])}
+                />
+                <button type="submit" onClick={saveImage}>Save Image</button>
+                <img style={{ height: "100px"} } src={imageUrl} alt="Image" />
 
             </div>
         </div>
