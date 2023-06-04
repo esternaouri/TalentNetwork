@@ -17,11 +17,11 @@ export class UsersHomePage extends Component {
             moreDetailsProj: [],
             moreDetailsFaqs: [],
             currentItem: 0,
-
+            imageUrl:null,
         };
     }
     //
-    toggleDetails = (id) => {
+    toggleDetails = (id,i) => {
         this.setState(prevState => ({
             clickForMoreDetails: !prevState.clickForMoreDetails
         }));
@@ -33,7 +33,20 @@ export class UsersHomePage extends Component {
         fetch('https://localhost:7116/Faqs/' + id).then(res => res.json()).
             then(json => this.setState({ moreDetailsFaqs: json })).
             catch(err => console.error(err));
-            console.log(JSON.stringify(this.state.moreDetailsFaqs));
+        console.log(JSON.stringify(this.state.moreDetailsFaqs));
+
+
+        fetch('https://localhost:7116/TalentUsers/Image/' + id)
+            .then(response => response.blob())
+            .then(blob => {
+                // Create a temporary URL for the image data
+                const url = URL.createObjectURL(blob);
+                this.setState({ imageUrl: url, currentItem:i })
+            });
+
+        // Clean up the URL when the component unmounts
+        return () => URL.revokeObjectURL(this.state.imageUrl);
+    
     };
     //
     componentDidMount() {
@@ -43,7 +56,7 @@ export class UsersHomePage extends Component {
     //
    
     render() {
-        let { items, loading, clickForMoreDetails, moreDetailsProj, moreDetailsFaqs } = this.state
+        let { items, loading, clickForMoreDetails, moreDetailsProj, moreDetailsFaqs, imageUrl } = this.state
         if (loading)
         return (<div>no home page data</div>);
         //
@@ -54,7 +67,8 @@ export class UsersHomePage extends Component {
                 <td>  🔨 {p.talent}</td>
                 <td>  🌐{p.city}</td>
                 <td> 📞{p.contactPhone}</td>
-                <td><button onClick={() => this.toggleDetails(p.userId)}>More Information</button>
+                {this.state.currentItem==i && < td > <img style={{ height: "100px" }} src={imageUrl} alt="Image" /></td>}
+                <td><button onClick={() => this.toggleDetails(p.userId,i)}>More Information</button>
 
                 </td>
 
@@ -101,6 +115,9 @@ export class UsersHomePage extends Component {
         fetch('https://localhost:7116/talentUsers').then(res => res.json()).
             then(json => this.setState({ items: json, loading: false })).
             catch(err => console.error(err));
+
+
+
     }
  
  
