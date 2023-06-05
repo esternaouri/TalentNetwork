@@ -49,18 +49,26 @@ namespace TalentNetwork.Controllers
         }
 
         [HttpPost("register")]
-        public IActionResult Register(User user)
+        public IActionResult Register(UserRegist user)
         {
-            var userInDb = _context.Users.FirstOrDefault(u => u.UserName == user.UserName);
+            var userInDb = _context.Users.FirstOrDefault(u => u.UserId == user.UserId);
             if (userInDb == null)
             {
-                var ph = new PasswordHasher<User>();
+                var ph = new PasswordHasher<UserRegist>();
                 user.Password = ph.HashPassword(user, user.Password);
-                user.IsAdmin = 2;// 1 - admin , 2 - user
-                _context.Users.Add(user);
+              //  user.IsAdmin = 2;// 1 - admin , 2 - user
+                 User newUser = new User 
+                 { 
+                     UserId = user.UserId,
+                     UserName=user.UserName, 
+                     Password = user.Password,
+                     IsAdmin=1, 
+                     PhoneNumber =user.PhoneNumber
+                 };
+                _context.Users.Add(newUser);
                 _context.SaveChanges();
-                TokensData td = td = CreateTokens(user);
-                return Created($"/users/{user.UserId}", td);
+                TokensData td = td = CreateTokens(newUser);
+                return Created($"/users/{newUser.UserId}", td);
             }
             else
             {
@@ -86,7 +94,8 @@ namespace TalentNetwork.Controllers
                 {
 
                     TokensData td = td = CreateTokens(userInDb);
-                    return Ok(td);
+
+                    return Ok(userInDb);
                 }
             }
         }

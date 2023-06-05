@@ -31,18 +31,25 @@ namespace TalentNetwork.Controllers
             {
                 return NotFound();
             }
-            var result = _context.TalentUsers.Join(_context.Users,
-                         TalentUser => TalentUser.UserId,
-                         user => user.UserId,
-                         (TalentUser, user) => new
-                         {
-                             TalentUser.UserId,
-                             user.UserName,
-                             TalentUser.Talent,
-                             TalentUser.City,
-                             TalentUser.ContactPhone
 
-                         }).ToList();
+            var joinQuery = from a in _context.TalentUsers
+                            join b in _context.Users on a.UserId equals b.UserId into temp
+                            from b in temp.DefaultIfEmpty()
+                            select new { a.UserId, a.Talent, a.City, a.ContactPhone, b.UserName  };
+            var result = joinQuery.ToList();
+
+         //   var result = _context.TalentUsers.Join(_context.Users,
+           //              TalentUser => TalentUser.UserId,
+             //            user => user.UserId,
+               //          (TalentUser, user) => new
+                 //        {
+                   //          TalentUser.UserId,
+                     //        user.UserName,
+                       //      TalentUser.Talent,
+                         //    TalentUser.City,
+                           //  TalentUser.ContactPhone
+
+                        // }).ToList();
 
             return Ok(result);
         }
@@ -99,13 +106,14 @@ namespace TalentNetwork.Controllers
         // POST: api/TalentUsers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TalentUser>> PostTalentUser(TalentUser talentUser)
+        public async Task<ActionResult<TalentUser>> PostTalentUser(UserTalentPost talentUser)
         {
             if (_context.TalentUsers == null)
             {
                 return Problem("Entity set 'TalentNetworkContext.TalentUsers'  is null.");
             }
-            _context.TalentUsers.Add(talentUser);
+            TalentUser newTalent = new TalentUser { City = talentUser.City, Talent = talentUser.Talent, ContactPhone = talentUser.ContactPhone, UserId = talentUser.UserId };
+            _context.TalentUsers.Add(newTalent);
             try
             {
                 await _context.SaveChangesAsync();
