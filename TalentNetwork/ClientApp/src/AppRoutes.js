@@ -6,7 +6,6 @@ import { AdminHomePage } from "./components/AdminHomePage"
 import { UsersHomePage } from "./components/UsersHomePage"
 import ManageUser from "./components/ManageUser"
 import Register from "./components/Register";
-
 const AppRoutes = [
   {
     index: true,
@@ -24,7 +23,7 @@ const AppRoutes = [
         path: '/register',
         element: <Register />
     },
-
+ 
    // {
      //   path: 'users-home-page/manage-user',
        // element: <ManageUser />

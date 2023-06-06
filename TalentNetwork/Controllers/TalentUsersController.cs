@@ -106,13 +106,23 @@ namespace TalentNetwork.Controllers
         // POST: api/TalentUsers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TalentUser>> PostTalentUser(UserTalentPost talentUser)
+        public async Task<IActionResult> PostTalentUser(UserTalentPost talentUser)
         {
             if (_context.TalentUsers == null)
             {
                 return Problem("Entity set 'TalentNetworkContext.TalentUsers'  is null.");
             }
-            TalentUser newTalent = new TalentUser { City = talentUser.City, Talent = talentUser.Talent, ContactPhone = talentUser.ContactPhone, UserId = talentUser.UserId };
+            var user = _context.Users.FirstOrDefault(u => u.UserId == talentUser.UserId);
+            var newTalent = new TalentUser {
+                City = talentUser.City,
+                Talent = talentUser.Talent,
+                ContactPhone = talentUser.ContactPhone, 
+                UserId = talentUser.UserId,
+                ImageName=null,
+                ImageDataByte= null,
+                ImageDataToUse= null,
+                User = user
+            };
             _context.TalentUsers.Add(newTalent);
             try
             {

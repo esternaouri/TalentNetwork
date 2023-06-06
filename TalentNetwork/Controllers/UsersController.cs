@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TalentNetworDAL.Models;
 using TalentNetwork.DTO;
+using NuGet.Protocol.Plugins;
 
 
 namespace TalentNetwork.Controllers
@@ -56,19 +57,19 @@ namespace TalentNetwork.Controllers
             {
                 var ph = new PasswordHasher<UserRegist>();
                 user.Password = ph.HashPassword(user, user.Password);
-              //  user.IsAdmin = 2;// 1 - admin , 2 - user
-                 User newUser = new User 
-                 { 
-                     UserId = user.UserId,
-                     UserName=user.UserName, 
-                     Password = user.Password,
-                     IsAdmin=1, 
-                     PhoneNumber =user.PhoneNumber
-                 };
-                _context.Users.Add(newUser);
+                var post = new User { 
+                    IsAdmin = 1,
+                    UserName = user.UserName,
+                    Password = user.Password,
+                    UserId = user.UserId, 
+                    PhoneNumber=null,
+                    RefreshToken=null,
+                    RefreshTokenExpires=null
+                };
+         
+                _context.Users.Add(post);
                 _context.SaveChanges();
-                TokensData td = td = CreateTokens(newUser);
-                return Created($"/users/{newUser.UserId}", td);
+                return Ok();
             }
             else
             {

@@ -13,6 +13,10 @@ const ManageUser = (props) => {
     const [idToEdit, setIdtoEdit] = useState(0);
     const [image, setImage] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
+    const [firstInfo, setFirstInfo] = useState(false);
+    const [city, setCity] = useState("");
+    const [talent, setTalent] = useState("");
+    const [phone, setPhone] = useState("");
 
     const [editProject, setEditproject] = useState(false);
     //
@@ -144,7 +148,23 @@ const ManageUser = (props) => {
         }
     }
     //
-      
+    const basicInfo = async () =>
+    {
+        const post = {
+            Talent: talent,
+            ContactPhone: phone,
+            City: city,
+            UserId: userId
+
+        }
+
+        try {
+            const res = await axios.post('https://localhost:7116/TalentUsers', post)
+            console.log(res.data)
+        } catch (e) {
+            alert(e)
+        }
+    }  
     useEffect(() => {
         // Fetch the image data from the API endpoint
         fetch('https://localhost:7116/TalentUsers/Image/' + userId)
@@ -171,7 +191,25 @@ const ManageUser = (props) => {
         <div>
             <div className="alert alert-info">
                 <h5 class="card-title">Project</h5>
+                <button onClick={() => setFirstInfo(true)}>Edit First Info </button>
+                {firstInfo &&
 
+                    <form onSubmit={basicInfo }>
+                        <label>
+                            Talent:
+                            <input type="text" onChange={(e) => setTalent(e.target.value)} />
+                        </label>
+                        <label>
+                            City:
+                            <input type="text" onChange={(e) => setCity(e.target.value)} />
+                        </label> <label>
+                            Phone:
+                            <input type="number" onChange={(e) => setPhone(e.target.value)} />
+                        </label>
+
+                        <button type="submit">edit!</button>
+
+                    </form>}
                 <button className="btn btn-primary" onClick={handleAddProject}>new project</button>
                 {AddProject &&
                     <form onSubmit={addProject} >
