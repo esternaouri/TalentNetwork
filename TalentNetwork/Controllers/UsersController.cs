@@ -11,7 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using TalentNetworDAL.Models;
 using TalentNetwork.DTO;
 using NuGet.Protocol.Plugins;
-
+using NuGet.Protocol.Core.Types;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace TalentNetwork.Controllers
 {
@@ -254,25 +255,43 @@ namespace TalentNetwork.Controllers
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public IActionResult Delete(int id)
         {
-            if (_context.Users == null)
+            var userInUsers = _context.Users.FirstOrDefault(u => u.UserId == id);
+            
+            if (userInUsers == null)
             {
                 return NotFound();
             }
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            var userInUsersTalents = _context.TalentUsers.FirstOrDefault(u => u.UserId == id);
+            var projectForTalent = _context.ProjectsForTalents.FirstOrDefault(u => u.UserId == id);
+            var FAQ = _context.Faqs.FirstOrDefault(f => f.UserId == id);
+
+            if (userInUsersTalents !=null)
             {
-                return NotFound();
+                _context.TalentUsers.Remove(userInUsersTalents);
+                _context.SaveChanges();
             }
 
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            if (projectForTalent != null)
+            {
+                _context.ProjectsForTalents.Remove(projectForTalent);
+                _context.SaveChanges();
+            }
+            if (FAQ != null)
+            {
+                _context.Faqs.Remove(FAQ);
+                _context.SaveChanges();
+            }
 
-            return NoContent();
+                _context.Users.Remove(userInUsers);
+                _context.SaveChanges();
+                return Ok();
         }
 
-        private bool UserExists(int id)
+    
+
+    private bool UserExists(int id)
         {
             return (_context.Users?.Any(e => e.UserId == id)).GetValueOrDefault();
         }

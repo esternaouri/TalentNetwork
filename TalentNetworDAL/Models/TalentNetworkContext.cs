@@ -47,7 +47,7 @@ public partial class TalentNetworkContext : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.Faqs)
                 .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Faqs_Users");
         });
 
@@ -63,7 +63,7 @@ public partial class TalentNetworkContext : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.ProjectsForTalents)
                 .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_ProjectsForTalents_Users");
         });
 
@@ -78,7 +78,7 @@ public partial class TalentNetworkContext : DbContext
 
             entity.HasOne(d => d.User).WithOne(p => p.TalentUser)
                 .HasForeignKey<TalentUser>(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_TalentUsers_Users");
         });
 
@@ -92,8 +92,8 @@ public partial class TalentNetworkContext : DbContext
        modelBuilder.Entity<User>().HasData(new User[]
      {
      //       password=1111
-          new User {  UserId = 1, UserName = "admin", Password = "AQAAAAEAACcQAAAAEF0yg+txDUNebuNSw+ieaIC/H0Xeu+MUqB/doLTDmBR59cwAl+QwMkMftjY2SMh7ww==", IsAdmin = 1 },
-            new User { UserId =11, UserName = "u1", Password = "AQAAAAEAACcQAAAAEF0yg+txDUNebuNSw+ieaIC/H0Xeu+MUqB/doLTDmBR59cwAl+QwMkMftjY2SMh7ww==", IsAdmin = 2},
+          new User { UserId = 1, UserName = "admin", Password = "AQAAAAEAACcQAAAAEF0yg+txDUNebuNSw+ieaIC/H0Xeu+MUqB/doLTDmBR59cwAl+QwMkMftjY2SMh7ww==", IsAdmin = 1 },
+          new User { UserId =11, UserName = "u1", Password = "AQAAAAEAACcQAAAAEF0yg+txDUNebuNSw+ieaIC/H0Xeu+MUqB/doLTDmBR59cwAl+QwMkMftjY2SMh7ww==", IsAdmin = 2},
      });
        modelBuilder.Entity<TalentUser>().HasData(new TalentUser[]
      {

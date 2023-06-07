@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 
 export class AdminHomePage extends Component {
 
@@ -16,7 +17,7 @@ export class AdminHomePage extends Component {
 
                 <button className="btn btn-primary"> Manage Users </button> 
                 ||
-                <button className="btn btn-primary"> Go To Users Page </button> 
+                <Link to="/users">Go to User Mangment</Link>
 
             </div>
         );

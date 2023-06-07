@@ -152,6 +152,9 @@ namespace TalentNetworDAL.Migrations
                     b.Property<int?>("ContactPhone")
                         .HasColumnType("int");
 
+                    b.Property<byte[]>("ImageDataByte")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("ImageDataToUse")
                         .HasColumnType("nvarchar(max)");
 
@@ -233,6 +236,7 @@ namespace TalentNetworDAL.Migrations
                     b.HasOne("TalentNetworDAL.Models.User", "User")
                         .WithMany("Faqs")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_Faqs_Users");
 
@@ -244,6 +248,7 @@ namespace TalentNetworDAL.Migrations
                     b.HasOne("TalentNetworDAL.Models.User", "User")
                         .WithMany("ProjectsForTalents")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_ProjectsForTalents_Users");
 
@@ -255,6 +260,7 @@ namespace TalentNetworDAL.Migrations
                     b.HasOne("TalentNetworDAL.Models.User", "User")
                         .WithOne("TalentUser")
                         .HasForeignKey("TalentNetworDAL.Models.TalentUser", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_TalentUsers_Users");
 
