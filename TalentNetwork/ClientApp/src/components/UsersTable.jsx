@@ -5,7 +5,17 @@ import axios from 'axios';
 export class UsersTable extends Component {
     constructor(props) {
         super(props);
-        this.state = { items: [], loading: true };
+        this.state =
+        {
+            items: [],
+            loading: true,
+            edit: false,
+            newUserName: "",
+            newPassword: "",
+            newIsAdmin: 0,
+            id:0
+        };
+
     }
     async del(id) {
         try {
@@ -16,9 +26,40 @@ export class UsersTable extends Component {
         } catch (e) {
             alert(e.message);
         }
-
-
     }
+    
+    async handleEditClick(id) {
+
+        this.setState({ edit: true });
+        this.setState({ id: id });
+       
+    }
+
+    async onSubEdit()
+    {
+        const post = {
+            UserId: this.state.id,
+            UserName: this.state.newUserName,
+            Password: this.state.newPassword,
+            IsAdmin: this.state.newIsAdmin
+
+        }
+
+        axios.put('https://localhost:7116/Users/' + this.state.id, post)
+            .then(response => {
+                if (response.ok) {
+                    alert("ok");
+                }
+                throw new Error('PUT request failed');
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
     componentDidMount() {
         this.populateProductsData();
     }
@@ -28,7 +69,6 @@ export class UsersTable extends Component {
             return (<div>no users</div>);
 
         let rows = items.map((p,i) => {
-            let editTo = "/users/edit-user/" + p.UserId;
             return (<tr>
                 <td>{p.userId}</td>
                 <td>{p.userName}</td>
@@ -36,19 +76,39 @@ export class UsersTable extends Component {
                 <td>{p.isAdmin}</td>
                 <td>{p.phoneNumber}</td>
 
-                <td><NavLink to={editTo} >Edit</NavLink> |
+                <td><button onClick={(e) => this.handleEditClick(p.userId)}> Edit</button> |
                     <button onClick={(e) => this.del(p.userId)} className=" btn btn-primary">Del</button>
                 </td>
 
             </tr>);
-        });
-           console.log(items);
-       // console.log(rows);
+        }); 
+        // console.log(items);
+        console.log(this.state.newUserName);
         return (
             <>
                 <h1>Users List</h1>
                 <hr />
+                {this.state.edit &&
+                    <form onSubmit={this.onSubEdit() }>
+                        <label>
+                            User Name:
+                            <input type="text" onChange={(e) => this.setState({ newUserName: e.target.value })} />
+                        </label>
+                        <label>
+                            Password:
+                            <input type="text" onChange={(e) => this.setState({ newPassword: e.target.value })} />
+                        </label> <label>
+                            Is Admin:
+                            <input type="number" onChange={(e) => this.setState({ newIsAdmin: e.target.value })} />
+                        </label>
+
+                        <button type="submit"> edit!</button>
+
+                    </form>
+                }
+
                 <table className="table">
+                    
                     <thead>
                         <tr>
                             <th>User id</th>
