@@ -99,6 +99,12 @@ const ManageUser = (props) => {
 
     }
     //
+    const addFaq = () => { }
+    //
+    const delFaq = () => { }
+    //
+    const editFaq = () => { }
+    
     let rowsProj = ProjsData.map((p, i) => {
         return (<ul className="list-group">
             <li className="list-group-item">🆎 PROJECT: {p.projectName}

@@ -11,12 +11,12 @@ export class AdminHomePage extends Component {
     render() {
         return (
             <div>
-                <h1>Hello Admine</h1>
+                <h1>Hello Admin</h1>
+                <p>How Do You Feel Today?</p>
 
-                <p>This is a simple example of a React component.</p>
-
-                <button className="btn btn-primary"> Manage Users </button> 
-                ||
+                <Link to="/users-home-page">Go to User Home Page</Link><br></br>
+                OR
+                <br></br>
                 <Link to="/users">Go to User Mangment</Link>
 
             </div>

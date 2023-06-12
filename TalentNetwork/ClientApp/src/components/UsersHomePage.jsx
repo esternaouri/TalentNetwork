@@ -89,12 +89,13 @@ export class UsersHomePage extends Component {
             </ul>);
         });
         //
-
         return (
             <>
-                <h1>Hello User num : {this.props.id}  </h1>
+                <h1>Hello {this.props.name}  </h1>
                 <hr />
-                <NavLink to="manage-user">Mange Your Profile</NavLink >
+                <NavLink to="manage-user">Mange Your Profile</NavLink > 
+                {this.props.admin == 2 && <div>Admin Only: <></><NavLink to="admin-home-page">Mange Users</NavLink ></div> }
+             
                 <table className="table">
                     {clickForMoreDetails && <div className="alert alert-info">
                         Projects|
@@ -115,9 +116,6 @@ export class UsersHomePage extends Component {
         fetch('https://localhost:7116/talentUsers').then(res => res.json()).
             then(json => this.setState({ items: json, loading: false })).
             catch(err => console.error(err));
-
-
-
     }
  
  

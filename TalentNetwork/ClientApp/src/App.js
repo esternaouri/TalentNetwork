@@ -9,9 +9,11 @@ import './custom.css';
 import Login from './components/Login';
 import ManageUser from"./components/ManageUser"
 import { Counter } from './components/Counter';
-
+import Home from "./components/Home"
 export const Context = createContext();
 export const UContext = createContext();
+export const AContext = createContext();
+export const NContext = createContext();
 
 
 function App () {
@@ -19,13 +21,17 @@ function App () {
 
     const [isLogin, setLogin] = useState(false);
     const [userId, setUserId] = useState(0);
+    const [IsAdmin, seIsAdmin] = useState(0);
+    const [userName, setUserName] = useState(NContext);
 
     
-     
+
 
     return (
         <Context.Provider value={[isLogin, setLogin] }> 
             <UContext.Provider value={[userId, setUserId]}> 
+                <AContext.Provider value={[IsAdmin, seIsAdmin]}> 
+                    <NContext.Provider value={[userName, setUserName]}> 
 
           <Layout>
         <Routes>
@@ -35,29 +41,25 @@ function App () {
           })}
 
                   <Route
-                          path='/users-home-page'
-                            element={isLogin ? <UsersHomePage id={userId} /> : <Login />}
-                ></Route>
-                <Route
-                    path='/admin-home-page'
-                        element={isLogin ? <AdminHomePage /> : <Login />}
-                        ></Route>
-                        <Route
-                            path='users-home-page/manage-user'
-                            element={
-                                <ManageUser id={userId} />
-                            }
-                        ></Route>
-                <Route
-                    path='/users'
-                    element={
-                        <UsersTable />
-                    }
-                   ></Route>
-
+                      path='/login'
+                      element={isLogin ? <UsersHomePage id={userId} admin={IsAdmin} name={userName} /> : <Login />}>
+                  </Route>
+                  <Route
+                       path='login/admin-home-page'
+                       element={IsAdmin == 2 ? < UsersTable /> : <Home />}>
+                  </Route>
+                    <Route
+                       path='login/manage-user'
+                       element={userId != 0 ?
+                       < ManageUser id={userId} /> : <Login />}>       
+                      </Route>
                   </Routes>
 
-      </Layout>
+                        </Layout>
+                        </NContext.Provider> 
+
+                    </AContext.Provider > 
+
             </UContext.Provider >
 
         </Context.Provider>
@@ -65,7 +67,6 @@ function App () {
     );
 }
 export default App;
-
 
 
 
