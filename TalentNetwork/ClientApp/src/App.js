@@ -10,6 +10,8 @@ import Login from './components/Login';
 import ManageUser from"./components/ManageUser"
 import { Counter } from './components/Counter';
 import Home from "./components/Home"
+import { Card, Form, Button } from 'react-bootstrap';
+
 export const Context = createContext();
 export const UContext = createContext();
 export const AContext = createContext();
@@ -56,6 +58,10 @@ function App () {
                   </Routes>
 
                         </Layout>
+                        <Card style={{ color: "red",
+                            padding: "20px",
+                            textAlign: "center", border: "none", width:"900"
+                        }}> Wish You Luck On Finiding You And Your Partner</Card>
                         </NContext.Provider> 
 
                     </AContext.Provider > 
