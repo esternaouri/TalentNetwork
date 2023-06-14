@@ -75,14 +75,18 @@ namespace TalentNetwork.Controllers
         // PUT: api/TalentUsers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTalentUser(int id, TalentUser talentUser)
+        public async Task<IActionResult> PutTalentUser(int id, UserTalentPost talentUser)
         {
             if (id != talentUser.UserId)
             {
                 return BadRequest();
             }
+           var userIndb = _context.TalentUsers.FirstOrDefault(x => x.UserId == id);
+            userIndb.Talent =talentUser.Talent;
+            userIndb.ContactPhone = talentUser.ContactPhone;
+            userIndb.City = talentUser.City;
 
-            _context.Entry(talentUser).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
 
             try
             {

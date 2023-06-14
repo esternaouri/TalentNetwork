@@ -67,7 +67,7 @@ const ManageUser = (props) => {
     }
     //
     const postEditProject = async ( e) => {
-        e.preventDefault();
+       e.preventDefault();
 
         const postToUpdate = {
             projectId: idToEdit,
@@ -165,7 +165,7 @@ const ManageUser = (props) => {
         }
 
         try {
-            const res = await axios.post('https://localhost:7116/TalentUsers', post)
+            const res = await axios.put('https://localhost:7116/TalentUsers/' + userId, post)
             console.log(res.data)
         } catch (e) {
             alert(e)

@@ -92,7 +92,7 @@ export class UsersHomePage extends Component {
                 <td><button className="btn btn-dark" onClick={() => this.toggleDetails(p.userId,i)}>More Information</button>
 
                 </td>
-
+                <br></br>
             </tr>);
         });
         //
@@ -113,7 +113,7 @@ export class UsersHomePage extends Component {
 
         return (
             <>
-                <h1>Hello {this.props.name}  </h1>
+                <h1 style={{ color: "red", textAlign: "center" }}>Hello {this.props.name} 🌖 </h1>
                 <hr />
                 <NavLink to="manage-user" style={{ fontSize: "20px",
                 fontWeight: "bold"
@@ -139,6 +139,10 @@ export class UsersHomePage extends Component {
                             <ul>{rowsMoreFaq}</ul>
                             </Modal.Body>
                     </div>} 
+
+
+
+
                     <thead className="table">
                         <tr>   
                         </tr>
