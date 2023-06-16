@@ -81,10 +81,34 @@ namespace TalentNetwork.Controllers
             {
                 return BadRequest();
             }
-           var userIndb = _context.TalentUsers.FirstOrDefault(x => x.UserId == id);
-            userIndb.Talent =talentUser.Talent;
-            userIndb.ContactPhone = talentUser.ContactPhone;
-            userIndb.City = talentUser.City;
+            var userIndb = _context.TalentUsers.FirstOrDefault(x => x.UserId == id);
+
+            if (userIndb == null) 
+            {
+                var userInUsers = _context.Users.FirstOrDefault(x => x.UserId == id);
+
+                var newTalent = new TalentUser
+                {
+                    City = talentUser.City,
+                    Talent = talentUser.Talent,
+                    ContactPhone = talentUser.ContactPhone,
+                    UserId = talentUser.UserId,
+                    ImageName = null,
+                    ImageDataByte = null,
+                    ImageDataToUse = null,
+                    User = userInUsers
+                };
+                _context.TalentUsers.Add(newTalent);
+                await _context.SaveChangesAsync();
+            }
+            else {
+                userIndb.Talent = talentUser.Talent;
+                userIndb.ContactPhone = talentUser.ContactPhone;
+                userIndb.City = talentUser.City;
+                await _context.SaveChangesAsync();
+
+            }
+
 
             await _context.SaveChangesAsync();
 
