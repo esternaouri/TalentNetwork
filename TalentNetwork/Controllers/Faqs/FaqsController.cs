@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TalentNetworDAL.Models;
+using TalentNetwork.DTO;
 
 namespace TalentNetwork.Controllers.Faqs
 {
@@ -52,14 +53,25 @@ namespace TalentNetwork.Controllers.Faqs
         // PUT: api/Faqs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutFaq(int id, Faq faq)
+        public async Task<IActionResult> PutFaq(int id, AddFaq faq)
         {
+
             if (id != faq.FaqId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(faq).State = EntityState.Modified;
+
+            var existingItem = _context.Faqs.FirstOrDefault(item => item.FaqId == id);
+            if (existingItem == null)
+            {
+                return NotFound();
+            }
+
+            existingItem.Question = faq.Question;
+            existingItem.Answer = faq.Answer;
+
+
 
             try
             {
@@ -83,30 +95,41 @@ namespace TalentNetwork.Controllers.Faqs
         // POST: api/Faqs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Faq>> PostFaq(Faq faq)
+        public async Task<ActionResult<Faq>> PostFaq(AddFaq faq)
         {
-          if (_context.Faqs == null)
-          {
-              return Problem("Entity set 'TalentNetworkContext.Faqs'  is null.");
-          }
-            _context.Faqs.Add(faq);
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (FaqExists(faq.FaqId))
+                if (_context.Faqs == null)
                 {
-                    return Conflict();
+                    return Problem("Entity set 'TalentNetworkContext.ProjectsForTalents'  is null.");
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return CreatedAtAction("GetFaq", new { id = faq.FaqId }, faq);
+                var user = _context.Users.FirstOrDefault(u => u.UserId == faq.UserId);
+                if (user == null)
+                {
+                    return NotFound("User not found");
+                }
+
+                var post = new Faq
+                {
+
+                    FaqId = _context.Faqs.Max(x => x.FaqId) + 1,
+                    UserId = faq.UserId,
+                    Question = faq.Question,
+                    Answer = faq.Answer,
+                    User = user
+                };
+                _context.Faqs.Add(post);
+
+                _context.SaveChanges();
+
+
+                return Ok(post);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
 
         // DELETE: api/Faqs/5

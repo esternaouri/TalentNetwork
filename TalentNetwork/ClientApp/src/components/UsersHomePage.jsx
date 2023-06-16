@@ -125,7 +125,7 @@ export class UsersHomePage extends Component {
                
 
                 <input className="form-control" type="text" placeholder="Find By City🔎" onChange={this.handleFilterCity} /> <></><br></br>
-                <input type="text" className="form-control" placeholder="Find By Subject🔎" onChange={this.handleFilterSub} /> <br></br>
+                <input type="text" className="form-control" placeholder="Find By Profession🔎" onChange={this.handleFilterSub} /> <br></br>
                 <table className="table">
                     {clickForMoreDetails && <div
 
