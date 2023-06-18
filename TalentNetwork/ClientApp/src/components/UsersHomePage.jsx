@@ -14,11 +14,14 @@ export class UsersHomePage extends Component {
             moreDetailsProj: [],
             moreDetailsFaqs: [],
             currentItem: 0,
+            currentFaq: 0,
             imageUrl: null,
             currentPage: 1,
             filterByCity: "",
             filterBySub: "",
-            filterdArr :[]
+            filterdArr: [],
+            clickForAnswer: false,
+
         };
     }
     //
@@ -49,6 +52,14 @@ export class UsersHomePage extends Component {
         return () => URL.revokeObjectURL(this.state.imageUrl);
     
     };
+    //
+    toggleAnswer = (i) =>
+    {
+        this.setState(prevState => ({
+            clickForAnswer: !prevState.clickForAnswer
+        }));
+        this.setState({ currentFaq: i });
+    }
     //
     componentDidMount() {
         this.populateProductsData();
@@ -81,21 +92,6 @@ export class UsersHomePage extends Component {
         if (loading)
         return (<div>no home page data</div>);
         //
-        let rows = filterdArr.map((p, i) => {
-            return (<tr className="card">
-                <td>user id: {p.userId}</td>
-                <td> 👤 {p.userName}</td>
-                <td>  🔨 {p.talent}</td>
-                <td>  🌐{p.city}</td>
-                <td> 📞{p.contactPhone}</td>
-                {this.state.currentItem==i && < td > <img style={{ height: "100px" }} src={imageUrl} alt="Image" /></td>}
-                <td><button className="btn btn-dark" onClick={() => this.toggleDetails(p.userId,i)}>More Information</button>
-
-                </td>
-                <br></br>
-            </tr>);
-        });
-        //
         let rowsMore = moreDetailsProj.map((p, i) => {
             return (<ul>
                 <li>🆎 PROJECT: {p.projectName}
@@ -106,14 +102,40 @@ export class UsersHomePage extends Component {
         let rowsMoreFaq = moreDetailsFaqs.map((p, i) => {
             return (<ul>
                 <li>🆎 Q: {p.question}
-                    💳| A: {p.answer}</li>
+                    <button className=" btn btn-light" onClick={() => this.toggleAnswer(p.faqId)}>answer</button><br></br>
+                    {this.state.clickForAnswer && this.state.currentFaq == p.faqId && <> { p.answer }</>}
+                </li>
             </ul>);
         });
         //
+        let rows = filterdArr.map((p, i) => {
+            return (<tr >
+                <td>user id: {p.userId}</td>
+                <td> 👤 {p.userName}</td>
+                <td>  🔨 {p.talent}</td>
+                <td>  🌐{p.city}</td>
+                <td> 📞{p.contactPhone}</td>
+                {this.state.currentItem == i && this.state.clickForMoreDetails && < div className="card bg-light mb-3"> <img style={{ height: "100px" }} src={imageUrl} alt="Image" /><br></br>
+                    <h5>Projects</h5>
+                    <ul style={{ boxAlign: "center",
+                    
+                      } }>{rowsMore}</ul>
+                    <h5> Q.A</h5>
+                        <ul>{rowsMoreFaq}</ul>
+                    
+                </div>}
+                <td><button className="btn btn-dark" onClick={() => this.toggleDetails(p.userId,i)}>More Information</button>
+
+                </td>
+                <br></br>
+            </tr>);
+        });
+        //
+      
 
         return (
             <>
-                <h1 style={{ color: "red", textAlign: "center" }}>Hello {this.props.name} 🌖 </h1>
+                <h1 style={{ color: "red", textAlign: "center" }}>Hello {this.props.name} </h1>
                 <hr />
                 <NavLink to="manage-user" style={{ fontSize: "20px",
                 fontWeight: "bold"
@@ -127,22 +149,7 @@ export class UsersHomePage extends Component {
                 <input className="form-control" type="text" placeholder="Find By City🔎" onChange={this.handleFilterCity} /> <></><br></br>
                 <input type="text" className="form-control" placeholder="Find By Profession🔎" onChange={this.handleFilterSub} /> <br></br>
                 <table className="table">
-                    {clickForMoreDetails && <div
-
-
-                        style={{ boxShadow: "20%" }}>
-
-                        Projects|
-                        <Modal.Body>
-                        <ul>{rowsMore}</ul>
-                        Q.A|
-                            <ul>{rowsMoreFaq}</ul>
-                            </Modal.Body>
-                    </div>} 
-
-
-
-
+              
                     <thead className="table">
                         <tr>   
                         </tr>
@@ -150,7 +157,21 @@ export class UsersHomePage extends Component {
                     <tbody className="card-body">{rows}</tbody>
 
                 </table>
-           
+                <nav aria-label="...">
+                    <ul className="pagination">
+                        <li className="page-item disabled">
+                            <a className="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li className="page-item"><a class="page-link" href="#">1</a></li>
+                        <li className="page-item active">
+                            <a className="page-link" href="#">2 <span class="sr-only"></span></a>
+                        </li>
+                        <li className="page-item"><a class="page-link" href="#">3</a></li>
+                        <li className="page-item">
+                            <a className="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
             </>
         );
     }
