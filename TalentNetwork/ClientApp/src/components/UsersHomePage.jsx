@@ -1,6 +1,6 @@
 ﻿import { Component } from "react";
 import { NavLink } from "react-router-dom";
-import Modal from 'react-bootstrap/Modal';
+
 
 
 export class UsersHomePage extends Component {
@@ -21,9 +21,12 @@ export class UsersHomePage extends Component {
             filterBySub: "",
             filterdArr: [],
             clickForAnswer: false,
+            postsPerPage: 2,
+            currentPage: 1
 
         };
     }
+
     //
     toggleDetails = (id,i) => {
         this.setState(prevState => ({
@@ -66,19 +69,17 @@ export class UsersHomePage extends Component {
         this.setState({ currentUser : this.props.id})
     }
     //
-    handlePageChange = (page) => {
-        this.setState({ currentPage: page });
-    };
-    //
+
     handleFilterCity = (event) => {
         const filterByCity = event.target.value;
         this.setState({ filterByCity }, this.filterdArr);
     };
-
+    //
     handleFilterSub = (event) => {
         const filterBySub = event.target.value;
         this.setState({ filterBySub }, this.filterdArr);
     };
+    //
     filterdArr = () => {
         const { filterByCity, filterBySub } = this.state;
         const filterdArr = this.state.items.filter(item =>
@@ -87,52 +88,96 @@ export class UsersHomePage extends Component {
         );
         this.setState({ filterdArr });
     };
-    render() {
-        let { items, loading, clickForMoreDetails, moreDetailsProj, moreDetailsFaqs, imageUrl, filterdArr } = this.state
-        if (loading)
-        return (<div>no home page data</div>);
-        //
-        let rowsMore = moreDetailsProj.map((p, i) => {
+
+
+    showData = () => {
+
+        const { postsPerPage, currentPage, filterdArr } = this.state;
+        const indexOfLastPage = currentPage * postsPerPage;
+        const indexOfFirstPage = indexOfLastPage - postsPerPage;
+        const currentPosts = filterdArr.slice(indexOfFirstPage, indexOfLastPage)
+        let rowsMore = this.state.moreDetailsProj.map((p, i) => {
             return (<ul>
                 <li>🆎 PROJECT: {p.projectName}
                     💳| PRICE: {p.projectPrice}</li>
             </ul>);
         });
         //
-        let rowsMoreFaq = moreDetailsFaqs.map((p, i) => {
+        let rowsMoreFaq = this.state.moreDetailsFaqs.map((p, i) => {
             return (<ul>
                 <li>🆎 Q: {p.question}
                     <button className=" btn btn-light" onClick={() => this.toggleAnswer(p.faqId)}>answer</button><br></br>
-                    {this.state.clickForAnswer && this.state.currentFaq == p.faqId && <> { p.answer }</>}
+                    {this.state.clickForAnswer && this.state.currentFaq == p.faqId && <> {p.answer}</>}
                 </li>
             </ul>);
         });
-        //
-        let rows = filterdArr.map((p, i) => {
-            return (<tr >
-                <td>user id: {p.userId}</td>
-                <td> 👤 {p.userName}</td>
-                <td>  🔨 {p.talent}</td>
-                <td>  🌐{p.city}</td>
-                <td> 📞{p.contactPhone}</td>
-                {this.state.currentItem == i && this.state.clickForMoreDetails && < div className="card bg-light mb-3"> <img style={{ height: "100px" }} src={imageUrl} alt="Image" /><br></br>
-                    <h5>Projects</h5>
-                    <ul style={{ boxAlign: "center",
-                    
-                      } }>{rowsMore}</ul>
-                    <h5> Q.A</h5>
-                        <ul>{rowsMoreFaq}</ul>
-                    
-                </div>}
-                <td><button className="btn btn-dark" onClick={() => this.toggleDetails(p.userId,i)}>More Information</button>
 
-                </td>
-                <br></br>
-            </tr>);
-        });
-        //
-      
+        try {
+            return currentPosts.map((item, index) => {
+                return (
+                    <tbody>
+                        <tr>
+                            <td>{postsPerPage * (currentPage - 1) + index + 1}</td>
+                            <td>{item.userId}</td>
+                            <td>{item.userName}</td>
+                            <td>{item.talent}</td>
+                            <td>{item.city}</td>
 
+                            <td>{item.contactPhone}</td>
+                            <td><button className="btn btn-dark" onClick={() => this.toggleDetails(item.userId, index)}>More Information</button>
+                                {this.state.currentItem == index && this.state.clickForMoreDetails && < div className="card bg-light mb-3" > <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /><br></br>
+                                    <h5>Projects</h5>
+                                    <ul style={{
+                                        boxAlign: "center"
+                                    }}>{rowsMore}</ul>
+                                    <h5> Q.A</h5>
+                                    <ul>{rowsMoreFaq}</ul>
+
+                                </div>}
+
+                            </td>
+                     </tr>
+                    </tbody>
+                )
+            })
+        } catch (e) {
+            alert(e.message)
+        }
+    }
+    showPagination = () => {
+        const { postsPerPage, filterdArr } = this.state;
+        const pageNumbers = [];
+        const totalPosts = filterdArr.length;
+
+        for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
+            pageNumbers.push(i)
+        }
+
+        const pagination = (pageNumbers) => {
+            this.setState({ currentPage: pageNumbers })
+        }
+
+        return (
+            <nav>
+                <ul className="pagination">
+                    {pageNumbers.map(number => (
+                        <li key={number} className={this.state.currentPage === number ? 'page-item active' : 'page-item'}>
+                            <button onClick={() => pagination(number)} className="page-link"> {number} </button>
+                        </li>
+                    ))}
+                </ul>
+            </nav>
+        )
+
+
+    }
+
+    render() {
+        let {  loading } = this.state
+        if (loading)
+        return (<div>no home page data</div>);
+        //
+     
         return (
             <>
                 <h1 style={{ color: "red", textAlign: "center" }}>Hello {this.props.name} </h1>
@@ -148,30 +193,27 @@ export class UsersHomePage extends Component {
 
                 <input className="form-control" type="text" placeholder="Find By City🔎" onChange={this.handleFilterCity} /> <></><br></br>
                 <input type="text" className="form-control" placeholder="Find By Profession🔎" onChange={this.handleFilterSub} /> <br></br>
-                <table className="table">
-              
-                    <thead className="table">
-                        <tr>   
-                        </tr>
-                    </thead>
-                    <tbody className="card-body">{rows}</tbody>
+                <div className="container">
+                    <table className="table align-items-center justify-content-center mb-0">
+                        <thead>
+                            <tr>
+                                <th>num</th>
+                                <th>User Id</th>
+                                <th>User Name</th>
+                                <th>Talent</th>
+                                <td>City</td>
+                                <th>contact Phone</th>
+                            </tr>
+                        </thead>
+                        {this.showData()}
+                    </table>
 
-                </table>
-                <nav aria-label="...">
-                    <ul className="pagination">
-                        <li className="page-item disabled">
-                            <a className="page-link" href="#" tabindex="-1">Previous</a>
-                        </li>
-                        <li className="page-item"><a class="page-link" href="#">1</a></li>
-                        <li className="page-item active">
-                            <a className="page-link" href="#">2 <span class="sr-only"></span></a>
-                        </li>
-                        <li className="page-item"><a class="page-link" href="#">3</a></li>
-                        <li className="page-item">
-                            <a className="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
+                    <div style={{ float: 'right' }}>
+                        {this.showPagination()}
+                    </div>
+
+                </div>
+               
             </>
         );
     }
