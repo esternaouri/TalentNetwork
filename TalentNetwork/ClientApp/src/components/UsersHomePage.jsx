@@ -21,8 +21,9 @@ export class UsersHomePage extends Component {
             filterBySub: "",
             filterdArr: [],
             clickForAnswer: false,
-            postsPerPage: 2,
-            currentPage: 1
+            postsPerPage: 4,
+            currentPage: 1,
+            isFilterd:false
 
         };
     }
@@ -69,15 +70,33 @@ export class UsersHomePage extends Component {
         this.setState({ currentUser : this.props.id})
     }
     //
-
     handleFilterCity = (event) => {
         const filterByCity = event.target.value;
+        this.setState({ isFilterd: true });
         this.setState({ filterByCity }, this.filterdArr);
+        if (filterByCity != "")
+        {
+            this.setState({ isFilterd: true });
+
+        }
+        if (filterByCity == "") {
+            this.setState({ isFilterd: false });
+
+        }
     };
     //
     handleFilterSub = (event) => {
         const filterBySub = event.target.value;
         this.setState({ filterBySub }, this.filterdArr);
+        if (filterBySub != "") {
+            this.setState({ isFilterd: true });
+
+        }
+        if (filterBySub == "") {
+            this.setState({ isFilterd: false });
+
+        }
+        
     };
     //
     filterdArr = () => {
@@ -92,10 +111,10 @@ export class UsersHomePage extends Component {
 
     showData = () => {
 
-        const { postsPerPage, currentPage, filterdArr } = this.state;
+        const { postsPerPage, currentPage, items } = this.state;
         const indexOfLastPage = currentPage * postsPerPage;
         const indexOfFirstPage = indexOfLastPage - postsPerPage;
-        const currentPosts = filterdArr.slice(indexOfFirstPage, indexOfLastPage)
+        const currentPosts = items.slice(indexOfFirstPage, indexOfLastPage)
         let rowsMore = this.state.moreDetailsProj.map((p, i) => {
             return (<ul>
                 <li>🆎 PROJECT: {p.projectName}
@@ -113,33 +132,68 @@ export class UsersHomePage extends Component {
         });
 
         try {
-            return currentPosts.map((item, index) => {
-                return (
-                    <tbody>
-                        <tr>
-                            <td>{postsPerPage * (currentPage - 1) + index + 1}</td>
-                            <td>{item.userId}</td>
-                            <td>{item.userName}</td>
-                            <td>{item.talent}</td>
-                            <td>{item.city}</td>
+            if (!this.state.isFilterd)
 
-                            <td>{item.contactPhone}</td>
-                            <td><button className="btn btn-dark" onClick={() => this.toggleDetails(item.userId, index)}>More Information</button>
-                                {this.state.currentItem == index && this.state.clickForMoreDetails && < div className="card bg-light mb-3" > <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /><br></br>
-                                    <h5>Projects</h5>
-                                    <ul style={{
-                                        boxAlign: "center"
-                                    }}>{rowsMore}</ul>
-                                    <h5> Q.A</h5>
-                                    <ul>{rowsMoreFaq}</ul>
+                return currentPosts.map((item, index) => {
+                    return (
+                        <tbody>
+                            <tr>
+                                <td>{postsPerPage * (currentPage - 1) + index + 1}</td>
+                                <td>{item.userId}</td>
+                                <td>{item.userName}</td>
+                                <td>{item.talent}</td>
+                                <td>{item.city}</td>
 
-                                </div>}
+                                <td>{item.contactPhone}</td>
+                                <td><button className="btn btn-dark" onClick={() => this.toggleDetails(item.userId, index)}>More Information</button>
+                                    {this.state.currentItem == index && this.state.clickForMoreDetails && < div className="card bg-light mb-3" > <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /><br></br>
+                                        <h5>Projects</h5>
+                                        <ul style={{
+                                            boxAlign: "center"
+                                        }}>{rowsMore}</ul>
+                                        <h5> Q.A</h5>
+                                        <ul>{rowsMoreFaq}</ul>
 
-                            </td>
-                     </tr>
-                    </tbody>
-                )
-            })
+                                    </div>}
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    )
+                })
+
+            else {
+
+                return this.state.filterdArr.map((item, index) => {
+                    return (
+                        <tbody>
+                            <tr>
+                                <td>{item.userId}</td>
+                                <td>{item.userName}</td>
+                                <td>{item.talent}</td>
+                                <td>{item.city}</td>
+
+                                <td>{item.contactPhone}</td>
+                                <td><button className="btn btn-dark" onClick={() => this.toggleDetails(item.userId, index)}>More Information</button>
+                                    {this.state.currentItem == index && this.state.clickForMoreDetails && < div className="card bg-light mb-3" > <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /><br></br>
+                                        <h5>Projects</h5>
+                                        <ul style={{
+                                            boxAlign: "center"
+                                        }}>{rowsMore}</ul>
+                                        <h5> Q.A</h5>
+                                        <ul>{rowsMoreFaq}</ul>
+
+                                    </div>}
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    )
+                })
+            }
+
+
+
         } catch (e) {
             alert(e.message)
         }
@@ -205,11 +259,11 @@ export class UsersHomePage extends Component {
                                 <th>contact Phone</th>
                             </tr>
                         </thead>
-                        {this.showData()}
+                        { this.showData()}
                     </table>
 
                     <div style={{ float: 'right' }}>
-                        {this.showPagination()}
+                        {!this.state.isFilterd&&this.showPagination()}
                     </div>
 
                 </div>
