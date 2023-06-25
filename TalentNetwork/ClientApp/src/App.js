@@ -1,14 +1,15 @@
-import React, { Component, createContext, useState } from 'react';
+import React, { Component, createContext, useState, useRef, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import { Layout } from './components/Layout';
-import { AdminHomePage } from "./components/AdminHomePage"
 import { UsersHomePage } from "./components/UsersHomePage"
 import { UsersTable } from "./components/UsersTable"
 import './custom.css';
 import Login from './components/Login';
 import ManageUser from"./components/ManageUser"
-import { Counter } from './components/Counter';
+import axios from "axios";
+import { Keys, getItem, setLoginData, removeLoginData } from "./utils/storage";
+
 import Home from "./components/Home"
 import { Card, Form, Button } from 'react-bootstrap';
 
@@ -26,7 +27,53 @@ function App () {
     const [IsAdmin, seIsAdmin] = useState(0);
     const [userName, setUserName] = useState(NContext);
 
-    
+    let timerID = useRef();
+
+    useEffect(() => {
+        console.log("App useEffect", Date());
+        if (getItem(Keys.refreshToken) && isNaN(timerID)) {
+            setRefreshTokenInterval();
+            refreshToken();
+        }
+    }, []);
+    //
+    function setRefreshTokenInterval() {
+        if (isNaN(timerID)) {
+            let expiresInSeconds = getItem(Keys.expiresInSeconds);
+            let refreshInterval = expiresInSeconds
+                ? Number(expiresInSeconds) / 2
+                : 30;
+            timerID = setInterval(refreshToken, refreshInterval * 1000);
+            console.log("starting refreshToken", refreshInterval, Date());
+        }
+    }
+    //
+    function refreshToken() {
+        console.log("refreshToken", Date());
+        axios
+            .post("https://localhost:7116/users/refreshToken", {
+                refreshToken: getItem(Keys.refreshToken),
+            })
+            .then((response) => {
+                login(response.data);
+            })
+            .catch((error) => {
+                logout();
+            });
+    }
+    //
+    function login(loginData) {
+        setLoginData(loginData.userResponse, loginData.tokensData);
+        setRefreshTokenInterval();
+        seIsAdmin(loginData.userResponse[Keys.roleID]);
+        setLogin(true);
+    }
+    //
+    function logout() {
+        clearTimeout(timerID);
+        removeLoginData();
+        setLogin(false);
+    }
 
 
     return (

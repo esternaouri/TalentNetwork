@@ -21,7 +21,7 @@ export class UsersHomePage extends Component {
             filterBySub: "",
             filterdArr: [],
             clickForAnswer: false,
-            postsPerPage: 4,
+            postsPerPage: 2,
             currentPage: 1,
             isFilterd:false
 
@@ -117,8 +117,9 @@ export class UsersHomePage extends Component {
         const currentPosts = items.slice(indexOfFirstPage, indexOfLastPage)
         let rowsMore = this.state.moreDetailsProj.map((p, i) => {
             return (<ul>
-                <li>🆎 PROJECT: {p.projectName}
-                    💳| PRICE: {p.projectPrice}</li>
+                <li className>🆎 PROJECT: {p.projectName}
+                    PRICE: {p.projectPrice}</li>
+                <hr></hr> 
             </ul>);
         });
         //
@@ -128,6 +129,7 @@ export class UsersHomePage extends Component {
                     <button className=" btn btn-light" onClick={() => this.toggleAnswer(p.faqId)}>answer</button><br></br>
                     {this.state.clickForAnswer && this.state.currentFaq == p.faqId && <> {p.answer}</>}
                 </li>
+                <hr></hr>
             </ul>);
         });
 
@@ -137,7 +139,10 @@ export class UsersHomePage extends Component {
                 return currentPosts.map((item, index) => {
                     return (
                         <tbody>
-                            <tr>
+                            < tr style={{
+                                width: "300px", height: "200px", border: " 2px solid #000", borderRadius: "20px", padding: " 10px",
+                                "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.05)"
+                            }}>
                                 <td>{postsPerPage * (currentPage - 1) + index + 1}</td>
                                 <td>{item.userId}</td>
                                 <td>{item.userName}</td>
@@ -146,7 +151,7 @@ export class UsersHomePage extends Component {
 
                                 <td>{item.contactPhone}</td>
                                 <td><button className="btn btn-dark" onClick={() => this.toggleDetails(item.userId, index)}>More Information</button>
-                                    {this.state.currentItem == index && this.state.clickForMoreDetails && < div className="card bg-light mb-3" > <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /><br></br>
+                                    {this.state.currentItem == index && this.state.clickForMoreDetails && < div className="d-flex justify-content-center" > <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /><br></br>
                                         <h5>Projects</h5>
                                         <ul style={{
                                             boxAlign: "center"
@@ -167,7 +172,10 @@ export class UsersHomePage extends Component {
                 return this.state.filterdArr.map((item, index) => {
                     return (
                         <tbody>
-                            <tr>
+                            <tr style={{
+                                width: "300px", height: "200px", border: " 2px solid #000", borderRadius: "20px", padding: " 10px",
+                                "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.05)"
+                                }}>
                                 <td>{item.userId}</td>
                                 <td>{item.userName}</td>
                                 <td>{item.talent}</td>
@@ -175,11 +183,12 @@ export class UsersHomePage extends Component {
 
                                 <td>{item.contactPhone}</td>
                                 <td><button className="btn btn-dark" onClick={() => this.toggleDetails(item.userId, index)}>More Information</button>
-                                    {this.state.currentItem == index && this.state.clickForMoreDetails && < div className="card bg-light mb-3" > <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /><br></br>
+                                    {this.state.currentItem == index && this.state.clickForMoreDetails && < div className="  d-flex justify-content-center " > <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /><br></br>
                                         <h5>Projects</h5>
                                         <ul style={{
                                             boxAlign: "center"
                                         }}>{rowsMore}</ul>
+                                        <hr></hr>
                                         <h5> Q.A</h5>
                                         <ul>{rowsMoreFaq}</ul>
 
@@ -226,6 +235,10 @@ export class UsersHomePage extends Component {
 
     }
 
+
+    handleRefresh = () => {
+        window.location.reload();
+    };
     render() {
         let {  loading } = this.state
         if (loading)
@@ -236,6 +249,9 @@ export class UsersHomePage extends Component {
             <>
                 <h1 style={{ color: "red", textAlign: "center" }}>Hello {this.props.name} </h1>
                 <hr />
+                <div className="d-flex justify-content-end">
+                <button className="btn btn-info" onClick={this.handleRefresh}>Log Out</button>
+                    </div>
                 <NavLink to="manage-user" style={{ fontSize: "20px",
                 fontWeight: "bold"
                  } } >Mange Your Profile</NavLink > 

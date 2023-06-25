@@ -13,16 +13,19 @@ export class UsersTable extends Component {
             newUserName: "",
             newPassword: "",
             newIsAdmin: 0,
-            id:0
+            id: 0,
+            isOkMessage:false
         };
 
     }
     async del(id) {
         try {
             let res = await axios.delete('https://localhost:7116/Users/' + id);
-            if (res.ok) {
+            
+                alert('success');
                 this.populateProductsData();
-            }
+
+            
         } catch (e) {
             alert(e.message);
         }
@@ -47,12 +50,15 @@ export class UsersTable extends Component {
 
         axios.put('https://localhost:7116/Users/' + this.state.id, post)
             .then(response => {
-                if (response.ok) {
-                    alert("ok");
-                }
+
+                if (response) {
+
+                    this.setState({ isOkMessage:true })
+                               }
                 throw new Error('PUT request failed');
             })
             .then(data => {
+
                 console.log(data);
             })
             .catch(error => {
@@ -64,7 +70,7 @@ export class UsersTable extends Component {
         this.populateProductsData();
     }
     render() {
-        let { items, loading } = this.state
+        let { items, loading, isOkMessage } = this.state
         if (loading)
             return (<div>no users</div>);
 
@@ -126,6 +132,7 @@ export class UsersTable extends Component {
         );
     }
     populateProductsData() {
+        if (this.state.isOkMessage){ alert("ok") }
         fetch('https://localhost:7116/users').then(res => res.json()).
             then(json => this.setState({ items: json, loading: false })).
             catch(err => console.error(err));

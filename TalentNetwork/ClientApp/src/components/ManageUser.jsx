@@ -63,6 +63,8 @@ const ManageUser = (props) => {
         })
             .then((response) => response.json())
             .then((data) => {
+                console.log("ok");
+
                 console.log(data);
                 // Handle the response
             })

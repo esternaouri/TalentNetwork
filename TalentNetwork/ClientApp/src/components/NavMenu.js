@@ -11,7 +11,8 @@ export class NavMenu extends Component {
 
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = {
-      collapsed: true
+        collapsed: true,
+        logout:"logIn/Out"
     };
   }
 
@@ -23,28 +24,33 @@ export class NavMenu extends Component {
 
   render() {
     return (
-      <header>
+
+        <header>
+
         <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" container light>
                 <NavbarBrand tag={Link} to="/login" style={{ color: "red", fontWeight: "900", fontSize: "24px" }}> 🟥</NavbarBrand>
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
           <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
             <ul className="navbar-nav flex-grow">
-              <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
+                        <NavItem>
+                            <NavLink tag={Link} className="text-dark" to="/">About</NavLink>
+
                         </NavItem>
                     
-              <NavItem>
+                        <NavItem>
+                            <NavLink tag={Link} className="text-dark" to="/login">Home</NavLink>
+
+
               </NavItem>
-              <NavItem>
-                            <NavLink tag={Link} className="text-dark" to="/login"> login</NavLink>
-                        </NavItem>
+                  
                         <NavItem>
                         </NavItem>
                     </ul>
 
           </Collapse>
         </Navbar>
-      </header>
+            </header>
+
     );
   }
 }
