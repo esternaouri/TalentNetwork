@@ -21,7 +21,7 @@ export class UsersHomePage extends Component {
             filterBySub: "",
             filterdArr: [],
             clickForAnswer: false,
-            postsPerPage: 2,
+            postsPerPage: 3,
             currentPage: 1,
             isFilterd:false
 
@@ -281,6 +281,7 @@ export class UsersHomePage extends Component {
                     <div style={{ float: 'right' }}>
                         {!this.state.isFilterd&&this.showPagination()}
                     </div>
+                    
 
                 </div>
                

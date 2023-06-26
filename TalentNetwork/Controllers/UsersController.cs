@@ -58,16 +58,17 @@ namespace TalentNetwork.Controllers
             {
                 var ph = new PasswordHasher<UserRegist>();
                 user.Password = ph.HashPassword(user, user.Password);
-                var post = new User { 
+                var post = new User
+                {
                     IsAdmin = 1,
                     UserName = user.UserName,
                     Password = user.Password,
-                    UserId = user.UserId, 
-                    PhoneNumber=null,
-                    RefreshToken=null,
-                    RefreshTokenExpires=null
+                    UserId = user.UserId,
+                    PhoneNumber = null,
+                    RefreshToken = null,
+                    RefreshTokenExpires = null
                 };
-         
+
                 _context.Users.Add(post);
                 _context.SaveChanges();
                 return Ok();
@@ -77,7 +78,6 @@ namespace TalentNetwork.Controllers
                 return BadRequest("invalid user name ,allready exists");
             }
         }
-
         [HttpPost("login")]
         public IActionResult Login(User user)
         {
@@ -208,6 +208,8 @@ namespace TalentNetwork.Controllers
             {
                 return NotFound();
             }
+            
+
 
             var ph = new PasswordHasher<EditUser>();
             user.Password = ph.HashPassword(user, user.Password);

@@ -88,7 +88,9 @@ const Login = () => {
                 <Button variant="primary" type="submit">
                     Log in
                 </Button>
-                </Form>
+                    </Form>
+
+                    <hr></hr>
                 <Link to="/register">New Here? Let Regist!</Link>
                 </Card.Body>
             </Card>

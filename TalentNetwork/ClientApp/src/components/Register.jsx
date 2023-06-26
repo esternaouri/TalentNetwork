@@ -13,13 +13,13 @@ const Register = () => {
     let [enteredPassword, setEnteredPassword] = useState("");
     let [enteredUserId, setEnteredUserId] = useState(0);
     let [enteredUserName, setEnteredUserName] = useState("");
-  
+
     const handleSubmit = async () => {
         const post1 = {
             UserId: enteredUserId,
             UserName: enteredUserName,
             Password: enteredPassword,
-           
+
         }
 
         try {
@@ -36,20 +36,21 @@ const Register = () => {
         <div>
             <form onSubmit={handleSubmit}>
                 <label>
-                   Set User Identity number:
-                    <input type="number" value={enteredUserId} onChange={(e) => setEnteredUserId(e.target.value)} />
+                    Set User Identity number:
+                    <input className="form-control"  type="number" value={enteredUserId} onChange={(e) => setEnteredUserId(e.target.value)} />
                 </label>
                 <label>
                     Set Name:
-                    <input type="text" onChange={(e) => setEnteredUserName(e.target.value)} />
-                </label> <label>
+                    <input className="form-control"  type="text" onChange={(e) => setEnteredUserName(e.target.value)} />
+                </label> <label><></>
                     Set  Password:
-                    <input type="password"  onChange={(e) => setEnteredPassword(e.target.value)} />
+                    <input className="form-control" type="password" onChange={(e) => setEnteredPassword(e.target.value)} />
                 </label>
-              
-                <button type="submit">Add User</button>
+                <></>
+                <hr></hr>
+                <button class="btn btn-primary" type="submit">Add User</button>
 
-                </form>
+            </form>
 
         </div>
 

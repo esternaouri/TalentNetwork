@@ -31,10 +31,16 @@ export class UsersTable extends Component {
         }
     }
     
-    async handleEditClick(id) {
-
-        this.setState({ edit: true });
+    async handleEditClick(id,name, password, isadmin) {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+        this.setState({ edit: !this.state.edit });
+        this.setState({ newIsAdmin: isadmin});
         this.setState({ id: id });
+        this.setState({ newPassword: "1111" });
+        this.setState({ newUserName: name });
        
     }
 
@@ -82,8 +88,9 @@ export class UsersTable extends Component {
                 <td>{p.isAdmin}</td>
                 <td>{p.phoneNumber}</td>
 
-                <td><button onClick={(e) => this.handleEditClick(p.userId)}> Edit</button> |
-                    <button onClick={(e) => this.del(p.userId)} className=" btn btn-primary">Del</button>
+                <td><button className="btn btn-info" onClick={(e) => this.handleEditClick(p.userId, p.userName, p.password, p.isAdmin)}> Edit</button> <></>
+                    <button className="btn btn-info"  onClick={(e) => this.del(p.userId)} >Del
+</button>
                 </td>
 
             </tr>);
@@ -95,20 +102,23 @@ export class UsersTable extends Component {
                 <h1>Users List</h1>
                 <hr />
                 {this.state.edit &&
-                    <form onSubmit={this.onSubEdit() }>
+                    <form onSubmit={this.onSubEdit()}>
                         <label>
+                            line to edit :{this.state.id}
+                            </label>
+                    <label>
                             User Name:
-                            <input type="text" onChange={(e) => this.setState({ newUserName: e.target.value })} />
+                            <input className="form-control" type="text" value={this.state.newUserName} onChange={(e) => this.setState({ newUserName: e.target.value })} />
                         </label>
                         <label>
                             Password:
-                            <input type="text" onChange={(e) => this.setState({ newPassword: e.target.value })} />
+                            <input className="form-control" type="text" value={this.state.newPassword} onChange={(e) => this.setState({ newPassword: e.target.value })} />
                         </label> <label>
                             Is Admin:
-                            <input type="number" onChange={(e) => this.setState({ newIsAdmin: e.target.value })} />
+                            <input type="number" className="form-control" value={this.state.newIsAdmin} onChange={(e) => this.setState({ newIsAdmin: e.target.value })} />
                         </label>
 
-                        <button type="submit"> edit!</button>
+                        <button className ="btn btn-info" type="submit"> edit!</button>
 
                     </form>
                 }
@@ -122,6 +132,8 @@ export class UsersTable extends Component {
                             <th>Password Hash</th>
                             <th>is admin</th>
                             <th>Phone</th>
+                            <th></th>
+                            <th></th>
                            
 
                         </tr>
