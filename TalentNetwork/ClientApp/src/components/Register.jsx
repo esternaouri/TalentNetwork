@@ -13,6 +13,7 @@ const Register = () => {
     let [enteredPassword, setEnteredPassword] = useState("");
     let [enteredUserId, setEnteredUserId] = useState(0);
     let [enteredUserName, setEnteredUserName] = useState("");
+    let navigate = useNavigate();
 
     const handleSubmit = async () => {
         const post1 = {
@@ -24,7 +25,10 @@ const Register = () => {
 
         try {
             const res = await axios.post('https://localhost:7116/USERS/register', post1)
-            console.log(res.data)
+            alert("Saved");
+            navigate("/login");
+
+
         } catch (e) {
             alert(e)
         }

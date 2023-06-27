@@ -44,8 +44,7 @@ export class UsersTable extends Component {
        
     }
 
-    async onSubEdit()
-    {
+    async onSubEdit() {
         const post = {
             UserId: this.state.id,
             UserName: this.state.newUserName,
@@ -59,8 +58,8 @@ export class UsersTable extends Component {
 
                 if (response) {
 
-                    this.setState({ isOkMessage:true })
-                               }
+                    this.setState({ isOkMessage: true })
+                }
                 throw new Error('PUT request failed');
             })
             .then(data => {
@@ -71,7 +70,6 @@ export class UsersTable extends Component {
                 console.error(error);
             });
     }
-
     componentDidMount() {
         this.populateProductsData();
     }
@@ -89,20 +87,19 @@ export class UsersTable extends Component {
                 <td>{p.phoneNumber}</td>
 
                 <td><button className="btn btn-info" onClick={(e) => this.handleEditClick(p.userId, p.userName, p.password, p.isAdmin)}> Edit</button> <></>
-                    <button className="btn btn-info"  onClick={(e) => this.del(p.userId)} >Del
-</button>
+                    <button className="btn btn-info" onClick={(e) => this.del(p.userId)} >Del</button>
+
                 </td>
 
             </tr>);
         }); 
-        // console.log(items);
-        console.log(this.state.newUserName);
+     
         return (
             <>
                 <h1>Users List</h1>
                 <hr />
                 {this.state.edit &&
-                    <form onSubmit={this.onSubEdit()}>
+                    <form onSubmit={this.onSubEdit()} >
                         <label>
                             line to edit :{this.state.id}
                             </label>
@@ -118,7 +115,7 @@ export class UsersTable extends Component {
                             <input type="number" className="form-control" value={this.state.newIsAdmin} onChange={(e) => this.setState({ newIsAdmin: e.target.value })} />
                         </label>
 
-                        <button className ="btn btn-info" type="submit"> edit!</button>
+                        <button className="btn btn-info" type="submit"> edit!</button>
 
                     </form>
                 }
@@ -144,7 +141,6 @@ export class UsersTable extends Component {
         );
     }
     populateProductsData() {
-        if (this.state.isOkMessage){ alert("ok") }
         fetch('https://localhost:7116/users').then(res => res.json()).
             then(json => this.setState({ items: json, loading: false })).
             catch(err => console.error(err));

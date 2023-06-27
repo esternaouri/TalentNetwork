@@ -2,8 +2,11 @@
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { json } from "../../../../node_modules/react-router-dom/dist/index";
+import { useNavigate } from "react-router-dom";
 
 const ManageUser = (props) => {
+    let navigate = useNavigate();
+
     const [faqsData, setFaqs] = useState([]);
     const [ProjsData, setProjData] = useState([]);
     const [AddProject, setAddProject] = useState(false);
@@ -43,7 +46,7 @@ const ManageUser = (props) => {
             catch(err => console.error(err));
         console.log(JSON.stringify(faqsData));
     }
-    //
+    //ALERT??
     const addProject = async (e) => {
         e.preventDefault();
 
@@ -63,7 +66,7 @@ const ManageUser = (props) => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log("ok");
+                alert("ok");
 
                 console.log(data);
                 // Handle the response
@@ -86,7 +89,10 @@ const ManageUser = (props) => {
 
         axios.put('https://localhost:7116/ProjectsForTalents/' + idToEdit, postToUpdate)
             .then(response => {
-                // Handle successful response
+                setEditproject(!editProject);
+                fetchUserData();
+
+                alert("Saved");
                 console.log(response.data);
             })
             .catch(error => {
@@ -99,6 +105,9 @@ const ManageUser = (props) => {
         axios
             .delete('https://localhost:7116/ProjectsForTalents/' + projectId)
             .then((res) => {
+                alert("Saved");
+                fetchUserData();
+
                 console.log(res);
             })
             .catch((err) => {
@@ -106,7 +115,7 @@ const ManageUser = (props) => {
             });
 
     }
-    //
+    //ALERT?????
     const addFaqHandle = (e) =>
     {
         e.preventDefault();
@@ -127,7 +136,8 @@ const ManageUser = (props) => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
+                alert("Saved");
+
                 // Handle the response
             })
             .catch((error) => {
@@ -138,9 +148,13 @@ const ManageUser = (props) => {
     //
     const delFaq = (FaqId) =>
     {
+
         axios
             .delete('https://localhost:7116/Faqs/' + FaqId)
             .then((res) => {
+                alert("OK");
+                fetchUserData();
+
                 console.log(res);
             })
             .catch((err) => {
@@ -153,7 +167,7 @@ const ManageUser = (props) => {
     {
 
         e.preventDefault();
-
+        setEditFaq(!editFaq)
         const post = {
             FaqId: idToEdit,
             UserId: userId,
@@ -163,7 +177,9 @@ const ManageUser = (props) => {
 
         axios.put('https://localhost:7116/Faqs/' + idToEdit, post)
             .then(response => {
-                // Handle successful response
+                alert("Saved");
+                fetchUserData();
+
                 console.log(response.data);
             })
             .catch(error => {
@@ -244,6 +260,9 @@ const ManageUser = (props) => {
         try {
             const res = await axios.put('https://localhost:7116/TalentUsers/' + userId, post)
             console.log(res.data)
+            alert("ok");
+
+
         } catch (e) {
             alert(e)
         }

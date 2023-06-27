@@ -237,11 +237,12 @@ namespace TalentNetwork.Controllers
 
             return NoContent();
 
+
         }
 
-            // POST: api/Users
-            // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-            [HttpPost]
+        // POST: api/Users
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
             if (_context.Users == null)
@@ -301,7 +302,7 @@ namespace TalentNetwork.Controllers
 
                 _context.Users.Remove(userInUsers);
                 _context.SaveChanges();
-                return Ok();
+                return Ok("OK");
         }
 
     
