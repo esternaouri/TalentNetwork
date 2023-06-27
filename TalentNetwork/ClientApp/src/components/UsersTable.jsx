@@ -44,7 +44,9 @@ export class UsersTable extends Component {
        
     }
 
-    async onSubEdit() {
+    async onSubEdit(e) {
+        e.preventDefault();
+
         const post = {
             UserId: this.state.id,
             UserName: this.state.newUserName,
@@ -57,8 +59,7 @@ export class UsersTable extends Component {
             .then(response => {
 
                 if (response) {
-
-                    this.setState({ isOkMessage: true })
+                    alert("ok")
                 }
                 throw new Error('PUT request failed');
             })
@@ -99,7 +100,7 @@ export class UsersTable extends Component {
                 <h1>Users List</h1>
                 <hr />
                 {this.state.edit &&
-                    <form onSubmit={this.onSubEdit()} >
+                    <form onSubmit={(e) => { this.onSubEdit(e) }} >
                         <label>
                             line to edit :{this.state.id}
                             </label>
