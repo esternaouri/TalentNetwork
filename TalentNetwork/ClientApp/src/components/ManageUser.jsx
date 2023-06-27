@@ -291,9 +291,11 @@ const ManageUser = (props) => {
     return (
 
         <div>
-            <div className="alert alert-info">
+            <div >
                 <h5 class="card-title">Project</h5>
-                <button onClick={() => setFirstInfo(true)}>Edit First Info </button>
+                <div className="d-flex justify-content-end">
+                    <button className="btn btn-primary" onClick={() => setFirstInfo(true)}>Edit First Info </button>
+                    </div>
                 {firstInfo &&
 
                     <form onSubmit={basicInfo }>
@@ -311,7 +313,8 @@ const ManageUser = (props) => {
 
                         <button type="submit">edit!</button>
 
-                    </form>}
+                    </form>}<hr></hr>
+                    
                 <button className="btn btn-primary" onClick={handleAddProject}>new project</button>
                 {AddProject &&
                     <form onSubmit={addProject} >
