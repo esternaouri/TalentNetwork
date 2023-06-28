@@ -46,7 +46,7 @@ const ManageUser = (props) => {
             catch(err => console.error(err));
         console.log(JSON.stringify(faqsData));
     }
-    //ALERT??
+
     const addProject = async (e) => {
         e.preventDefault();
 
@@ -64,9 +64,11 @@ const ManageUser = (props) => {
             },
             body: JSON.stringify(post)
         })
-            .then((response) => response.json())
+            
             .then((data) => {
-                alert("ok");
+                alert("Done");
+                setAddProject(false);
+                fetchUserData();
 
                 console.log(data);
                 // Handle the response
@@ -115,7 +117,7 @@ const ManageUser = (props) => {
             });
 
     }
-    //ALERT?????
+    //
     const addFaqHandle = (e) =>
     {
         e.preventDefault();
@@ -134,10 +136,10 @@ const ManageUser = (props) => {
             },
             body: JSON.stringify(post)
         })
-            .then((response) => response.json())
             .then((data) => {
                 alert("Saved");
-
+                setAddFaq(false);
+                fetchUserData();
                 // Handle the response
             })
             .catch((error) => {
@@ -247,8 +249,9 @@ const ManageUser = (props) => {
         }
     }
     //
-    const basicInfo = async () =>
+    const basicInfo = async (e) =>
     {
+        e.preventDefault();
         const post = {
             Talent: talent,
             ContactPhone: phone,
@@ -261,6 +264,7 @@ const ManageUser = (props) => {
             const res = await axios.put('https://localhost:7116/TalentUsers/' + userId, post)
             console.log(res.data)
             alert("ok");
+            setFirstInfo(false);
 
 
         } catch (e) {
@@ -298,7 +302,7 @@ const ManageUser = (props) => {
                     </div>
                 {firstInfo &&
 
-                    <form onSubmit={basicInfo }>
+                    <form onSubmit={(e)=>basicInfo(e) }>
                         <label>
                             Talent:
                             <input type="text" onChange={(e) => setTalent(e.target.value)} />
@@ -317,7 +321,7 @@ const ManageUser = (props) => {
                     
                 <button className="btn btn-primary" onClick={handleAddProject}>new project</button>
                 {AddProject &&
-                    <form onSubmit={addProject} >
+                    <form onSubmit={(e)=>addProject(e)} >
                         <lable>
                             Project Name
                             <input type="text" onChange={(e) => setAddProjectName(e.target.value)} />

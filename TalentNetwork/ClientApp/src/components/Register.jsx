@@ -15,7 +15,9 @@ const Register = () => {
     let [enteredUserName, setEnteredUserName] = useState("");
     let navigate = useNavigate();
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
         const post1 = {
             UserId: enteredUserId,
             UserName: enteredUserName,
@@ -38,7 +40,7 @@ const Register = () => {
     return (
 
         <div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={(e)=>handleSubmit(e)}>
                 <label>
                     Set User Identity number:
                     <input className="form-control"  type="number" value={enteredUserId} onChange={(e) => setEnteredUserId(e.target.value)} />
@@ -46,7 +48,8 @@ const Register = () => {
                 <label>
                     Set Name:
                     <input className="form-control"  type="text" onChange={(e) => setEnteredUserName(e.target.value)} />
-                </label> <label><></>
+                </label>
+                <label>
                     Set  Password:
                     <input className="form-control" type="password" onChange={(e) => setEnteredPassword(e.target.value)} />
                 </label>

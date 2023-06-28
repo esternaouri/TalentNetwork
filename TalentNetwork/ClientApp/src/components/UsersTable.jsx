@@ -59,7 +59,8 @@ export class UsersTable extends Component {
             .then(response => {
 
                 if (response) {
-                    alert("ok")
+                    alert("Done");
+                    this.populateProductsData();
                 }
                 throw new Error('PUT request failed');
             })
@@ -115,8 +116,9 @@ export class UsersTable extends Component {
                             Is Admin:
                             <input type="number" className="form-control" value={this.state.newIsAdmin} onChange={(e) => this.setState({ newIsAdmin: e.target.value })} />
                         </label>
-
                         <button className="btn btn-info" type="submit"> edit!</button>
+                        <button className="btn btn-info" type="submit" onClick={() => this.setState({edit:false})}> cancel!</button>
+
 
                     </form>
                 }
