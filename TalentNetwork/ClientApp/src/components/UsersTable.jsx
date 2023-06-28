@@ -60,6 +60,7 @@ export class UsersTable extends Component {
 
                 if (response) {
                     alert("Done");
+                    this.setState({ edit: false });
                     this.populateProductsData();
                 }
                 throw new Error('PUT request failed');

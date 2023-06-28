@@ -43,7 +43,7 @@ const Login = () => {
             setUserName(CurentUser.userName);
       
         } catch (e) {
-            alert(e)
+            alert(" USER ID OR PASSWORD IS INCORRECT")
         }
 
     };
