@@ -243,7 +243,7 @@ const ManageUser = (props) => {
                 alert("Saved");
 
             } catch (error) {
-                alert(error);
+                alert(error + " First Add Basic Info");
             }
 
         }

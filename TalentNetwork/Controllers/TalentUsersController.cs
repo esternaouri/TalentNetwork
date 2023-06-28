@@ -9,6 +9,7 @@ using TalentNetworDAL.Models;
 using System.IO;
 using TalentNetwork.DTO;
 using System.Runtime.InteropServices;
+using System.Net;
 
 namespace TalentNetwork.Controllers
 {
@@ -213,14 +214,23 @@ namespace TalentNetwork.Controllers
 
                 
                  var existingItem = _context.TalentUsers.FirstOrDefault(item => item.UserId == userId);
-                 existingItem.ImageDataByte = imageData;
+                    if(existingItem == null) 
+                    {
+                        throw new Exception( "First Add Basic Info");
 
-                await _context.SaveChangesAsync();
+                    }
+                    else 
+                    {
+                        existingItem.ImageDataByte = imageData;
+
+                        await _context.SaveChangesAsync();
+                    }
+                 
             }
             }
             catch
             {
-                return Conflict();
+                return Conflict("First Add Basic Info");
             }
             return Ok(); // Return a success response
         }
