@@ -150,7 +150,7 @@ export class UsersHomePage extends Component {
                                 <td>{item.city}</td>
 
                                 <td>{item.contactPhone}</td>
-                                <td><button className="btn btn-dark" onClick={() => this.toggleDetails(item.userId, index)}>More Information</button>
+                                <td><button className="btn btn-secondary" onClick={() => this.toggleDetails(item.userId, index)}>More Information</button>
                                     {this.state.currentItem == index && this.state.clickForMoreDetails && < div className="d-flex justify-content-center" > <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /><br></br>
                                         <h5>Projects</h5>
                                         <ul style={{
@@ -265,7 +265,7 @@ export class UsersHomePage extends Component {
                 <input type="text" className="form-control" placeholder="Find By Profession🔎" onChange={this.handleFilterSub} /> <br></br>
                 <div className="container">
                     <table className="table align-items-center justify-content-center mb-0">
-                        <thead>
+                        <thead className= "table table-secondary">
                             <tr>
                                 <th>num</th>
                                 <th>User Id</th>
@@ -273,6 +273,7 @@ export class UsersHomePage extends Component {
                                 <th>Talent</th>
                                 <td>City</td>
                                 <th>contact Phone</th>
+                                <th></th>
                             </tr>
                         </thead>
                         { this.showData()}

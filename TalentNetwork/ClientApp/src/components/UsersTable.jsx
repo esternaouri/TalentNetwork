@@ -1,6 +1,9 @@
 ﻿import { Component } from "react";
 import { NavLink } from "react-router-dom";
 import axios from 'axios';
+import Table from 'react-bootstrap/Table';
+import Row from "../../../../node_modules/react-bootstrap/esm/Row";
+import 'bootstrap/dist/css/bootstrap.css'; // Import Bootstrap CSS
 
 export class UsersTable extends Component {
     constructor(props) {
@@ -76,21 +79,24 @@ export class UsersTable extends Component {
     componentDidMount() {
         this.populateProductsData();
     }
+  
     render() {
         let { items, loading, isOkMessage } = this.state
         if (loading)
             return (<div>no users</div>);
+      
 
         let rows = items.map((p,i) => {
             return (<tr>
-                <td>{p.userId}</td>
-                <td>{p.userName}</td>
-                <td>{p.password}</td>
-                <td>{p.isAdmin}</td>
-                <td>{p.phoneNumber}</td>
+                <td >{p.userId}</td>
+                <td >{p.userName}</td>
+                <td >{p.isAdmin}</td>
 
-                <td><button className="btn btn-info" onClick={(e) => this.handleEditClick(p.userId, p.userName, p.password, p.isAdmin)}> Edit</button> <></>
-                    <button className="btn btn-info" onClick={(e) => this.del(p.userId)} >Del</button>
+                <td scope="row"> <button className="btn btn-info" onClick={(e) => this.handleEditClick(p.userId, p.userName, p.password, p.isAdmin)}> 🖊️</button> <><br></br></>
+
+                </td>
+                <td>
+                    <button className="btn btn-info" onClick={(e) => this.del(p.userId)} >🗑️</button>
 
                 </td>
 
@@ -100,6 +106,7 @@ export class UsersTable extends Component {
         return (
             <>
                 <h1>Users List</h1>
+               
                 <hr />
                 {this.state.edit &&
                     <form onSubmit={(e) => { this.onSubEdit(e) }} >
@@ -123,24 +130,22 @@ export class UsersTable extends Component {
 
                     </form>
                 }
-
-                <table className="table">
+                <div className="container">
+                    <table className=" table table table-striped ">
                     
-                    <thead>
-                        <tr>
-                            <th>User id</th>
-                            <th>user name</th>
-                            <th>Password Hash</th>
-                            <th>is admin</th>
-                            <th>Phone</th>
-                            <th></th>
-                            <th></th>
+                    <thead className="table table-dark">
+                            <tr>
+                                <th >User id</th>
+                                <th >user name</th>
+                                <th >is admin</th>
+                                <th >Edit</th>
+                                <th >Delete</th>
                            
-
                         </tr>
-                    </thead>
-                    <tbody>{rows}</tbody>
-                </table>
+                        </thead>
+                        <tbody className="table table-striped ">{rows}</tbody>
+                    </table>
+                    </div>
             </>
         );
     }
