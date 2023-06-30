@@ -64,7 +64,7 @@ const ManageUser = (props) => {
             },
             body: JSON.stringify(post)
         })
-            
+
             .then((data) => {
                 alert("Done");
                 setAddProject(false);
@@ -79,8 +79,8 @@ const ManageUser = (props) => {
             });
     }
     //
-    const postEditProject = async ( e) => {
-       e.preventDefault();
+    const postEditProject = async (e) => {
+        e.preventDefault();
 
         const postToUpdate = {
             projectId: idToEdit,
@@ -118,8 +118,7 @@ const ManageUser = (props) => {
 
     }
     //
-    const addFaqHandle = (e) =>
-    {
+    const addFaqHandle = (e) => {
         e.preventDefault();
 
         const post = {
@@ -148,8 +147,7 @@ const ManageUser = (props) => {
             });
     }
     //
-    const delFaq = (FaqId) =>
-    {
+    const delFaq = (FaqId) => {
 
         axios
             .delete('https://localhost:7116/Faqs/' + FaqId)
@@ -165,8 +163,7 @@ const ManageUser = (props) => {
 
     }
     //
-    const editFaqHandleSub = (e) =>
-    {
+    const editFaqHandleSub = (e) => {
 
         e.preventDefault();
         setEditFaq(!editFaq)
@@ -190,8 +187,7 @@ const ManageUser = (props) => {
             });
     }
     //
-    const editFaqs = (id) =>
-    {
+    const editFaqs = (id) => {
         setEditFaq(!editFaq);
         setIdtoEdit(id);
     }
@@ -249,8 +245,7 @@ const ManageUser = (props) => {
         }
     }
     //
-    const basicInfo = async (e) =>
-    {
+    const basicInfo = async (e) => {
         e.preventDefault();
         const post = {
             Talent: talent,
@@ -270,7 +265,7 @@ const ManageUser = (props) => {
         } catch (e) {
             alert(e)
         }
-    }  
+    }
     useEffect(() => {
         // Fetch the image data from the API endpoint
         fetch('https://localhost:7116/TalentUsers/Image/' + userId)
@@ -299,10 +294,10 @@ const ManageUser = (props) => {
                 <h5 class="card-title">Project</h5>
                 <div className="d-flex justify-content-end">
                     <button className="btn btn-primary" onClick={() => setFirstInfo(true)}>Edit First Info </button>
-                    </div>
+                </div>
                 {firstInfo &&
 
-                    <form onSubmit={(e)=>basicInfo(e) }>
+                    <form onSubmit={(e) => basicInfo(e)}>
                         <label>
                             Talent:
                             <input type="text" onChange={(e) => setTalent(e.target.value)} />
@@ -318,10 +313,10 @@ const ManageUser = (props) => {
                         <button type="submit">edit!</button>
 
                     </form>}<hr></hr>
-                    
+
                 <button className="btn btn-primary" onClick={handleAddProject}>new project</button>
                 {AddProject &&
-                    <form onSubmit={(e)=>addProject(e)} >
+                    <form onSubmit={(e) => addProject(e)} >
                         <lable>
                             Project Name
                             <input type="text" onChange={(e) => setAddProjectName(e.target.value)} />
@@ -334,7 +329,7 @@ const ManageUser = (props) => {
                         <button type="submit">add</button>
                     </form>
                 }<></>
-                
+
                 {editProject &&
                     <form onSubmit={postEditProject}                    >
                         <lable>
@@ -348,7 +343,7 @@ const ManageUser = (props) => {
                         </lable>
                         <button type="submit">edit</button>
                     </form>
-                }              
+                }
                 <ul className="list-group-item">{rowsProj}</ul>
 
 
@@ -381,7 +376,7 @@ const ManageUser = (props) => {
                         </lable>
                         <button type="submit">edit</button>
                     </form>
-                } 
+                }
                 <ul className="list-group-item" >{rowsFaqs}</ul>
             </div>
 
@@ -394,7 +389,7 @@ const ManageUser = (props) => {
                     onChange={(e) => setImage(e.target.files[0])}
                 />
                 <button type="submit" onClick={saveImage}>Save Image</button>
-                <img style={{ height: "100px"} } src={imageUrl} alt="Image" />
+                <img style={{ height: "100px" }} src={imageUrl} alt="Image" />
 
             </div>
         </div>

@@ -140,7 +140,7 @@ export class UsersTable extends Component {
                                 <th >is admin</th>
                                 <th >Edit</th>
                                 <th >Delete</th>
-                           
+                         
                         </tr>
                         </thead>
                         <tbody className="table table-striped ">{rows}</tbody>
