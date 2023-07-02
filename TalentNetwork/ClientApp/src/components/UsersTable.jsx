@@ -17,34 +17,34 @@ export class UsersTable extends Component {
             newPassword: "",
             newIsAdmin: 0,
             id: 0,
-            isOkMessage:false
+            isOkMessage: false
         };
 
     }
     async del(id) {
         try {
             let res = await axios.delete('https://localhost:7116/Users/' + id);
-            
-                alert('success');
-                this.populateProductsData();
 
-            
+            alert('success');
+            this.populateProductsData();
+
+
         } catch (e) {
             alert(e.message);
         }
     }
-    
-    async handleEditClick(id,name, password, isadmin) {
+
+    async handleEditClick(id, name, password, isadmin) {
         window.scrollTo({
             top: 0,
             behavior: 'smooth',
         });
         this.setState({ edit: !this.state.edit });
-        this.setState({ newIsAdmin: isadmin});
+        this.setState({ newIsAdmin: isadmin });
         this.setState({ id: id });
         this.setState({ newPassword: "1111" });
         this.setState({ newUserName: name });
-       
+
     }
 
     async onSubEdit(e) {
@@ -79,14 +79,14 @@ export class UsersTable extends Component {
     componentDidMount() {
         this.populateProductsData();
     }
-  
+
     render() {
         let { items, loading, isOkMessage } = this.state
         if (loading)
             return (<div>no users</div>);
-      
 
-        let rows = items.map((p,i) => {
+
+        let rows = items.map((p, i) => {
             return (<tr>
                 <td >{p.userId}</td>
                 <td >{p.userName}</td>
@@ -101,19 +101,19 @@ export class UsersTable extends Component {
                 </td>
 
             </tr>);
-        }); 
-     
+        });
+
         return (
             <>
                 <h1>Users List</h1>
-               
+
                 <hr />
                 {this.state.edit &&
                     <form onSubmit={(e) => { this.onSubEdit(e) }} >
                         <label>
                             line to edit :{this.state.id}
-                            </label>
-                    <label>
+                        </label>
+                        <label>
                             User Name:
                             <input className="form-control" type="text" value={this.state.newUserName} onChange={(e) => this.setState({ newUserName: e.target.value })} />
                         </label>
@@ -125,27 +125,27 @@ export class UsersTable extends Component {
                             <input type="number" className="form-control" value={this.state.newIsAdmin} onChange={(e) => this.setState({ newIsAdmin: e.target.value })} />
                         </label>
                         <button className="btn btn-info" type="submit"> edit!</button>
-                        <button className="btn btn-info" type="submit" onClick={() => this.setState({edit:false})}> cancel!</button>
+                        <button className="btn btn-info" type="submit" onClick={() => this.setState({ edit: false })}> cancel!</button>
 
 
                     </form>
                 }
                 <div className="container">
                     <table className=" table table table-striped ">
-                    
-                    <thead className="table table-dark">
+
+                        <thead className="table table-dark">
                             <tr>
                                 <th >User id</th>
                                 <th >user name</th>
                                 <th >is admin</th>
                                 <th >Edit</th>
                                 <th >Delete</th>
-                         
-                        </tr>
+
+                            </tr>
                         </thead>
                         <tbody className="table table-striped ">{rows}</tbody>
                     </table>
-                    </div>
+                </div>
             </>
         );
     }

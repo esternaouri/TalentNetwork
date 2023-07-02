@@ -193,26 +193,31 @@ const ManageUser = (props) => {
     }
     //
     let rowsProj = ProjsData.map((p, i) => {
-        return (<ul className="list-group">
-            <li className="list-group-item">🆎 PROJECT: {p.projectName}
-                💳| PRICE: {p.projectPrice} <></>
-                <button className="btn btn-success" onClick={() => handleEdit(p.projectId)}>edit</button>
+        return (
+            
+            <tr >
+                <td> {p.projectName}</td>
+                <td> {p.projectPrice.toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD'
+                }) }</td>   
+                <td> <button className="btn btn-success" onClick={() => handleEdit(p.projectId)}>🖊️</button></td> 
 
-                <button className="btn btn-danger" onClick={() => DelProject(p.projectId)} >delete</button>
-
-            </li>
-        </ul>);
+                <td>   <button className="btn btn-danger" onClick={() => DelProject(p.projectId)} >🗑️</button></td> 
+                </tr>
+           
+        );
     });
     //
     let rowsFaqs = faqsData.map((p, i) => {
-        return (<ul>
-            <li className="list-group-item">🆎 Q: {p.question}
-                💳| A: {p.answer}
-                <button className="btn btn-success" onClick={() => editFaqs(p.faqId)}>edit</button>
-                <button className="btn btn-danger" onClick={() => delFaq(p.faqId)}>delete</button>
+        return (<tr>
+            <td> {p.question}</td>
+            <td>{p.answer}</td> 
+            <td>  <button className="btn btn-success" onClick={() => editFaqs(p.faqId)}>🖊️</button></td>  
+            <td><button className="btn btn-danger" onClick={() => delFaq(p.faqId)}>🗑️</button></td>     
 
-            </li>
-        </ul>);
+            
+        </tr>);
     });
     //
     const handleAddProject = () => {
@@ -344,7 +349,21 @@ const ManageUser = (props) => {
                         <button type="submit">edit</button>
                     </form>
                 }
-                <ul className="list-group-item">{rowsProj}</ul>
+                <div className="container">
+                    <table className=" table table table-striped ">
+
+                        <thead className="table table-info">
+                            <tr>
+                                <th >Project Title</th>
+                                <th > Price (TVA)</th>
+                                <th >Edit</th>
+                                <th >Delete</th>
+
+                            </tr>
+                        </thead>
+                        <tbody className="table table-striped ">{ rowsProj }</tbody>
+                    </table>
+                </div>
 
 
                 <h5 class="card-title">Faq</h5>
@@ -377,7 +396,23 @@ const ManageUser = (props) => {
                         <button type="submit">edit</button>
                     </form>
                 }
-                <ul className="list-group-item" >{rowsFaqs}</ul>
+
+                <div className="container">
+                    <table className=" table table table-striped ">
+
+                        <thead className="table table-info">
+                            <tr>
+                                <th >Question</th>
+                                <th > Answer</th>
+                                <th >Edit</th>
+                                <th >Delete</th>
+
+                            </tr>
+                        </thead>
+                        <tbody className="table table-striped">{rowsFaqs}</tbody>
+                    </table>
+                </div>
+
             </div>
 
 
