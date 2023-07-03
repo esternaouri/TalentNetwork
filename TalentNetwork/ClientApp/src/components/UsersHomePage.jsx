@@ -285,7 +285,14 @@ export class UsersHomePage extends Component {
                     
 
                 </div>
-               
+                <select class="form-select " aria-label="Post Per Page" value={this.state.postsPerPage} onChange={(e) => { this.setState({ postsPerPage: e.target.value }) }}>
+                    <option selected>Post Per Page</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+
+                </select>
             </>
         );
     }

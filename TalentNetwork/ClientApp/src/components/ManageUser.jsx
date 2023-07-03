@@ -349,21 +349,22 @@ const ManageUser = (props) => {
                         <button type="submit">edit</button>
                     </form>
                 }
-                <div className="container">
+                {rowsProj.length > 0 && <div className="container">
                     <table className=" table table table-striped ">
 
                         <thead className="table table-info">
                             <tr>
                                 <th >Project Title</th>
                                 <th > Price (TVA)</th>
-                                <th >Edit</th>
-                                <th >Delete</th>
+                                <th ></th>
+                                <th ></th>
 
                             </tr>
                         </thead>
-                        <tbody className="table table-striped ">{ rowsProj }</tbody>
+                        <tbody className="table table-striped ">{rowsProj}</tbody>
                     </table>
-                </div>
+                </div>}
+                {rowsProj.length == 0 && <h3 style={{ textAlign: "center", color:"red" }}> No Projects Data, Add Project  </h3>}
 
 
                 <h5 class="card-title">Faq</h5>
@@ -395,23 +396,24 @@ const ManageUser = (props) => {
                         </lable>
                         <button type="submit">edit</button>
                     </form>
-                }
+                }<></>
 
-                <div className="container">
+                {rowsFaqs.length > 0 && <div className="container">
                     <table className=" table table table-striped ">
 
                         <thead className="table table-info">
                             <tr>
                                 <th >Question</th>
                                 <th > Answer</th>
-                                <th >Edit</th>
-                                <th >Delete</th>
+                                <th ></th>
+                                <th ></th>
 
                             </tr>
                         </thead>
                         <tbody className="table table-striped">{rowsFaqs}</tbody>
                     </table>
-                </div>
+                </div>}
+                {rowsFaqs.length == 0 && <h3 style={{ textAlign: "center", color:"red" }}> No Projects Data, Add Faq </h3>}
 
             </div>
 
