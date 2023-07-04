@@ -1,5 +1,6 @@
 ﻿import { Component } from "react";
 import { NavLink } from "react-router-dom";
+import { Card, Form, Button } from 'react-bootstrap';
 
 
 
@@ -116,11 +117,14 @@ export class UsersHomePage extends Component {
         const indexOfFirstPage = indexOfLastPage - postsPerPage;
         const currentPosts = items.slice(indexOfFirstPage, indexOfLastPage)
         let rowsMore = this.state.moreDetailsProj.map((p, i) => {
-            return (<ul>
-                <li className>🆎 PROJECT: {p.projectName}
-                    PRICE: {p.projectPrice}</li>
-                <hr></hr> 
-            </ul>);
+            return (<tr>
+                <td className>  {p.projectName}<hr></hr></td>
+
+                <td> {p.projectPrice.toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'USD'
+                    })}</td>
+            </tr>);
         });
         //
         let rowsMoreFaq = this.state.moreDetailsFaqs.map((p, i) => {
@@ -138,32 +142,32 @@ export class UsersHomePage extends Component {
 
                 return currentPosts.map((item, index) => {
                     return (
-                        <tbody>
-                            < tr style={{
-                                width: "300px", height: "200px", border: " 2px solid #000", borderRadius: "20px", padding: " 10px",
-                                "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.05)"
-                            }}>
-                                <td>{postsPerPage * (currentPage - 1) + index + 1}</td>
-                                <td>{item.userId}</td>
-                                <td>{item.userName}</td>
-                                <td>{item.talent}</td>
-                                <td>{item.city}</td>
+                        
+                             < tbody >
+                                < tr style={{
+                                    width: "300px", height: "200px", border: " 2px solid #000", borderRadius: "20px", padding: " 10px",
+                                    "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.05)"
+                                }}>
+                                    <td>{postsPerPage * (currentPage - 1) + index + 1}</td>
+                                    <td>{item.userId}</td>
+                                    <td>{item.userName}</td>
+                                    <td>{item.talent}</td>
+                                    <td>{item.city}</td>
 
-                                <td>{item.contactPhone}</td>
+                                    <td>{item.contactPhone}</td>
                                 <td><button className="btn btn-secondary" onClick={() => this.toggleDetails(item.userId, index)}>More Information</button>
-                                    {this.state.currentItem == index && this.state.clickForMoreDetails && < div className="d-flex justify-content-center" > <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /><br></br>
-                                        <h5>Projects</h5>
-                                        <ul style={{
-                                            boxAlign: "center"
-                                        }}>{rowsMore}</ul>
-                                        <h5> Q.A</h5>
-                                        <ul>{rowsMoreFaq}</ul>
+                                    {this.state.currentItem == index && this.state.clickForMoreDetails && < tr style={{ display: "flex", justifyContent:"center" }}>
+                                        <td> <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /> </td>
+                                        <td>{rowsMore}</td>
 
-                                    </div>}
+                                            <td>{rowsMoreFaq}</td>
 
-                                </td>
-                            </tr>
-                        </tbody>
+                                        </tr>}
+
+                                    </td>
+                                </tr>
+                            </tbody >
+                      
                     )
                 })
 
@@ -171,6 +175,7 @@ export class UsersHomePage extends Component {
 
                 return this.state.filterdArr.map((item, index) => {
                     return (
+                        <div style= {{ overflow:"auto" } }> 
                         <tbody>
                             <tr style={{
                                 width: "300px", height: "200px", border: " 2px solid #000", borderRadius: "20px", padding: " 10px",
@@ -183,20 +188,20 @@ export class UsersHomePage extends Component {
 
                                 <td>{item.contactPhone}</td>
                                 <td><button className="btn btn-dark" onClick={() => this.toggleDetails(item.userId, index)}>More Information</button>
-                                    {this.state.currentItem == index && this.state.clickForMoreDetails && < div className="  d-flex justify-content-center " > <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /><br></br>
-                                        <h5>Projects</h5>
+                                    {this.state.currentItem == index && this.state.clickForMoreDetails && < Card className=" card " > <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /><br></br>
+                                        <h5>Projects And Faqs</h5>
                                         <ul style={{
                                             boxAlign: "center"
                                         }}>{rowsMore}</ul>
                                         <hr></hr>
-                                        <h5> Q.A</h5>
                                         <ul>{rowsMoreFaq}</ul>
 
-                                    </div>}
+                                    </Card>}
 
                                 </td>
                             </tr>
-                        </tbody>
+                            </tbody>
+                        </div>
                     )
                 })
             }
@@ -263,7 +268,7 @@ export class UsersHomePage extends Component {
 
                 <input className="form-control" type="text" placeholder="Find By City🔎" onChange={this.handleFilterCity} /> <></><br></br>
                 <input type="text" className="form-control" placeholder="Find By Profession🔎" onChange={this.handleFilterSub} /> <br></br>
-                <div className="container">
+                <div style={{ overflowX:"auto" } }>
                     <table className="table align-items-center justify-content-center mb-0">
                         <thead className= "table table-secondary">
                             <tr>

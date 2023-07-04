@@ -16,7 +16,6 @@ public partial class User
     public DateTime? RefreshTokenExpires { get; set; }
 
     public int ?PhoneNumber { get; set; }  
-
     public virtual ICollection<Faq> Faqs { get; set; } = new List<Faq>();
 
     public virtual ICollection<ProjectsForTalent> ProjectsForTalents { get; set; } = new List<ProjectsForTalent>();

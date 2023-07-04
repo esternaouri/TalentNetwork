@@ -62,6 +62,9 @@ const Login = () => {
     return (
 
         <div>
+            <img style={{ width: "12%", height: "12%"   ,boxShadow: "0 2px 4px rgba(0, 0, 0, 9)"
+            }} src="/favicon.png" alt="logo" /> <h2>Try The Best You Are Money As It Sounds "kling, klang"
+</h2> 
             <Card style={{  "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.02)" }}>
                 <Card.Body>
                     <Card.Title>Login!</Card.Title>

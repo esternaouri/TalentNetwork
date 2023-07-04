@@ -1,4 +1,4 @@
-import React, { Component, createContext, useState, useRef, useEffect } from 'react';
+﻿import React, { Component, createContext, useState, useRef, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import { Layout } from './components/Layout';
@@ -106,9 +106,16 @@ function App () {
 
                         </Layout>
                         <Card style={{ color: "red",
-                            padding: "20px",
-                            textAlign: "center", border: "none", width:"900"
-                        }}> Wish You Luck On Finiding You And Your Partner</Card>
+                            position: "absolute",
+                            left: 0,
+                            bottom: -0,
+                            right: "0",
+                            textAlign: "center",
+                            padding: "0.1%"
+                        }}> <h1>Wish You Luck On Finiding You And Your Partner </h1> <h5>for any question call me 058-700-7177 🌐
+                                <img style={{ width: "2%", height :"2%"}} src="/favicon.png" alt="logo" />
+
+                            </h5></Card>
                         </NContext.Provider> 
 
                     </AContext.Provider > 
