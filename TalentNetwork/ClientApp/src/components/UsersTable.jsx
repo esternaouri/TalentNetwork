@@ -130,10 +130,19 @@ export class UsersTable extends Component {
 
                     </form>
                 }
-                <div className="container">
+
+                <div style={{
+                    width: "100 %",
+                    height: "1050px",
+                    overflow: "auto",
+                    position: "relative"
+                }}>
                     <table className=" table table table-striped ">
 
-                        <thead className="table table-dark">
+                        <thead style={{
+                            position: "sticky",
+                            top: 0
+                        }} lassName="table table-secondary">
                             <tr>
                                 <th >User id</th>
                                 <th >user name</th>
