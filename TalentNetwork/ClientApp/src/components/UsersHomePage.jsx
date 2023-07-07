@@ -295,6 +295,8 @@ export class UsersHomePage extends Component {
                 <div style={{ float: 'right' }}>
                     {!this.state.isFilterd && this.showPagination()}
                 </div>
+                <hr></hr>
+                <h5 style={{color:"blue"} }>Post Per Page:</h5>
                 <select class="form-select " aria-label="Post Per Page" value={this.state.postsPerPage} onChange={(e) => { this.setState({ postsPerPage: e.target.value }) }}>
                     <option selected>Post Per Page</option>
                     <option value="3">3</option>

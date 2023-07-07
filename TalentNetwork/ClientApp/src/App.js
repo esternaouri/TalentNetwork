@@ -112,7 +112,7 @@ function App () {
                             right: "0",
                             textAlign: "center",
                             padding: "0.1%"
-                        }}> <h1>Wish You Luck On Finiding You And Your Partner </h1> <h5>for any question call me 058-700-7177 🌐
+                        }}> <h1>Wish You Luck On Finiding You And Your Partner </h1> <h5>for any question call me 058-700-7177 
                                 <img style={{ width: "2%", height :"2%"}} src="/favicon.png" alt="logo" />
 
                             </h5></Card>

@@ -66,16 +66,19 @@ const ManageUser = (props) => {
         })
 
             .then((data) => {
-                alert("Done");
-                setAddProject(false);
-                fetchUserData();
+                if (!(data.status == 400)) {
+                    alert("Done");
+                    setAddProject(false);
+                    fetchUserData();
 
-                console.log(data);
-                // Handle the response
+                    console.log(data);
+                }
+                else {alert("Title Not Okay-Must Be Less Than 10 Characters") }
+                
             })
             .catch((error) => {
-                console.error(error);
-                // Handle the error
+                throw new Error('TITLE LENGTH NOT OKAY');
+                alert("not okay ")
             });
     }
     //

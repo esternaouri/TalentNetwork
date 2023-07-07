@@ -107,25 +107,34 @@ namespace TalentNetwork.Controllers
                 {
                     return NotFound("User not found");
                 }
-
-                var post = new ProjectsForTalent
+                else if (newProjectDetails.ProjectName.Length > 10)
                 {
+                    return BadRequest("title");
 
-                    ProjectId = _context.ProjectsForTalents.Max(x=> x.ProjectId) +1,
-                    UserId = newProjectDetails.UserId,
-                    ProjectName = newProjectDetails.ProjectName,
-                    ProjectPrice = newProjectDetails.ProjectPrice,
-                    User = user
-                };
-                _context.ProjectsForTalents.Add(post);
+                }
+                else
+                {
+                    var post = new ProjectsForTalent
+                    {
 
-                _context.SaveChanges();
+                        ProjectId = _context.ProjectsForTalents.Max(x => x.ProjectId) + 1,
+                        UserId = newProjectDetails.UserId,
+                        ProjectName = newProjectDetails.ProjectName,
+                        ProjectPrice = newProjectDetails.ProjectPrice,
+                        User = user
+                    };
+                    _context.ProjectsForTalents.Add(post);
 
+                    _context.SaveChanges();
 
-                return Ok(post);
+                    return Ok(post);
+                }
+             
             } catch(Exception e) {
                  return BadRequest(e);
             }
+            return BadRequest();
+
         }
 
         // DELETE: api/ProjectsForTalents/5
