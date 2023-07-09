@@ -1,6 +1,7 @@
 ﻿import { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { Card, Form, Button } from 'react-bootstrap';
+const { REACT_APP_API_URL } = process.env;
 
 
 
@@ -34,18 +35,18 @@ export class UsersHomePage extends Component {
         this.setState(prevState => ({
             clickForMoreDetails: !prevState.clickForMoreDetails
         }));
-        fetch('https://localhost:7116/ProjectsForTalents/' + id).then(res => res.json()).
+        fetch(`${REACT_APP_API_URL}/ProjectsForTalents/` + id).then(res => res.json()).
             then(json => this.setState({ moreDetailsProj: json})).
             catch(err => console.error(err));
         console.log(JSON.stringify(this.state.moreDetailsProj));
 
-        fetch('https://localhost:7116/Faqs/' + id).then(res => res.json()).
+        fetch(`${REACT_APP_API_URL}/Faqs/` + id).then(res => res.json()).
             then(json => this.setState({ moreDetailsFaqs: json })).
             catch(err => console.error(err));
         console.log(JSON.stringify(this.state.moreDetailsFaqs));
 
 
-        fetch('https://localhost:7116/TalentUsers/Image/' + id)
+        fetch(`${REACT_APP_API_URL}/TalentUsers/Image/` + id)
             .then(response => response.blob())
             .then(blob => {
                 // Create a temporary URL for the image data
@@ -309,7 +310,7 @@ export class UsersHomePage extends Component {
         );
     }
     populateProductsData() {
-        fetch('https://localhost:7116/talentUsers').then(res => res.json()).
+        fetch(`${REACT_APP_API_URL}/talentUsers`).then(res => res.json()).
             then(json => this.setState({ items: json, loading: false, filterdArr: json })).
             catch(err => console.error(err));
     }

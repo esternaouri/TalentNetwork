@@ -4,6 +4,7 @@ import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Row from "../../../../node_modules/react-bootstrap/esm/Row";
 import 'bootstrap/dist/css/bootstrap.css'; // Import Bootstrap CSS
+const { REACT_APP_API_URL } = process.env;
 
 export class UsersTable extends Component {
     constructor(props) {
@@ -23,7 +24,7 @@ export class UsersTable extends Component {
     }
     async del(id) {
         try {
-            let res = await axios.delete('https://localhost:7116/Users/' + id);
+            let res = await axios.delete(`${REACT_APP_API_URL}/Users/` + id);
 
             alert('success');
             this.populateProductsData();
@@ -58,7 +59,7 @@ export class UsersTable extends Component {
 
         }
 
-        axios.put('https://localhost:7116/Users/' + this.state.id, post)
+        axios.put(`${REACT_APP_API_URL}/Users/` + this.state.id, post)
             .then(response => {
 
                 if (response) {
@@ -159,7 +160,7 @@ export class UsersTable extends Component {
         );
     }
     populateProductsData() {
-        fetch('https://localhost:7116/users').then(res => res.json()).
+        fetch(`${REACT_APP_API_URL}/users`).then(res => res.json()).
             then(json => this.setState({ items: json, loading: false })).
             catch(err => console.error(err));
     }

@@ -8,6 +8,7 @@ import { Context } from "../App"
 import { UContext } from "../App"
 import { Navigate, NavLink, redirect } from "../../../../node_modules/react-router-dom/dist/index";
 import { withRouter } from 'react-router-dom';
+const { REACT_APP_API_URL } = process.env;
 
 const Register = () => {
 
@@ -27,7 +28,7 @@ const Register = () => {
         }
 
         try {
-            const res = await axios.post('https://localhost:7116/USERS/register', post1)
+            const res = await axios.post(`${REACT_APP_API_URL}/USERS/register`, post1)
             alert("Saved");
             navigate("/login");
 

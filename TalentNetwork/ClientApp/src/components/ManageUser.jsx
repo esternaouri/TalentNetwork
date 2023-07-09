@@ -3,8 +3,10 @@ import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { json } from "../../../../node_modules/react-router-dom/dist/index";
 import { useNavigate } from "react-router-dom";
+const { REACT_APP_API_URL } = process.env;
 
 const ManageUser = (props) => {
+
     let navigate = useNavigate();
 
     const [faqsData, setFaqs] = useState([]);
@@ -36,12 +38,12 @@ const ManageUser = (props) => {
     //
     const fetchUserData = async () => {
 
-        fetch('https://localhost:7116/ProjectsForTalents/' + props.id).then(res => res.json()).
+        fetch(`${REACT_APP_API_URL}/ProjectsForTalents/` + props.id).then(res => res.json()).
             then(json => setProjData(json)).
             catch(err => console.error(err));
         console.log(JSON.stringify(ProjsData));
 
-        fetch('https://localhost:7116/Faqs/' + props.id).then(res => res.json()).
+        fetch(`${REACT_APP_API_URL}/Faqs/` + props.id).then(res => res.json()).
             then(json => setFaqs(json)).
             catch(err => console.error(err));
         console.log(JSON.stringify(faqsData));
@@ -57,7 +59,7 @@ const ManageUser = (props) => {
             ProjectPrice: AddProjectPrice
         }
 
-        fetch('https://localhost:7116/ProjectsForTalents', {
+        fetch(`${REACT_APP_API_URL}/ProjectsForTalents`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -92,7 +94,7 @@ const ManageUser = (props) => {
             ProjectPrice: AddProjectPrice
         }
 
-        axios.put('https://localhost:7116/ProjectsForTalents/' + idToEdit, postToUpdate)
+        axios.put(`${REACT_APP_API_URL}/ProjectsForTalents/` + idToEdit, postToUpdate)
             .then(response => {
                 setEditproject(!editProject);
                 fetchUserData();
@@ -108,7 +110,7 @@ const ManageUser = (props) => {
     //
     const DelProject = (projectId) => {
         axios
-            .delete('https://localhost:7116/ProjectsForTalents/' + projectId)
+            .delete(`${REACT_APP_API_URL}/ProjectsForTalents/` + projectId)
             .then((res) => {
                 alert("Saved");
                 fetchUserData();
@@ -131,7 +133,7 @@ const ManageUser = (props) => {
             Answer: answer
         }
 
-        fetch('https://localhost:7116/Faqs', {
+        fetch(`${REACT_APP_API_URL}/Faqs`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -153,7 +155,7 @@ const ManageUser = (props) => {
     const delFaq = (FaqId) => {
 
         axios
-            .delete('https://localhost:7116/Faqs/' + FaqId)
+            .delete(`${REACT_APP_API_URL}/Faqs/` + FaqId)
             .then((res) => {
                 alert("OK");
                 fetchUserData();
@@ -177,7 +179,7 @@ const ManageUser = (props) => {
             Answer: answer
         }
 
-        axios.put('https://localhost:7116/Faqs/' + idToEdit, post)
+        axios.put(`${REACT_APP_API_URL}/Faqs/` + idToEdit, post)
             .then(response => {
                 alert("Saved");
                 fetchUserData();
@@ -240,7 +242,7 @@ const ManageUser = (props) => {
             try {
                 const response = await axios({
                     method: "post",
-                    url: 'https://localhost:7116/TalentUsers/Image',
+                    url: `${REACT_APP_API_URL}/TalentUsers/Image`,
                     data: formData,
                     headers: { "Content-Type": "multipart/form-data" },
                 });
@@ -264,7 +266,7 @@ const ManageUser = (props) => {
         }
 
         try {
-            const res = await axios.put('https://localhost:7116/TalentUsers/' + userId, post)
+            const res = await axios.put(`${REACT_APP_API_URL}/TalentUsers/` + userId, post)
             console.log(res.data)
             alert("ok");
             setFirstInfo(false);
@@ -276,7 +278,7 @@ const ManageUser = (props) => {
     }
     useEffect(() => {
         // Fetch the image data from the API endpoint
-        fetch('https://localhost:7116/TalentUsers/Image/' + userId)
+        fetch(`${REACT_APP_API_URL}/TalentUsers/Image/` + userId)
             .then(response => response.blob())
             .then(blob => {
                 // Create a temporary URL for the image data
@@ -287,7 +289,6 @@ const ManageUser = (props) => {
         // Clean up the URL when the component unmounts
         return () => URL.revokeObjectURL(imageUrl);
     }, [userId]);
-    //
 
     useEffect(() => {
         fetchUserData();

@@ -18,6 +18,7 @@ namespace TalentNetwork
 
             builder.Services.AddControllersWithViews();
             var TalentNetworkCS = builder.Configuration.GetConnectionString("TalentNetwork");
+
             int expiresInSeconds = int.Parse(builder.Configuration.GetSection("Jwt:ExpiresInSeconds").Value);
             string key = builder.Configuration.GetSection("Jwt:Key").Value;
             string issuer = builder.Configuration.GetSection("Jwt:Issuer").Value;

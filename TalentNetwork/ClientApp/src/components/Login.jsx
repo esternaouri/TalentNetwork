@@ -7,6 +7,7 @@ import { Context } from "../App"
 import { UContext } from "../App"
 import { AContext } from "../App"
 import { NContext } from "../App"
+const { REACT_APP_API_URL } = process.env;
 
 const Login = () => {
 
@@ -33,7 +34,7 @@ const Login = () => {
         }
 
         try {
-            const res = await axios.post('https://localhost:7116/USERS/LOGIN', post)
+            const res = await axios.post(`${REACT_APP_API_URL}/USERS/LOGIN`, post)
             setFetchedToken(res.data)
             setLogin(true);
             let CurentUser = JSON.parse(JSON.stringify(res.data));

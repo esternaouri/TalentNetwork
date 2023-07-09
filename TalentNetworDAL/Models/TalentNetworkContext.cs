@@ -23,13 +23,14 @@ public partial class TalentNetworkContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer();
+
+    // COMMENT THIS FOR USING STRING FROM APPSETTING JSON{
        // optionsBuilder.EnableSensitiveDataLogging();
 
-        optionsBuilder.UseSqlServer("Data Source=DESKTOP-MNQDAU5\\SQLEXPRESS;Initial Catalog=TalentNetwork;Integrated Security=True; trustservercertificate=true");
+     //   optionsBuilder.UseSqlServer("Data Source=DESKTOP-MNQDAU5\\SQLEXPRESS;Initial Catalog=TalentNetwork;Integrated Security=True; trustservercertificate=true");
 
-    }
+   // }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

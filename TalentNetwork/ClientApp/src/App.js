@@ -12,7 +12,7 @@ import { Keys, getItem, setLoginData, removeLoginData } from "./utils/storage";
 
 import Home from "./components/Home"
 import { Card, Form, Button } from 'react-bootstrap';
-
+import NotFound from "./components/NotFound"
 export const Context = createContext();
 export const UContext = createContext();
 export const AContext = createContext();
@@ -101,8 +101,10 @@ function App () {
                        path='login/manage-user'
                        element={userId != 0 ?
                        < ManageUser id={userId} /> : <Login />}>       
-                      </Route>
-                  </Routes>
+                                </Route>
+                                <Route path="*" element={<NotFound />} />
+
+           </Routes>
 
                         </Layout>
                         <Card style={{ color: "red",

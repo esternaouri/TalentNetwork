@@ -301,7 +301,8 @@ namespace TalentNetwork.Controllers
             }
 
                 _context.Users.Remove(userInUsers);
-                _context.SaveChanges();
+
+            _context.SaveChanges();
                 return Ok("OK");
         }
 
