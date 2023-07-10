@@ -66,7 +66,8 @@ namespace TalentNetwork.Controllers
                     UserId = user.UserId,
                     PhoneNumber = null,
                     RefreshToken = null,
-                    RefreshTokenExpires = null
+                    RefreshTokenExpires = null,
+                    Email = user.Email,
                 };
 
                 _context.Users.Add(post);

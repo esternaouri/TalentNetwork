@@ -18,5 +18,6 @@ public partial class TalentUser
    public byte[]? ImageDataByte { get; set; }
 
     public string? ImageDataToUse { get; set; }
+
     public virtual User User { get; set; } = null!;
 }

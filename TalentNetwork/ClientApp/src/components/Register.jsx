@@ -15,6 +15,8 @@ const Register = () => {
     let [enteredPassword, setEnteredPassword] = useState("");
     let [enteredUserId, setEnteredUserId] = useState(0);
     let [enteredUserName, setEnteredUserName] = useState("");
+    let [enteredEmail, setEnteredEmail] = useState("");
+
     let navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -24,7 +26,7 @@ const Register = () => {
             UserId: enteredUserId,
             UserName: enteredUserName,
             Password: enteredPassword,
-
+            Email: enteredEmail,
         }
 
         try {
@@ -62,7 +64,11 @@ const Register = () => {
                      Name:
                     <input className="form-control"  type="text" onChange={(e) => setEnteredUserName(e.target.value)} />
                 </label>
-                </div>
+                        </div>
+                        <label className="d-flex justify-content-end">
+                            Email:
+                            <input className="form-control" type="email" onChange={(e) => setEnteredEmail(e.target.value)} />
+                        </label>
                 <hr></hr>
 
                 <div className="form-group row">

@@ -154,6 +154,7 @@ export class UsersHomePage extends Component {
                                     <td>{item.userName}</td>
                                     <td>{item.talent}</td>
                                     <td>{item.city}</td>
+                                    <td>{item.email}</td>
 
                                     <td>{item.contactPhone}</td>
                                 <td><button className="btn btn-secondary" onClick={() => this.toggleDetails(item.userId, index)}>More Information</button>
@@ -187,6 +188,8 @@ export class UsersHomePage extends Component {
                                     <td>{item.userName}</td>
                                     <td>{item.talent}</td>
                                     <td>{item.city}</td>
+                                    <td>{item.email}</td>
+
 
                                     <td>{item.contactPhone}</td>
                                     <td><button className="btn btn-secondary" onClick={() => this.toggleDetails(item.userId, index)}>More Information</button>
@@ -285,6 +288,7 @@ export class UsersHomePage extends Component {
                                 <th>User Name</th>
                                 <th>Talent</th>
                                 <td>City</td>
+                                <td>Email</td>
                                 <th>contact Phone</th>
                                 <th></th>
                             </tr>

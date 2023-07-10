@@ -36,22 +36,10 @@ namespace TalentNetwork.Controllers
             var joinQuery = from a in _context.TalentUsers
                             join b in _context.Users on a.UserId equals b.UserId into temp
                             from b in temp.DefaultIfEmpty()
-                            select new { a.UserId, a.Talent, a.City, a.ContactPhone, b.UserName,b.IsAdmin  };
+                            select new { a.UserId, a.Talent, a.City, a.ContactPhone, b.UserName,b.IsAdmin,b.Email};
             var result = joinQuery.ToList();
 
-         //   var result = _context.TalentUsers.Join(_context.Users,
-           //              TalentUser => TalentUser.UserId,
-             //            user => user.UserId,
-               //          (TalentUser, user) => new
-                 //        {
-                   //          TalentUser.UserId,
-                     //        user.UserName,
-                       //      TalentUser.Talent,
-                         //    TalentUser.City,
-                           //  TalentUser.ContactPhone
-
-                        // }).ToList();
-
+       
             return Ok(result);
         }
 

@@ -12,8 +12,8 @@ using TalentNetworDAL.Models;
 namespace TalentNetworDAL.Migrations
 {
     [DbContext(typeof(TalentNetworkContext))]
-    [Migration("20230527190551_1")]
-    partial class _1
+    [Migration("20230710210512_mail")]
+    partial class mail
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,13 +32,13 @@ namespace TalentNetworDAL.Migrations
                         .HasColumnName("FaqID");
 
                     b.Property<string>("Answer")
-                        .HasMaxLength(68)
-                        .HasColumnType("nchar(68)")
+                        .HasMaxLength(1213565468)
+                        .HasColumnType("nchar(1213565468)")
                         .IsFixedLength();
 
                     b.Property<string>("Question")
-                        .HasMaxLength(68)
-                        .HasColumnType("nchar(68)")
+                        .HasMaxLength(1213565468)
+                        .HasColumnType("nchar(1213565468)")
                         .IsFixedLength();
 
                     b.Property<int>("UserId")
@@ -53,30 +53,37 @@ namespace TalentNetworDAL.Migrations
                     b.HasData(
                         new
                         {
-                            FaqId = 1,
-                            Answer = "2 weeks",
-                            Question = "How long does it take to finsh project? ",
-                            UserId = 1
-                        },
-                        new
-                        {
-                            FaqId = 2,
-                            Answer = "2 years",
-                            Question = "How much experience do you have? ",
-                            UserId = 1
-                        },
-                        new
-                        {
-                            FaqId = 3,
+                            FaqId = 15,
                             Answer = "4 weeks",
-                            Question = "How long does it take to finsh project? ",
+                            Question = "How-long does it take to fins project? ",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            FaqId = 5,
+                            Answer = "7 years",
+                            Question = "How--much experience do you have?",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            FaqId = 6,
+                            Answer = "8 weeks",
+                            Question = "How-long does it take to finsh projec? ",
                             UserId = 11
                         },
                         new
                         {
-                            FaqId = 4,
-                            Answer = "2 years",
-                            Question = "How long does it take to finsh project? ",
+                            FaqId = 7,
+                            Answer = "17 years",
+                            Question = "Ho-long does it take to finsh projec? ",
+                            UserId = 11
+                        },
+                        new
+                        {
+                            FaqId = 59,
+                            Answer = "17 years",
+                            Question = "Ho-long finsh projec? ",
                             UserId = 11
                         });
                 });
@@ -103,6 +110,36 @@ namespace TalentNetworDAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("ProjectsForTalents");
+
+                    b.HasData(
+                        new
+                        {
+                            ProjectId = 1,
+                            ProjectName = "a proj",
+                            ProjectPrice = 10000,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ProjectId = 2,
+                            ProjectName = "b proj",
+                            ProjectPrice = 5000,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ProjectId = 3,
+                            ProjectName = "c proj ",
+                            ProjectPrice = 14000,
+                            UserId = 11
+                        },
+                        new
+                        {
+                            ProjectId = 4,
+                            ProjectName = "d proj",
+                            ProjectPrice = 54,
+                            UserId = 11
+                        });
                 });
 
             modelBuilder.Entity("TalentNetworDAL.Models.TalentUser", b =>
@@ -117,6 +154,15 @@ namespace TalentNetworDAL.Migrations
 
                     b.Property<int?>("ContactPhone")
                         .HasColumnType("int");
+
+                    b.Property<byte[]>("ImageDataByte")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("ImageDataToUse")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Talent")
                         .HasColumnType("nvarchar(max)");
@@ -146,6 +192,9 @@ namespace TalentNetworDAL.Migrations
                 {
                     b.Property<int>("UserId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("IsAdmin")
                         .HasColumnType("int");
@@ -193,6 +242,7 @@ namespace TalentNetworDAL.Migrations
                     b.HasOne("TalentNetworDAL.Models.User", "User")
                         .WithMany("Faqs")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_Faqs_Users");
 
@@ -204,6 +254,7 @@ namespace TalentNetworDAL.Migrations
                     b.HasOne("TalentNetworDAL.Models.User", "User")
                         .WithMany("ProjectsForTalents")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_ProjectsForTalents_Users");
 
@@ -215,6 +266,7 @@ namespace TalentNetworDAL.Migrations
                     b.HasOne("TalentNetworDAL.Models.User", "User")
                         .WithOne("TalentUser")
                         .HasForeignKey("TalentNetworDAL.Models.TalentUser", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_TalentUsers_Users");
 
