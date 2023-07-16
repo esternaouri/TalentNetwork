@@ -1,4 +1,4 @@
-﻿import React, { Component, createContext, useState, useRef, useEffect } from 'react';
+﻿import React, {  createContext, useState, useRef, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import { Layout } from './components/Layout';
@@ -6,12 +6,12 @@ import { UsersHomePage } from "./components/UsersHomePage"
 import { UsersTable } from "./components/UsersTable"
 import './custom.css';
 import Login from './components/Login';
-import ManageUser  from "./components/ManageUser"
+import ManageUser from "./components/ManageUser"
 import axios from "axios";
 import { Keys, getItem, setLoginData, removeLoginData } from "./utils/storage";
 
 import Home from "./components/Home"
-import { Card, Form, Button } from 'react-bootstrap';
+import { Card} from 'react-bootstrap';
 import NotFound from "./components/NotFound"
 export const Context = createContext();
 export const UContext = createContext();
@@ -19,7 +19,7 @@ export const AContext = createContext();
 export const NContext = createContext();
 
 
-function App () {
+function App() {
     //static displayName = App.name;
 
     const [isLogin, setLogin] = useState(false);
@@ -30,7 +30,6 @@ function App () {
     let timerID = useRef();
 
     useEffect(() => {
-        console.log("App useEffect", Date());
         if (getItem(Keys.refreshToken) && isNaN(timerID)) {
             setRefreshTokenInterval();
             refreshToken();
@@ -44,12 +43,10 @@ function App () {
                 ? Number(expiresInSeconds) / 2
                 : 30;
             timerID = setInterval(refreshToken, refreshInterval * 1000);
-            console.log("starting refreshToken", refreshInterval, Date());
         }
     }
-    //
+    //refreshing token
     function refreshToken() {
-        console.log("refreshToken", Date());
         axios
             .post("https://localhost:7116/users/refreshToken", {
                 refreshToken: getItem(Keys.refreshToken),
@@ -68,7 +65,7 @@ function App () {
         seIsAdmin(loginData.userResponse[Keys.roleID]);
         setLogin(true);
     }
-    //
+    //log out
     function logout() {
         clearTimeout(timerID);
         removeLoginData();
@@ -77,50 +74,51 @@ function App () {
 
 
     return (
-        <Context.Provider value={[isLogin, setLogin] }> 
-            <UContext.Provider value={[userId, setUserId]}> 
-                <AContext.Provider value={[IsAdmin, seIsAdmin]}> 
-                    <NContext.Provider value={[userName, setUserName]}> 
+        <Context.Provider value={[isLogin, setLogin]}>
+            <UContext.Provider value={[userId, setUserId]}>
+                <AContext.Provider value={[IsAdmin, seIsAdmin]}>
+                    <NContext.Provider value={[userName, setUserName]}>
 
-          <Layout>
-        <Routes>
-          {AppRoutes.map((route, index) => {
-            const { element, ...rest } = route;
-            return <Route key={index} {...rest} element={element} />;
-          })}
+                        <Layout>
+                            <Routes>
+                                {AppRoutes.map((route, index) => {
+                                    const { element, ...rest } = route;
+                                    return <Route key={index} {...rest} element={element} />;
+                                })}
 
-                  <Route
-                      path='/login'
-                      element={isLogin ? <UsersHomePage id={userId} admin={IsAdmin} name={userName} /> : <Login />}>
-                  </Route>
-                  <Route
-                       path='login/admin-home-page'
-                       element={IsAdmin == 2 ? < UsersTable /> : <Home />}>
-                  </Route>
-                    <Route
-                       path='login/manage-user'
-                       element={userId != 0 ?
-                       < ManageUser id={userId} /> : <Login />}>       
+                                <Route
+                                    path='/login'
+                                    element={isLogin ? <UsersHomePage id={userId} admin={IsAdmin} name={userName} /> : <Login />}>
+                                </Route>
+                                <Route
+                                    path='login/admin-home-page'
+                                    element={IsAdmin == 2 ? < UsersTable /> : <Home />}>
+                                </Route>
+                                <Route
+                                    path='login/manage-user'
+                                    element={userId != 0 ?
+                                        < ManageUser id={userId} /> : <Login />}>
                                 </Route>
                                 <Route path="*" element={<NotFound />} />
 
-           </Routes>
+                            </Routes>
 
                         </Layout>
-                        <Card style={{ color: "red",
+                        <Card style={{
+                            color: "red",
                             position: "absolute",
                             left: 0,
                             bottom: -0,
                             right: "0",
                             textAlign: "center",
                             padding: "0.1%"
-                        }}> <h1>Wish You Luck On Finiding You And Your Partner </h1> <h5>for any question call me 058-700-7177 
-                                <img style={{ width: "2%", height :"2%"}} src="/favicon.png" alt="logo" />
+                        }}> <h1>Wish You Luck On Finiding You And Your Partner </h1> <h5>for any question call me 058-700-7177
+                                <img style={{ width: "2%", height: "2%" }} src="/favicon.png" alt="logo" />
 
                             </h5></Card>
-                        </NContext.Provider> 
+                    </NContext.Provider>
 
-                    </AContext.Provider > 
+                </AContext.Provider >
 
             </UContext.Provider >
 
@@ -129,6 +127,3 @@ function App () {
     );
 }
 export default App;
-
-
-

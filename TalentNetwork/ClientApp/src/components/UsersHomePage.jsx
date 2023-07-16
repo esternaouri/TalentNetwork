@@ -1,6 +1,6 @@
 ﻿import { Component } from "react";
 import { NavLink } from "react-router-dom";
-import { Card, Form, Button } from 'react-bootstrap';
+
 const { REACT_APP_API_URL } = process.env;
 
 
@@ -30,7 +30,7 @@ export class UsersHomePage extends Component {
         };
     }
 
-    //
+    //open details for row
     toggleDetails = (id,i) => {
         this.setState(prevState => ({
             clickForMoreDetails: !prevState.clickForMoreDetails
@@ -38,12 +38,10 @@ export class UsersHomePage extends Component {
         fetch(`${REACT_APP_API_URL}/ProjectsForTalents/` + id).then(res => res.json()).
             then(json => this.setState({ moreDetailsProj: json})).
             catch(err => console.error(err));
-        console.log(JSON.stringify(this.state.moreDetailsProj));
 
         fetch(`${REACT_APP_API_URL}/Faqs/` + id).then(res => res.json()).
             then(json => this.setState({ moreDetailsFaqs: json })).
             catch(err => console.error(err));
-        console.log(JSON.stringify(this.state.moreDetailsFaqs));
 
 
         fetch(`${REACT_APP_API_URL}/TalentUsers/Image/` + id)
@@ -58,7 +56,7 @@ export class UsersHomePage extends Component {
         return () => URL.revokeObjectURL(this.state.imageUrl);
     
     };
-    //
+    //open answer in details of a row
     toggleAnswer = (i) =>
     {
         this.setState(prevState => ({
@@ -66,12 +64,12 @@ export class UsersHomePage extends Component {
         }));
         this.setState({ currentFaq: i });
     }
-    //
+    // fetch home table
     componentDidMount() {
-        this.populateProductsData();
+        this.populateTableData();
         this.setState({ currentUser : this.props.id})
     }
-    //
+    // filtering by city 
     handleFilterCity = (event) => {
         const filterByCity = event.target.value;
         this.setState({ isFilterd: true });
@@ -86,7 +84,7 @@ export class UsersHomePage extends Component {
 
         }
     };
-    //
+    //filtering by proffesion
     handleFilterSub = (event) => {
         const filterBySub = event.target.value;
         this.setState({ filterBySub }, this.filterdArr);
@@ -100,7 +98,7 @@ export class UsersHomePage extends Component {
         }
         
     };
-    //
+    // rendering filterd array of data
     filterdArr = () => {
         const { filterByCity, filterBySub } = this.state;
         const filterdArr = this.state.items.filter(item =>
@@ -109,8 +107,15 @@ export class UsersHomePage extends Component {
         );
         this.setState({ filterdArr });
     };
+    //
+    watsup = (phone) =>
+    {
+        const url = `https://wa.me/${phone}`;
 
+        window.open(url, '_blank');
+    }
 
+    // data of the main table rendering by pagination or filterring
     showData = () => {
 
         const { postsPerPage, currentPage, items } = this.state;
@@ -118,8 +123,8 @@ export class UsersHomePage extends Component {
         const indexOfFirstPage = indexOfLastPage - postsPerPage;
         const currentPosts = items.slice(indexOfFirstPage, indexOfLastPage)
         let rowsMore = this.state.moreDetailsProj.map((p, i) => {
-            return (<tr>
-                <td className>  {p.projectName}<hr></hr></td>
+            return (<tr key={i }>
+                <td >  {p.projectName}<hr></hr></td>
 
                 <td> {p.projectPrice.toLocaleString('en-US', {
                         style: 'currency',
@@ -129,8 +134,8 @@ export class UsersHomePage extends Component {
         });
         //
         let rowsMoreFaq = this.state.moreDetailsFaqs.map((p, i) => {
-            return (<ul>
-                <li>🆎 Q: {p.question}
+            return (<ul key={i}>
+                <li key={i}>🆎 Q: {p.question}
                     <button className=" btn btn-light" onClick={() => this.toggleAnswer(p.faqId)}>answer</button><br></br>
                     {this.state.clickForAnswer && this.state.currentFaq == p.faqId && <> {p.answer}</>}
                 </li>
@@ -144,10 +149,10 @@ export class UsersHomePage extends Component {
                 return currentPosts.map((item, index) => {
                     return (
                         
-                             < tbody >
-                                < tr style={{
+                        < tbody >
+                            < tr key={item.userId} style={{
                                     width: "300px", height: "200px", border: " 2px solid #000", borderRadius: "20px", padding: " 10px",
-                                    "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.05)"
+                                    "boxshadow": "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.05)"
                                 }}>
                                     <td>{postsPerPage * (currentPage - 1) + index + 1}</td>
                                     <td>{item.userId}</td>
@@ -156,20 +161,19 @@ export class UsersHomePage extends Component {
                                     <td>{item.city}</td>
                                     <td>{item.email}</td>
 
-                                    <td>{item.contactPhone}</td>
-                                <td><button className="btn btn-secondary" onClick={() => this.toggleDetails(item.userId, index)}>More Information</button>
-                                    {this.state.currentItem == index && this.state.clickForMoreDetails && < tr style={{ display: "flex", justifyContent:"center" }}>
+                                <td>{item.contactPhone} <button className="btn btn-success" onClick={() => this.watsup(item.contactPhone)}>Whatsaap💬</button></td>
+                                <td><button className="btn btn-secondary" onClick={() => this.toggleDetails(item.userId, index)}>More </button>
+                                    {this.state.currentItem == index && this.state.clickForMoreDetails && < td style={{ display: "flex", justifyContent:"center" }}>
                                         <td> <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /> </td>
                                         <td>{rowsMore}</td>
 
                                             <td>{rowsMoreFaq}</td>
 
-                                        </tr>}
+                                        </td>}
 
                                     </td>
                                 </tr>
                             </tbody >
-                      
                     )
                 })
 
@@ -177,34 +181,31 @@ export class UsersHomePage extends Component {
 
                 return this.state.filterdArr.map((item, index) => {
                     return (
-                        
-                            < tbody >
-                                < tr style={{
+
+                        < tbody >
+                            < tr key={item.userId} style={{
                                     width: "300px", height: "200px", border: " 2px solid #000", borderRadius: "20px", padding: " 10px",
-                                    "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.05)"
+                                    "boxShadow": "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.05)"
                                 }}>
                                     <td>{postsPerPage * (currentPage - 1) + index + 1}</td>
                                     <td>{item.userId}</td>
                                     <td>{item.userName}</td>
                                     <td>{item.talent}</td>
                                     <td>{item.city}</td>
-                                    <td>{item.email}</td>
-
-
-                                    <td>{item.contactPhone}</td>
-                                    <td><button className="btn btn-secondary" onClick={() => this.toggleDetails(item.userId, index)}>More Information</button>
-                                        {this.state.currentItem == index && this.state.clickForMoreDetails && < tr style={{ display: "flex", justifyContent: "center" }}>
+                                <td>{item.email}</td>
+                                <td>{item.contactPhone} <button className ="btn btn-success" onClick={() => this.watsup(item.contactPhone)}>Whatsaap💬</button></td>
+                                    <td><button className="btn btn-secondary" onClick={() => this.toggleDetails(item.userId, index)}>More </button>
+                                        {this.state.currentItem == index && this.state.clickForMoreDetails && < td style={{ display: "flex", justifyContent: "center" }}>
                                             <td> <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /> </td>
                                             <td>{rowsMore}</td>
 
                                             <td>{rowsMoreFaq}</td>
 
-                                        </tr>}
+                                        </td>}
 
                                     </td>
                                 </tr>
                             </tbody >
-                        
                     )
                 })
             }
@@ -215,6 +216,7 @@ export class UsersHomePage extends Component {
             alert(e.message)
         }
     }
+    //mange pagination
     showPagination = () => {
         const { postsPerPage, filterdArr } = this.state;
         const pageNumbers = [];
@@ -232,10 +234,10 @@ export class UsersHomePage extends Component {
             <nav>
                 <ul className="pagination">
                     {pageNumbers.map(number => (
-                        <li key={number} className={this.state.currentPage === number ? 'page-item active' : 'page-item'}>
+                        <li  className={this.state.currentPage === number ? 'page-item active' : 'page-item'}>
                             <button onClick={() => pagination(number)} className="page-link"> {number} </button>
                         </li>
-                    ))}
+                    ) )}
                 </ul>
             </nav>
         )
@@ -243,7 +245,7 @@ export class UsersHomePage extends Component {
 
     }
 
-
+    // log out 
     handleRefresh = () => {
         window.location.reload();
     };
@@ -254,11 +256,15 @@ export class UsersHomePage extends Component {
         //
      
         return (
-            <>
-                <h1 style={{ color: "red", textAlign: "center" }}>Hello {this.props.name} </h1>
+            < div>
+
+                <h1 style={{ color: "#20B2AA", textShadow:" 2px ", textAlign: "center" }}>Hello {this.props.name} </h1>
+
                 <hr />
                 <div className="d-flex justify-content-end">
-                <button className="btn btn-info" onClick={this.handleRefresh}>Log Out</button>
+                    <img src="BEAR green.png" style={{ width: "5%", height: "5%" }} />
+
+                    <button className="btn btn-lg  btn-info" onClick={this.handleRefresh}>Log Out</button>
                     </div>
                 <NavLink to="manage-user" style={{ fontSize: "20px",
                 fontWeight: "bold"
@@ -268,7 +274,6 @@ export class UsersHomePage extends Component {
                     fontWeight: "bold"
                 }}>Mange Users</NavLink ></div>}
                
-
                 <input className="form-control" type="text" placeholder="Find By City🔎" onChange={this.handleFilterCity} /> <></><br></br>
                 <input type="text" className="form-control" placeholder="Find By Profession🔎" onChange={this.handleFilterSub} /> <br></br>
                 <div style={{
@@ -277,20 +282,20 @@ export class UsersHomePage extends Component {
                     overflow: "auto",
                     whiteSpace: "nowrap"
                 }}>
-                    <table className="table align-items-center justify-content-center mb-0">
+                    <table  className="table align-items-center justify-content-center mb-0">
                         <thead style={{
                             position: "sticky",
                             top: 0
                         }} className = "table table-secondary">
-                            <tr>
-                                <th>num</th>
-                                <th>User Id</th>
-                                <th>User Name</th>
-                                <th>Talent</th>
-                                <td>City</td>
-                                <td>Email</td>
-                                <th>contact Phone</th>
-                                <th></th>
+                            <tr >
+                                <th key="header0" >num</th>
+                                <th key="header1" >User Id</th>
+                                <th key="header2" >User Name</th>
+                                <th key="header3">Talent</th>
+                                <td key="header4" >City</td>
+                                <td key="header5">Email</td>
+                                <th key="header6" >contact Phone</th>
+                                <th key="header7"></th>
                             </tr>
                         </thead>
                         { this.showData()}
@@ -302,18 +307,19 @@ export class UsersHomePage extends Component {
                 </div>
                 <hr></hr>
                 <h5 style={{color:"blue"} }>Post Per Page:</h5>
-                <select class="form-select " aria-label="Post Per Page" value={this.state.postsPerPage} onChange={(e) => { this.setState({ postsPerPage: e.target.value }) }}>
-                    <option selected>Post Per Page</option>
+                <select className="form-select " aria-label="Post Per Page" value={this.state.postsPerPage} onChange={(e) => { this.setState({ postsPerPage: e.target.value }) }}>
+                    <option defaultValue>Post Per Page</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
                     <option value="5">5</option>
                     <option value="6">6</option>
 
                 </select>
-            </>
+            </div>
         );
     }
-    populateProductsData() {
+    //populate table data
+    populateTableData() {
         fetch(`${REACT_APP_API_URL}/talentUsers`).then(res => res.json()).
             then(json => this.setState({ items: json, loading: false, filterdArr: json })).
             catch(err => console.error(err));

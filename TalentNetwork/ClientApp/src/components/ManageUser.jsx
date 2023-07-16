@@ -1,41 +1,43 @@
-﻿import { createContext, useContext, useEffect, useState } from "react";
+﻿import {  useEffect, useState } from "react";
 import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
-import { json } from "../../../../node_modules/react-router-dom/dist/index";
+
 import { useNavigate } from "react-router-dom";
 const { REACT_APP_API_URL } = process.env;
 
 const ManageUser = (props) => {
 
-    let navigate = useNavigate();
-
+    //users data arrys including faqs and projects
     const [faqsData, setFaqs] = useState([]);
     const [ProjsData, setProjData] = useState([]);
+    //boleans for adding/updating any data 
     const [AddProject, setAddProject] = useState(false);
     const [AddProjectName, setAddProjectName] = useState(false);
     const [AddProjectPrice, setAddProjectPrice] = useState(false);
+    const [addFaq, setAddFaq] = useState(false);
+    const [editFaq, setEditFaq] = useState(false);
+    const [editProject, setEditproject] = useState(false);
+    //cureent user
     const [userId, setUserId] = useState(props.id);
     const [idToEdit, setIdtoEdit] = useState(0);
+    //manging profile image
     const [image, setImage] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
+    //managing first info of the user
     const [firstInfo, setFirstInfo] = useState(false);
     const [city, setCity] = useState("");
     const [talent, setTalent] = useState("");
     const [phone, setPhone] = useState("");
-
-    const [addFaq, setAddFaq] = useState(false);
+    //manging faq crud
     const [qestion, setquestion] = useState("");
     const [answer, setAnswer] = useState("");
-    const [editFaq, setEditFaq] = useState(false);
 
 
-    const [editProject, setEditproject] = useState(false);
-    //
+    //bollen click for edit project
     const handleEdit = (id) => {
         setEditproject(!editProject);
         setIdtoEdit(id);
     }
-    //
+    //fetching all datas
     const fetchUserData = async () => {
 
         fetch(`${REACT_APP_API_URL}/ProjectsForTalents/` + props.id).then(res => res.json()).
@@ -48,7 +50,7 @@ const ManageUser = (props) => {
             catch(err => console.error(err));
         console.log(JSON.stringify(faqsData));
     }
-
+    // add project 
     const addProject = async (e) => {
         e.preventDefault();
 
@@ -83,7 +85,7 @@ const ManageUser = (props) => {
                 alert("not okay ")
             });
     }
-    //
+    // edit project
     const postEditProject = async (e) => {
         e.preventDefault();
 
@@ -107,7 +109,7 @@ const ManageUser = (props) => {
                 console.error(error);
             });
     }
-    //
+    //delete project
     const DelProject = (projectId) => {
         axios
             .delete(`${REACT_APP_API_URL}/ProjectsForTalents/` + projectId)
@@ -122,7 +124,7 @@ const ManageUser = (props) => {
             });
 
     }
-    //
+    // add faq
     const addFaqHandle = (e) => {
         e.preventDefault();
 
@@ -151,7 +153,7 @@ const ManageUser = (props) => {
                 // Handle the error
             });
     }
-    //
+    // delete faq
     const delFaq = (FaqId) => {
 
         axios
@@ -167,7 +169,7 @@ const ManageUser = (props) => {
             });
 
     }
-    //
+    // edit faq
     const editFaqHandleSub = (e) => {
 
         e.preventDefault();
@@ -191,12 +193,12 @@ const ManageUser = (props) => {
                 console.error(error);
             });
     }
-    //
+    // bloean to edit faq
     const editFaqs = (id) => {
         setEditFaq(!editFaq);
         setIdtoEdit(id);
     }
-    //
+    // array of projects rows
     let rowsProj = ProjsData.map((p, i) => {
         return (
             
@@ -213,7 +215,7 @@ const ManageUser = (props) => {
            
         );
     });
-    //
+    // array of faqs rows
     let rowsFaqs = faqsData.map((p, i) => {
         return (<tr>
             <td> {p.question}</td>
@@ -224,15 +226,15 @@ const ManageUser = (props) => {
             
         </tr>);
     });
-    //
+    // bolean add project
     const handleAddProject = () => {
         setAddProject(!AddProject);
     }
-    //
+    // boleab add faq
     const handleAddFaq = () => {
         setAddFaq(!addFaq);
     }
-    //
+    // images 
     async function saveImage(e) {
         e.preventDefault();
         {
@@ -254,7 +256,7 @@ const ManageUser = (props) => {
 
         }
     }
-    //
+    // basic information
     const basicInfo = async (e) => {
         e.preventDefault();
         const post = {
@@ -302,7 +304,7 @@ const ManageUser = (props) => {
             <div >
                 <h5 class="card-title">Project</h5>
                 <div className="d-flex justify-content-end">
-                    <button className="btn btn-primary" onClick={() => setFirstInfo(true)}>Edit First Info </button>
+                    <button className="btn btn-primary" onClick={() => setFirstInfo(!firstInfo)}>Edit First Info </button>
                 </div>
                 {firstInfo &&
 

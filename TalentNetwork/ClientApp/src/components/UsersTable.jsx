@@ -143,7 +143,7 @@ export class UsersTable extends Component {
                         <thead style={{
                             position: "sticky",
                             top: 0
-                        }} lassName="table table-secondary">
+                        }} className="table table-secondary">
                             <tr>
                                 <th >User id</th>
                                 <th >user name</th>

@@ -18,7 +18,7 @@ const Register = () => {
     let [enteredEmail, setEnteredEmail] = useState("");
 
     let navigate = useNavigate();
-
+    //register data to server
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -78,7 +78,7 @@ const Register = () => {
                     <input className="form-control" type="password" onChange={(e) => setEnteredPassword(e.target.value)} />
                 </label>
             </div>
-                <button class="btn btn-primary" type="submit">Add User</button>
+                        <button className="btn btn-primary" type="submit">Add User</button>
 
             </Form>
                     </Card.Body>
