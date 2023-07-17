@@ -1,4 +1,4 @@
-﻿import {  useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import axios from 'axios';
 
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,8 @@ const ManageUser = (props) => {
     //users data arrys including faqs and projects
     const [faqsData, setFaqs] = useState([]);
     const [ProjsData, setProjData] = useState([]);
+    const [UserData, setUserData] = useState([]);
+
     //boleans for adding/updating any data 
     const [AddProject, setAddProject] = useState(false);
     const [AddProjectName, setAddProjectName] = useState(false);
@@ -43,13 +45,17 @@ const ManageUser = (props) => {
         fetch(`${REACT_APP_API_URL}/ProjectsForTalents/` + props.id).then(res => res.json()).
             then(json => setProjData(json)).
             catch(err => console.error(err));
-        console.log(JSON.stringify(ProjsData));
 
         fetch(`${REACT_APP_API_URL}/Faqs/` + props.id).then(res => res.json()).
             then(json => setFaqs(json)).
             catch(err => console.error(err));
-        console.log(JSON.stringify(faqsData));
+
+
+        fetch(`${REACT_APP_API_URL}/TalentUsers/` + props.id).then(res => res.json()).
+            then(json => setUserData(json)).
+            catch(err => console.error(err));
     }
+
     // add project 
     const addProject = async (e) => {
         e.preventDefault();
@@ -77,8 +83,8 @@ const ManageUser = (props) => {
 
                     console.log(data);
                 }
-                else {alert("Title Not Okay-Must Be Less Than 10 Characters") }
-                
+                else { alert("Title Not Okay-Must Be Less Than 10 Characters") }
+
             })
             .catch((error) => {
                 throw new Error('TITLE LENGTH NOT OKAY');
@@ -105,7 +111,7 @@ const ManageUser = (props) => {
                 console.log(response.data);
             })
             .catch(error => {
-                // Handle error
+                alert("Title Not Okay-Must Be Less Than 10 Characters")
                 console.error(error);
             });
     }
@@ -201,29 +207,29 @@ const ManageUser = (props) => {
     // array of projects rows
     let rowsProj = ProjsData.map((p, i) => {
         return (
-            
+
             <tr >
                 <td> {p.projectName}</td>
                 <td> {p.projectPrice.toLocaleString('en-US', {
                     style: 'currency',
                     currency: 'USD'
-                }) }</td>   
-                <td> <button className="btn btn-success" onClick={() => handleEdit(p.projectId)}>🖊️</button></td> 
+                })}</td>
+                <td> <button className="btn btn-success" onClick={() => handleEdit(p.projectId)}>🖊️</button></td>
 
-                <td>   <button className="btn btn-danger" onClick={() => DelProject(p.projectId)} >🗑️</button></td> 
-                </tr>
-           
+                <td>   <button className="btn btn-danger" onClick={() => DelProject(p.projectId)} >🗑️</button></td>
+            </tr>
+
         );
     });
     // array of faqs rows
     let rowsFaqs = faqsData.map((p, i) => {
         return (<tr>
             <td> {p.question}</td>
-            <td>{p.answer}</td> 
-            <td>  <button className="btn btn-success" onClick={() => editFaqs(p.faqId)}>🖊️</button></td>  
-            <td><button className="btn btn-danger" onClick={() => delFaq(p.faqId)}>🗑️</button></td>     
+            <td>{p.answer}</td>
+            <td>  <button className="btn btn-success" onClick={() => editFaqs(p.faqId)}>🖊️</button></td>
+            <td><button className="btn btn-danger" onClick={() => delFaq(p.faqId)}>🗑️</button></td>
 
-            
+
         </tr>);
     });
     // bolean add project
@@ -249,6 +255,8 @@ const ManageUser = (props) => {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
                 alert("Saved");
+                fetchUserData();
+
 
             } catch (error) {
                 alert(error + " First Add Basic Info");
@@ -271,6 +279,8 @@ const ManageUser = (props) => {
             const res = await axios.put(`${REACT_APP_API_URL}/TalentUsers/` + userId, post)
             console.log(res.data)
             alert("ok");
+            fetchUserData();
+
             setFirstInfo(false);
 
 
@@ -302,10 +312,25 @@ const ManageUser = (props) => {
 
         <div>
             <div >
-                <h5 class="card-title">Project</h5>
-                <div className="d-flex justify-content-end">
-                    <button className="btn btn-primary" onClick={() => setFirstInfo(!firstInfo)}>Edit First Info </button>
+
+                <img src="BEAR green.png" style={{
+                    width: "5%", height: "5%", float: "right" }} />
+
+                
+                <div style={{
+                    display: "flex",
+                    justifyContent: "space-between"
+                }}>
+                    <th> Talent :  </th>{UserData.talent}  
+                    <th> City :   </th>{UserData.city} 
+                    <th>Phone : </th> {UserData.contactPhone} 
+                    <th>Name :  </th>{UserData.userName} 
+                    <th> Email : </th> {UserData.email} 
+                    <div className="d-flex justify-content-end">
+                        <button className="btn btn-outline-success" onClick={() => setFirstInfo(!firstInfo)}>🖊️</button>
+                    </div>
                 </div>
+
                 {firstInfo &&
 
                     <form onSubmit={(e) => basicInfo(e)}>
@@ -323,9 +348,12 @@ const ManageUser = (props) => {
 
                         <button type="submit">edit!</button>
 
-                    </form>}<hr></hr>
+                    </form>}
+              
 
-                <button className="btn btn-primary" onClick={handleAddProject}>new project</button>
+                <hr></hr>
+                <h5 className="card-title">Project <button className="btn btn-outline-success" onClick={handleAddProject}> + </button></h5>
+              
                 {AddProject &&
                     <form onSubmit={(e) => addProject(e)} >
                         <lable>
@@ -370,11 +398,11 @@ const ManageUser = (props) => {
                         <tbody className="table table-striped ">{rowsProj}</tbody>
                     </table>
                 </div>}
-                {rowsProj.length == 0 && <h3 style={{ textAlign: "center", color:"red" }}> No Projects Data, Add Project  </h3>}
+                {rowsProj.length == 0 && <h3 style={{ textAlign: "center", color: "red" }}> No Projects Data, Add Project  </h3>}
 
 
-                <h5 class="card-title">Faq</h5>
-                <button className="btn btn-primary" onClick={handleAddFaq}>  New Faq</button>
+                <h5 class="card-title">Faq <button className="btn btn-outline-success" onClick={handleAddFaq}>  + </button></h5>
+               
                 {addFaq &&
                     <form onSubmit={addFaqHandle} >
                         <lable>
@@ -419,7 +447,7 @@ const ManageUser = (props) => {
                         <tbody className="table table-striped">{rowsFaqs}</tbody>
                     </table>
                 </div>}
-                {rowsFaqs.length == 0 && <h3 style={{ textAlign: "center", color:"red" }}> No Projects Data, Add Faq </h3>}
+                {rowsFaqs.length == 0 && <h3 style={{ textAlign: "center", color: "red" }}> No Projects Data, Add Faq </h3>}
 
             </div>
 
@@ -431,7 +459,7 @@ const ManageUser = (props) => {
                     className="form-control"
                     onChange={(e) => setImage(e.target.files[0])}
                 />
-                <button type="submit" onClick={saveImage}>Save Image</button>
+                <button type="submit" className="btn btn-success"  onClick={saveImage}>Save Image</button>
                 <img style={{ height: "100px" }} src={imageUrl} alt="Image" />
 
             </div>

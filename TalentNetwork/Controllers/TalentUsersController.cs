@@ -47,18 +47,21 @@ namespace TalentNetwork.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TalentUser>> GetTalentUser(int id)
         {
+
             if (_context.TalentUsers == null)
             {
                 return NotFound();
             }
-            var talentUser = await _context.TalentUsers.FindAsync(id);
 
-            if (talentUser == null)
-            {
-                return NotFound();
-            }
+            var joinQuery = from a in _context.TalentUsers 
+                            join b in _context.Users on a.UserId equals b.UserId into temp
+                            from b in temp.DefaultIfEmpty()
+                            select new { a.UserId, a.Talent, a.City, a.ContactPhone, b.UserName, b.IsAdmin, b.Email };
+            var result = joinQuery.ToList();
+            var userIndb =result.FirstOrDefault(x=> x.UserId==id);
 
-            return talentUser;
+            return Ok(userIndb);
+          
         }
 
         // PUT: api/TalentUsers/5
