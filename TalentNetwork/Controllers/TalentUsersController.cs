@@ -75,6 +75,7 @@ namespace TalentNetwork.Controllers
             }
             var userIndb = _context.TalentUsers.FirstOrDefault(x => x.UserId == id);
 
+
             if (userIndb == null) 
             {
                 var userInUsers = _context.Users.FirstOrDefault(x => x.UserId == id);
@@ -94,9 +95,12 @@ namespace TalentNetwork.Controllers
                 await _context.SaveChangesAsync();
             }
             else {
+                var userInUsers = _context.Users.FirstOrDefault(x => x.UserId == id);
+                userInUsers.Email=talentUser.Email;
                 userIndb.Talent = talentUser.Talent;
                 userIndb.ContactPhone = talentUser.ContactPhone;
-                userIndb.City = talentUser.City;
+                await _context.SaveChangesAsync();
+
                 await _context.SaveChangesAsync();
 
             }

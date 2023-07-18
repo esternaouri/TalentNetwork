@@ -21,6 +21,8 @@ export class UsersHomePage extends Component {
             currentPage: 1,
             filterByCity: "",
             filterBySub: "",
+            filterByName: "",
+            filterById: "",
             filterdArr: [],
             clickForAnswer: false,
             postsPerPage: 3,
@@ -98,12 +100,15 @@ export class UsersHomePage extends Component {
         }
         
     };
+ 
     // rendering filterd array of data
     filterdArr = () => {
         const { filterByCity, filterBySub } = this.state;
         const filterdArr = this.state.items.filter(item =>
             item.city.toLowerCase().includes(filterByCity.toLowerCase()) &&
-            item.talent.toLowerCase().includes(filterBySub.toLowerCase())
+            item.talent.toLowerCase().includes(filterBySub.toLowerCase()) 
+         
+
         );
         this.setState({ filterdArr });
     };
@@ -220,7 +225,7 @@ export class UsersHomePage extends Component {
     showPagination = () => {
         const { postsPerPage, filterdArr } = this.state;
         const pageNumbers = [];
-        const totalPosts = filterdArr.length;
+        const totalPosts = filterdArr.length; 
 
         for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
             pageNumbers.push(i)
@@ -276,6 +281,8 @@ export class UsersHomePage extends Component {
                
                 <input className="form-control" type="text" placeholder="Find By City🔎" onChange={this.handleFilterCity} /> <></><br></br>
                 <input type="text" className="form-control" placeholder="Find By Profession🔎" onChange={this.handleFilterSub} /> <br></br>
+               
+
                 <div style={{
                     width: "100 %", 
                     height: "600px",

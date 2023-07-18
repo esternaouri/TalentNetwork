@@ -36,7 +36,7 @@ const Register = () => {
 
 
         } catch (e) {
-            alert(e)
+            alert("all data need to be apply. ID need to be indentic")
         }
 
     }

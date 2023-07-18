@@ -29,6 +29,8 @@ const ManageUser = (props) => {
     const [city, setCity] = useState("");
     const [talent, setTalent] = useState("");
     const [phone, setPhone] = useState("");
+    const [email, setEmail] = useState("");
+
     //manging faq crud
     const [qestion, setquestion] = useState("");
     const [answer, setAnswer] = useState("");
@@ -54,6 +56,8 @@ const ManageUser = (props) => {
         fetch(`${REACT_APP_API_URL}/TalentUsers/` + props.id).then(res => res.json()).
             then(json => setUserData(json)).
             catch(err => console.error(err));
+       
+
     }
 
     // add project 
@@ -271,7 +275,8 @@ const ManageUser = (props) => {
             Talent: talent,
             ContactPhone: phone,
             City: city,
-            UserId: userId
+            UserId: userId,
+            Email:email
 
         }
 
@@ -288,6 +293,7 @@ const ManageUser = (props) => {
             alert(e)
         }
     }
+    //
     useEffect(() => {
         // Fetch the image data from the API endpoint
         fetch(`${REACT_APP_API_URL}/TalentUsers/Image/` + userId)
@@ -336,7 +342,7 @@ const ManageUser = (props) => {
                     <form onSubmit={(e) => basicInfo(e)}>
                         <label>
                             Talent:
-                            <input type="text" onChange={(e) => setTalent(e.target.value)} />
+                            <input type="text"  onChange={(e) => setTalent(e.target.value)} />
                         </label>
                         <label>
                             City:
@@ -345,7 +351,10 @@ const ManageUser = (props) => {
                             Phone:
                             <input type="number" onChange={(e) => setPhone(e.target.value)} />
                         </label>
-
+                        <label>
+                            Email:
+                            <input type="email"  onChange={(e) => setEmail(e.target.value)} />
+                        </label>
                         <button type="submit">edit!</button>
 
                     </form>}
@@ -370,14 +379,14 @@ const ManageUser = (props) => {
                 }<></>
 
                 {editProject &&
-                    <form onSubmit={postEditProject}                    >
+                    <form onSubmit={postEditProject}>
                         <lable>
                             Project New Name
-                            <input type="text" onChange={(e) => setAddProjectName(e.target.value)} />
+                            <input type="text"  onChange={(e) => setAddProjectName(e.target.value)} />
                         </lable>
                         <lable>
                             Project New price
-                            <input type="number" onChange={(e) => setAddProjectPrice(e.target.value)} />
+                            <input type="number"  onChange={(e) => setAddProjectPrice(e.target.value)} />
 
                         </lable>
                         <button type="submit">edit</button>
@@ -425,7 +434,7 @@ const ManageUser = (props) => {
                         </lable>
                         <lable>
                             faq New Answer
-                            <input type="text" onChange={(e) => setAnswer(e.target.value)} />
+                            <input type="text"  onChange={(e) => setAnswer(e.target.value)} />
 
                         </lable>
                         <button type="submit">edit</button>

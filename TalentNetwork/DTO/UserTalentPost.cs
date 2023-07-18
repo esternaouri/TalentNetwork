@@ -9,5 +9,6 @@
 
         public int? ContactPhone { get; set; }
         public string? Talent { get; set; }
+        public string? Email { get; set; }  
     }
 }

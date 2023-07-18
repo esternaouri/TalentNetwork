@@ -18,9 +18,13 @@ export class UsersTable extends Component {
             newPassword: "",
             newIsAdmin: 0,
             id: 0,
-            isOkMessage: false
+            isOkMessage: false,
+            isFilterd: false,
+            filterdArr: [],
+            filterByName:"",
+            filterById:0,
         };
-
+        
     }
     async del(id) {
         try {
@@ -81,13 +85,40 @@ export class UsersTable extends Component {
         this.populateProductsData();
     }
 
+    handleFilterName = (e) =>
+    {
+        this.setState({ filterByName: e.target.value, isFilterd: true });
+        const filterdArr = this.state.items.filter(item =>
+            item.userName.toLowerCase().includes(e.target.value.toLowerCase()) 
+
+
+        );
+        this.setState({ filterdArr });
+
+    }
+    handleFilterId = (e) => {
+        this.setState({ filterById: e.target.value });
+        const filter = this.state.items.filter(item =>
+            item.userId==e.target.value
+
+        );
+        if (e.target.value == 0) {
+            this.setState({ filterdArr: this.state.items })
+        }
+        else
+        {
+            this.setState({ filterdArr: filter });
+
+        }
+        
+    }
     render() {
-        let { items, loading, isOkMessage } = this.state
+        let { items, loading, filterdArr } = this.state
         if (loading)
             return (<div>no users</div>);
 
 
-        let rows = items.map((p, i) => {
+        let rows = filterdArr.map((p, i) => {
             return (<tr>
                 <td >{p.userId}</td>
                 <td >{p.userName}</td>
@@ -109,6 +140,15 @@ export class UsersTable extends Component {
                 <h1>Users List</h1>
 
                 <hr />
+                <div style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    margin:"3%"
+                }}>
+                <input className="form-control" type="text" placeholder="Find By Name🔎" onChange={this.handleFilterName} /> <hr></hr>
+                    <input type="text" className="form-control" placeholder="Find By Id🔎" onChange={this.handleFilterId} /> <br></br>
+                </div>
+                <hr></hr>
                 {this.state.edit &&
                     <form onSubmit={(e) => { this.onSubEdit(e) }} >
                         <label>
@@ -161,7 +201,7 @@ export class UsersTable extends Component {
     }
     populateProductsData() {
         fetch(`${REACT_APP_API_URL}/users`).then(res => res.json()).
-            then(json => this.setState({ items: json, loading: false })).
+            then(json => this.setState({ items: json, loading: false, filterdArr :json})).
             catch(err => console.error(err));
     }
 }
