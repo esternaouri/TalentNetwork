@@ -75,7 +75,7 @@ export class UsersTable extends Component {
             })
             .then(data => {
 
-                console.log(data);
+                
             })
             .catch(error => {
                 console.error(error);
@@ -119,7 +119,7 @@ export class UsersTable extends Component {
 
 
         let rows = filterdArr.map((p, i) => {
-            return (<tr>
+            return (<tr key={"f_tr_"+i }>
                 <td >{p.userId}</td>
                 <td >{p.userName}</td>
                 <td >{p.isAdmin}</td>

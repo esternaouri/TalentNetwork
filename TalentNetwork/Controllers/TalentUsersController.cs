@@ -98,6 +98,8 @@ namespace TalentNetwork.Controllers
                 var userInUsers = _context.Users.FirstOrDefault(x => x.UserId == id);
                 userInUsers.Email=talentUser.Email;
                 userIndb.Talent = talentUser.Talent;
+                userIndb.City = talentUser.City;
+
                 userIndb.ContactPhone = talentUser.ContactPhone;
                 await _context.SaveChangesAsync();
 

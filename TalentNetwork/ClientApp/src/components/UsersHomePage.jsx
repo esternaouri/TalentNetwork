@@ -128,24 +128,23 @@ export class UsersHomePage extends Component {
         const indexOfFirstPage = indexOfLastPage - postsPerPage;
         const currentPosts = items.slice(indexOfFirstPage, indexOfLastPage)
         let rowsMore = this.state.moreDetailsProj.map((p, i) => {
-            return (<tr key={i }>
-                <td >  {p.projectName}<hr></hr></td>
-
-                <td> {p.projectPrice.toLocaleString('en-US', {
+            return (<span key={"proj_"+i}>
+                <span>{p.projectName}</span>
+                <span> {p.projectPrice.toLocaleString('en-US', {
                         style: 'currency',
                         currency: 'USD'
-                    })}</td>
-            </tr>);
+                    })}</span><hr></hr>
+            </span>);
         });
         //
         let rowsMoreFaq = this.state.moreDetailsFaqs.map((p, i) => {
-            return (<ul key={i}>
-                <li key={i}>🆎 Q: {p.question}
+            return (<span key={"faq_"+i}>
+                <li key={"faq_li" + i}>🆎 Q: {p.question}
                     <button className=" btn btn-light" onClick={() => this.toggleAnswer(p.faqId)}>answer</button><br></br>
                     {this.state.clickForAnswer && this.state.currentFaq == p.faqId && <> {p.answer}</>}
                 </li>
                 <hr></hr>
-            </ul>);
+            </span>);
         });
 
         try {
@@ -154,27 +153,27 @@ export class UsersHomePage extends Component {
                 return currentPosts.map((item, index) => {
                     return (
                         
-                        < tbody >
-                            < tr key={item.userId} style={{
+                        < tbody key={"_body1_"+index }>
+                            < tr key={"f_tr_"+index} style={{
                                     width: "300px", height: "200px", border: " 2px solid #000", borderRadius: "20px", padding: " 10px",
                                     "boxshadow": "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.05)"
                                 }}>
-                                    <td>{postsPerPage * (currentPage - 1) + index + 1}</td>
-                                    <td>{item.userId}</td>
-                                    <td>{item.userName}</td>
-                                    <td>{item.talent}</td>
-                                    <td>{item.city}</td>
-                                    <td>{item.email}</td>
+                                <td key={"f_td"+index }>{postsPerPage * (currentPage - 1) + index + 1}</td>
+                                <td key={"f_td"+12 }>{item.userId}</td>
+                                <td key={"f_td" + 13 }>{item.userName}</td>
+                                <td key={"f_td" + 14}>{item.talent}</td>
+                                <td key={"f_td" + 15}>{item.city}</td>
+                                <td key={"f_td" + 16}>{item.email}</td>
+                                <td key={"f_td" + 17}>{item.contactPhone}</td>
+                                <td key={"f_td" + 18}> <button className="btn btn-success" onClick={() => this.watsup(item.contactPhone)}>Whatsaap💬</button></td>
+                                <td key={"f_td" + 19}><button className="btn btn-secondary" onClick={() => this.toggleDetails(item.userId, index)}>More </button>
+                                    {this.state.currentItem == index && this.state.clickForMoreDetails && < span style={{ display: "flex", justifyContent:"center" }}>
+                                        <span> <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /> </span>
+                                        <span>{rowsMore}</span>
 
-                                <td>{item.contactPhone} <button className="btn btn-success" onClick={() => this.watsup(item.contactPhone)}>Whatsaap💬</button></td>
-                                <td><button className="btn btn-secondary" onClick={() => this.toggleDetails(item.userId, index)}>More </button>
-                                    {this.state.currentItem == index && this.state.clickForMoreDetails && < td style={{ display: "flex", justifyContent:"center" }}>
-                                        <td> <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /> </td>
-                                        <td>{rowsMore}</td>
+                                            <span>{rowsMoreFaq}</span>
 
-                                            <td>{rowsMoreFaq}</td>
-
-                                        </td>}
+                                        </span>}
 
                                     </td>
                                 </tr>
@@ -187,19 +186,19 @@ export class UsersHomePage extends Component {
                 return this.state.filterdArr.map((item, index) => {
                     return (
 
-                        < tbody >
-                            < tr key={item.userId} style={{
+                        < tbody key={"_body2" + 2}>
+                            < tr key={ "tr_"+index} style={{
                                     width: "300px", height: "200px", border: " 2px solid #000", borderRadius: "20px", padding: " 10px",
                                     "boxShadow": "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.05)"
                                 }}>
-                                    <td>{postsPerPage * (currentPage - 1) + index + 1}</td>
-                                    <td>{item.userId}</td>
-                                    <td>{item.userName}</td>
-                                    <td>{item.talent}</td>
-                                    <td>{item.city}</td>
-                                <td>{item.email}</td>
-                                <td>{item.contactPhone} <button className ="btn btn-success" onClick={() => this.watsup(item.contactPhone)}>Whatsaap💬</button></td>
-                                    <td><button className="btn btn-secondary" onClick={() => this.toggleDetails(item.userId, index)}>More </button>
+                                <td key={"_td" + 1}>{postsPerPage * (currentPage - 1) + index + 1}</td>
+                                <td key={"_td" + 10}>{item.userId}</td>
+                                <td key={"_td" + 12}>{item.userName}</td>
+                                <td key={"_td" + 11}>{item.talent}</td>
+                                <td key={"_td" + 17}>{item.city}</td>
+                                <td key={"_td" + 12}>{item.email}</td>
+                                <td key={"_td" + 14}>{item.contactPhone} <button className ="btn btn-success" onClick={() => this.watsup(item.contactPhone)}>Whatsaap💬</button></td>
+                                <td key={"_td" + 15}><button className="btn btn-secondary" onClick={() => this.toggleDetails(item.userId, index)}>More </button>
                                         {this.state.currentItem == index && this.state.clickForMoreDetails && < td style={{ display: "flex", justifyContent: "center" }}>
                                             <td> <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /> </td>
                                             <td>{rowsMore}</td>
@@ -239,7 +238,7 @@ export class UsersHomePage extends Component {
             <nav>
                 <ul className="pagination">
                     {pageNumbers.map(number => (
-                        <li  className={this.state.currentPage === number ? 'page-item active' : 'page-item'}>
+                        <li key={ "pagination_"+number} className={this.state.currentPage === number ? 'page-item active' : 'page-item'}>
                             <button onClick={() => pagination(number)} className="page-link"> {number} </button>
                         </li>
                     ) )}
@@ -299,10 +298,12 @@ export class UsersHomePage extends Component {
                                 <th key="header1" >User Id</th>
                                 <th key="header2" >User Name</th>
                                 <th key="header3">Talent</th>
-                                <td key="header4" >City</td>
-                                <td key="header5">Email</td>
+                                <th key="header4" >City</th>
+                                <th key="header5">Email</th>
                                 <th key="header6" >contact Phone</th>
                                 <th key="header7"></th>
+                                <th key="header8"></th>
+
                             </tr>
                         </thead>
                         { this.showData()}

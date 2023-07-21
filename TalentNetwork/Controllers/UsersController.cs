@@ -10,10 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TalentNetworDAL.Models;
 using TalentNetwork.DTO;
-using NuGet.Protocol.Plugins;
-using NuGet.Protocol.Core.Types;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-
 namespace TalentNetwork.Controllers
 {
     [Route("[controller]")]
@@ -54,10 +50,13 @@ namespace TalentNetwork.Controllers
         public IActionResult Register(UserRegist user)
         {
             var userInDb = _context.Users.FirstOrDefault(u => u.UserId == user.UserId);
+           // var maxId = _context.Users.Max(u=>u.UserId);
+
             if (userInDb == null)
             {
                 var ph = new PasswordHasher<UserRegist>();
                 user.Password = ph.HashPassword(user, user.Password);
+
                 var post = new User
                 {
                     IsAdmin = 1,

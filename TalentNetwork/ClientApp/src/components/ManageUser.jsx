@@ -85,7 +85,6 @@ const ManageUser = (props) => {
                     setAddProject(false);
                     fetchUserData();
 
-                    console.log(data);
                 }
                 else { alert("Title Not Okay-Must Be Less Than 10 Characters") }
 
@@ -112,11 +111,9 @@ const ManageUser = (props) => {
                 fetchUserData();
 
                 alert("Saved");
-                console.log(response.data);
             })
             .catch(error => {
                 alert("Title Not Okay-Must Be Less Than 10 Characters")
-                console.error(error);
             });
     }
     //delete project
@@ -127,10 +124,9 @@ const ManageUser = (props) => {
                 alert("Saved");
                 fetchUserData();
 
-                console.log(res);
             })
             .catch((err) => {
-                console.log(err.message);
+                alert(err.message);
             });
 
     }
@@ -172,10 +168,9 @@ const ManageUser = (props) => {
                 alert("OK");
                 fetchUserData();
 
-                console.log(res);
+               
             })
             .catch((err) => {
-                console.log(err.message);
             });
 
     }
@@ -196,11 +191,8 @@ const ManageUser = (props) => {
                 alert("Saved");
                 fetchUserData();
 
-                console.log(response.data);
             })
             .catch(error => {
-                // Handle error
-                console.error(error);
             });
     }
     // bloean to edit faq
@@ -212,7 +204,7 @@ const ManageUser = (props) => {
     let rowsProj = ProjsData.map((p, i) => {
         return (
 
-            <tr >
+            <tr key={"p_data"+i } >
                 <td> {p.projectName}</td>
                 <td> {p.projectPrice.toLocaleString('en-US', {
                     style: 'currency',
@@ -227,7 +219,7 @@ const ManageUser = (props) => {
     });
     // array of faqs rows
     let rowsFaqs = faqsData.map((p, i) => {
-        return (<tr>
+        return (<tr key={"f_data"+i }>
             <td> {p.question}</td>
             <td>{p.answer}</td>
             <td>  <button className="btn btn-success" onClick={() => editFaqs(p.faqId)}>🖊️</button></td>
@@ -282,7 +274,6 @@ const ManageUser = (props) => {
 
         try {
             const res = await axios.put(`${REACT_APP_API_URL}/TalentUsers/` + userId, post)
-            console.log(res.data)
             alert("ok");
             fetchUserData();
 
@@ -327,11 +318,11 @@ const ManageUser = (props) => {
                     display: "flex",
                     justifyContent: "space-between"
                 }}>
-                    <th> Talent :  </th>{UserData.talent}  
-                    <th> City :   </th>{UserData.city} 
-                    <th>Phone : </th> {UserData.contactPhone} 
-                    <th>Name :  </th>{UserData.userName} 
-                    <th> Email : </th> {UserData.email} 
+                    <span> Talent :  </span>{UserData.talent}  
+                    <span> City :   </span>{UserData.city} 
+                    <span>Phone : </span> {UserData.contactPhone} 
+                    <span>Name :  </span>{UserData.userName} 
+                    <span> Email : </span> {UserData.email} 
                     <div className="d-flex justify-content-end">
                         <button className="btn btn-outline-success" onClick={() => setFirstInfo(!firstInfo)}>🖊️</button>
                     </div>
@@ -342,18 +333,18 @@ const ManageUser = (props) => {
                     <form onSubmit={(e) => basicInfo(e)}>
                         <label>
                             Talent:
-                            <input type="text"  onChange={(e) => setTalent(e.target.value)} />
+                            <input type="text" placeholder={UserData.talent} onChange={(e) => setTalent(e.target.value)} />
                         </label>
                         <label>
                             City:
-                            <input type="text" onChange={(e) => setCity(e.target.value)} />
+                            <input type="text" placeholder={UserData.city} onChange={(e) => setCity(e.target.value)} />
                         </label> <label>
                             Phone:
-                            <input type="number" onChange={(e) => setPhone(e.target.value)} />
+                            <input type="number" placeholder={UserData.contactPhone} onChange={(e) => setPhone(e.target.value)} />
                         </label>
                         <label>
                             Email:
-                            <input type="email"  onChange={(e) => setEmail(e.target.value)} />
+                            <input type="email" placeholder={UserData.email} onChange={(e) => setEmail(e.target.value)} />
                         </label>
                         <button type="submit">edit!</button>
 
@@ -410,7 +401,7 @@ const ManageUser = (props) => {
                 {rowsProj.length == 0 && <h3 style={{ textAlign: "center", color: "red" }}> No Projects Data, Add Project  </h3>}
 
 
-                <h5 class="card-title">Faq <button className="btn btn-outline-success" onClick={handleAddFaq}>  + </button></h5>
+                <h5 className="card-title">Faq <button className="btn btn-outline-success" onClick={handleAddFaq}>  + </button></h5>
                
                 {addFaq &&
                     <form onSubmit={addFaqHandle} >
