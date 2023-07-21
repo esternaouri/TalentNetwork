@@ -1,5 +1,5 @@
 ﻿import { createContext, useContext, useEffect, useState } from "react";
-import { Card,Form, Button } from 'react-bootstrap';
+import { Card, Form, Button } from 'react-bootstrap';
 
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
@@ -41,7 +41,7 @@ const Login = () => {
             seIsAdmin(CurentUser.isAdmin);
             setUserId(CurentUser.userId);
             setUserName(CurentUser.userName);
-      
+
         } catch (e) {
             alert(" USER ID OR PASSWORD IS INCORRECT")
         }
@@ -54,52 +54,52 @@ const Login = () => {
         fetchToken();
     }
 
- 
-  
-   
+
+
+
 
     return (
 
         <div>
 
-            <Card style={{  "boxShadow": "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.02)" }}>
+            <Card style={{ }}>
                 <Card.Body>
-                    <img className=" card-img-top"style={{
-                        width: "12%", height: "12%", boxShadow: "0 2px 4px rgba(0, 0, 0, 9)"
+                    <img className=" card-img-top" style={{
+                        width: "12%", height: "12%",
                     }} src="/BEAR GREEN.png" alt="logo" /> <h2>Try The Best You Are Money As It Sounds "kling, klang"
-                    </h2> 
+                    </h2>
                     <Card.Title>Login!</Card.Title>
 
-            <Form onSubmit={handleSubmit} >
-                <Form.Group controlId="formEmail">
-                    <Form.Label>User Id</Form.Label>
-                    <Form.Control
-                        type="text"
-                         placeholder="Enter Id"
-                         onChange={(e) => setEnteredUserId(e.target.value)}
-                    />
-                </Form.Group>
+                    <Form onSubmit={handleSubmit} >
+                        <Form.Group controlId="formEmail">
+                            <Form.Label>User Id</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Enter Id"
+                                onChange={(e) => setEnteredUserId(e.target.value)}
+                            />
+                        </Form.Group>
 
-                <Form.Group controlId="formPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                        type="password"
-                            placeholder="Password"
-                            onChange={(e) => setEnteredPassword(e.target.value)}
-                    />
-                </Form.Group>
+                        <Form.Group controlId="formPassword">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control
+                                type="password"
+                                placeholder="Password"
+                                onChange={(e) => setEnteredPassword(e.target.value)}
+                            />
+                        </Form.Group>
 
-                <Button variant="primary" type="submit">
-                    Log in
-                </Button>
+                        <Button variant="primary" type="submit">
+                            Log in
+                        </Button>
                     </Form>
 
                     <hr></hr>
-                <Link to="/register">New Here? Let Regist!</Link>
+                    <Link to="/register">New Here? Let Regist!</Link>
                 </Card.Body>
             </Card>
-                </div>
-              
+        </div>
+
 
     );
 };

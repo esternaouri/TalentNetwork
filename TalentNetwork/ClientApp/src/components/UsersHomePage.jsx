@@ -186,26 +186,26 @@ export class UsersHomePage extends Component {
                 return this.state.filterdArr.map((item, index) => {
                     return (
 
-                        < tbody key={"_body2" + 2}>
+                        < tbody key={"_body2" + index}>
                             < tr key={ "tr_"+index} style={{
                                     width: "300px", height: "200px", border: " 2px solid #000", borderRadius: "20px", padding: " 10px",
                                     "boxShadow": "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.05)"
                                 }}>
                                 <td key={"_td" + 1}>{postsPerPage * (currentPage - 1) + index + 1}</td>
                                 <td key={"_td" + 10}>{item.userId}</td>
-                                <td key={"_td" + 12}>{item.userName}</td>
-                                <td key={"_td" + 11}>{item.talent}</td>
+                                <td key={"_td" + 312}>{item.userName}</td>
+                                <td key={"_td" + 111}>{item.talent}</td>
                                 <td key={"_td" + 17}>{item.city}</td>
                                 <td key={"_td" + 12}>{item.email}</td>
                                 <td key={"_td" + 14}>{item.contactPhone} <button className ="btn btn-success" onClick={() => this.watsup(item.contactPhone)}>Whatsaap💬</button></td>
                                 <td key={"_td" + 15}><button className="btn btn-secondary" onClick={() => this.toggleDetails(item.userId, index)}>More </button>
-                                        {this.state.currentItem == index && this.state.clickForMoreDetails && < td style={{ display: "flex", justifyContent: "center" }}>
-                                            <td> <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /> </td>
-                                            <td>{rowsMore}</td>
+                                        {this.state.currentItem == index && this.state.clickForMoreDetails && < span style={{ display: "flex", justifyContent: "center" }}>
+                                            <span> <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /> </span>
+                                            <span>{rowsMore}</span>
 
-                                            <td>{rowsMoreFaq}</td>
+                                            <span>{rowsMoreFaq}</span>
 
-                                        </td>}
+                                        </span>}
 
                                     </td>
                                 </tr>

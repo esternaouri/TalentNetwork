@@ -56,7 +56,8 @@ const ManageUser = (props) => {
         fetch(`${REACT_APP_API_URL}/TalentUsers/` + props.id).then(res => res.json()).
             then(json => setUserData(json)).
             catch(err => console.error(err));
-       
+
+
 
     }
 
@@ -204,7 +205,7 @@ const ManageUser = (props) => {
     let rowsProj = ProjsData.map((p, i) => {
         return (
 
-            <tr key={"p_data"+i } >
+            <tr key={"p_data"+i} >
                 <td> {p.projectName}</td>
                 <td> {p.projectPrice.toLocaleString('en-US', {
                     style: 'currency',
@@ -263,6 +264,7 @@ const ManageUser = (props) => {
     // basic information
     const basicInfo = async (e) => {
         e.preventDefault();
+       
         const post = {
             Talent: talent,
             ContactPhone: phone,
@@ -281,7 +283,7 @@ const ManageUser = (props) => {
 
 
         } catch (e) {
-            alert(e)
+            alert("enter all parameters")
         }
     }
     //
@@ -301,8 +303,11 @@ const ManageUser = (props) => {
 
     useEffect(() => {
         fetchUserData();
-
+        
     }, [])
+
+
+
 
 
     return (
@@ -371,15 +376,15 @@ const ManageUser = (props) => {
 
                 {editProject &&
                     <form onSubmit={postEditProject}>
-                        <lable>
+                        <div>
                             Project New Name
                             <input type="text"  onChange={(e) => setAddProjectName(e.target.value)} />
-                        </lable>
-                        <lable>
+                        </div>
+                        <div>
                             Project New price
                             <input type="number"  onChange={(e) => setAddProjectPrice(e.target.value)} />
 
-                        </lable>
+                        </div>
                         <button type="submit">edit</button>
                     </form>
                 }
@@ -419,15 +424,15 @@ const ManageUser = (props) => {
                 }<></>
                 {editFaq &&
                     <form onSubmit={editFaqHandleSub}>
-                        <lable>
+                        <div>
                             Faq New Qeustion
                             <input type="text" onChange={(e) => setquestion(e.target.value)} />
-                        </lable>
-                        <lable>
+                        </div>
+                        <div>
                             faq New Answer
                             <input type="text"  onChange={(e) => setAnswer(e.target.value)} />
 
-                        </lable>
+                        </div>
                         <button type="submit">edit</button>
                     </form>
                 }<></>

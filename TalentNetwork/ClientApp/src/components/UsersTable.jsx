@@ -122,6 +122,8 @@ export class UsersTable extends Component {
             return (<tr key={"f_tr_"+i }>
                 <td >{p.userId}</td>
                 <td >{p.userName}</td>
+                <td >{p.email}</td>
+
                 <td >{p.isAdmin}</td>
 
                 <td scope="row"> <button className="btn btn-info" onClick={(e) => this.handleEditClick(p.userId, p.userName, p.password, p.isAdmin)}> 🖊️</button> <><br></br></>
@@ -187,6 +189,7 @@ export class UsersTable extends Component {
                             <tr>
                                 <th >User id</th>
                                 <th >user name</th>
+                                <th >Email</th>
                                 <th >is admin</th>
                                 <th >Edit</th>
                                 <th >Delete</th>

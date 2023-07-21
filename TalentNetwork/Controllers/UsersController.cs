@@ -50,7 +50,7 @@ namespace TalentNetwork.Controllers
         public IActionResult Register(UserRegist user)
         {
             var userInDb = _context.Users.FirstOrDefault(u => u.UserId == user.UserId);
-           // var maxId = _context.Users.Max(u=>u.UserId);
+            // var maxId = _context.Users.Max(u=>u.UserId);
 
             if (userInDb == null)
             {
@@ -208,7 +208,7 @@ namespace TalentNetwork.Controllers
             {
                 return NotFound();
             }
-            
+
 
 
             var ph = new PasswordHasher<EditUser>();
@@ -274,7 +274,7 @@ namespace TalentNetwork.Controllers
         public IActionResult Delete(int id)
         {
             var userInUsers = _context.Users.FirstOrDefault(u => u.UserId == id);
-            
+
             if (userInUsers == null)
             {
                 return NotFound();
@@ -283,7 +283,7 @@ namespace TalentNetwork.Controllers
             var projectForTalent = _context.ProjectsForTalents.FirstOrDefault(u => u.UserId == id);
             var FAQ = _context.Faqs.FirstOrDefault(f => f.UserId == id);
 
-            if (userInUsersTalents !=null)
+            if (userInUsersTalents != null)
             {
                 _context.TalentUsers.Remove(userInUsersTalents);
                 _context.SaveChanges();
@@ -300,15 +300,15 @@ namespace TalentNetwork.Controllers
                 _context.SaveChanges();
             }
 
-                _context.Users.Remove(userInUsers);
+            _context.Users.Remove(userInUsers);
 
             _context.SaveChanges();
-                return Ok("OK");
+            return Ok("OK");
         }
 
-    
 
-    private bool UserExists(int id)
+
+        private bool UserExists(int id)
         {
             return (_context.Users?.Any(e => e.UserId == id)).GetValueOrDefault();
         }
