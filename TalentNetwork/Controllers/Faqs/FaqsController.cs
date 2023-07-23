@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TalentNetworDAL.Models;
-using TalentNetwork.DTO;
 
 namespace TalentNetwork.Controllers.Faqs
 {
@@ -15,7 +10,6 @@ namespace TalentNetwork.Controllers.Faqs
     public class FaqsController : ControllerBase
     {
         private readonly TalentNetworkContext _context;
-
         public FaqsController(TalentNetworkContext context)
         {
             _context = context;
@@ -70,8 +64,6 @@ namespace TalentNetwork.Controllers.Faqs
 
             existingItem.Question = faq.Question;
             existingItem.Answer = faq.Answer;
-
-
 
             try
             {

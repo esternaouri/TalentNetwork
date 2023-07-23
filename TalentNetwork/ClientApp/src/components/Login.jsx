@@ -1,8 +1,8 @@
-﻿import { createContext, useContext, useEffect, useState } from "react";
+﻿import {  useContext, useState } from "react";
 import { Card, Form, Button } from 'react-bootstrap';
 
 import axios from 'axios';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Context } from "../App"
 import { UContext } from "../App"
 import { AContext } from "../App"
@@ -13,20 +13,16 @@ const Login = () => {
 
     let [enteredPassword, setEnteredPassword] = useState("");
     let [enteredUserId, setEnteredUserId] = useState(0);
-    const [fetchedToken, setFetchedToken] = useState([])
+    const [fetchedToken, setFetchedToken] = useState([]);
 
-    const [fetchedUser, setFetchedUser] = useState([])
+    const [fetchedUser, setFetchedUser] = useState([]);
     const [isLogin, setLogin] = useContext(Context);
     const [userId, setUserId] = useContext(UContext);
     const [IsAdmin, seIsAdmin] = useContext(AContext);
     const [userName, setUserName] = useContext(NContext);
 
-    let navigate = useNavigate();
-
-
 
     const fetchToken = async (e) => {
-
 
         const post = {
             UserId: enteredUserId,
@@ -61,7 +57,6 @@ const Login = () => {
     return (
 
         <div>
-
             <Card style={{ }}>
                 <Card.Body>
                     <img className=" card-img-top" style={{

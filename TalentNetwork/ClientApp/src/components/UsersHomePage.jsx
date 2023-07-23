@@ -31,9 +31,10 @@ export class UsersHomePage extends Component {
 
         };
     }
-
-    //open details for row
-    toggleDetails = (id,i) => {
+    //-------------------------------------------------------------------------------------------------------------------
+    //---------------------------------------Hndel open more details-----------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------------------
+    toggleDetails = (id, i) => {
         this.setState(prevState => ({
             clickForMoreDetails: !prevState.clickForMoreDetails
         }));
@@ -58,7 +59,10 @@ export class UsersHomePage extends Component {
         return () => URL.revokeObjectURL(this.state.imageUrl);
     
     };
-    //open answer in details of a row
+
+    //-------------------------------------------------------------------------------------------------------------------
+    //---------------------------------------Hndel open more faqs-----------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------------------
     toggleAnswer = (i) =>
     {
         this.setState(prevState => ({
@@ -66,12 +70,19 @@ export class UsersHomePage extends Component {
         }));
         this.setState({ currentFaq: i });
     }
-    // fetch home table
+
+    //-------------------------------------------------------------------------------------------------------------------
+    //---------------------------------------Fetch main table data ------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------------------
     componentDidMount() {
         this.populateTableData();
         this.setState({ currentUser : this.props.id})
     }
-    // filtering by city 
+
+    //-------------------------------------------------------------------------------------------------------------------
+    //---------------------------------------Handel filtering -----------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------------------
+
     handleFilterCity = (event) => {
         const filterByCity = event.target.value;
         this.setState({ isFilterd: true });
@@ -86,7 +97,6 @@ export class UsersHomePage extends Component {
 
         }
     };
-    //filtering by proffesion
     handleFilterSub = (event) => {
         const filterBySub = event.target.value;
         this.setState({ filterBySub }, this.filterdArr);
@@ -99,9 +109,7 @@ export class UsersHomePage extends Component {
 
         }
         
-    };
- 
-    // rendering filterd array of data
+    }; 
     filterdArr = () => {
         const { filterByCity, filterBySub } = this.state;
         const filterdArr = this.state.items.filter(item =>
@@ -112,7 +120,10 @@ export class UsersHomePage extends Component {
         );
         this.setState({ filterdArr });
     };
-    //
+
+    //-------------------------------------------------------------------------------------------------------------------
+    //---------------------------------------open watssup --------- -----------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------------------
     watsup = (phone) =>
     {
         const url = `https://wa.me/${phone}`;
@@ -120,7 +131,10 @@ export class UsersHomePage extends Component {
         window.open(url, '_blank');
     }
 
-    // data of the main table rendering by pagination or filterring
+
+    //-------------------------------------------------------------------------------------------------------------------
+    //---------------------------------------SHOW MAIN TABLE DATA AND PAGINATION  --------------- ------------------------
+    //-------------------------------------------------------------------------------------------------------------------
     showData = () => {
 
         const { postsPerPage, currentPage, items } = this.state;
@@ -166,7 +180,7 @@ export class UsersHomePage extends Component {
                                 <td key={"f_td" + 16}>{item.email}</td>
                                 <td key={"f_td" + 17}>{item.contactPhone}</td>
                                 <td key={"f_td" + 18}> <button className="btn btn-success" onClick={() => this.watsup(item.contactPhone)}>Whatsaap💬</button></td>
-                                <td key={"f_td" + 19}><button className="btn btn-secondary" onClick={() => this.toggleDetails(item.userId, index)}>More </button>
+                                <td className="card" key={"f_td" + 19}><button className="btn btn-secondary" onClick={() => this.toggleDetails(item.userId, index)}>More </button>
                                     {this.state.currentItem == index && this.state.clickForMoreDetails && < span style={{ display: "flex", justifyContent:"center" }}>
                                         <span> <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /> </span>
                                         <span>{rowsMore}</span>
@@ -197,8 +211,9 @@ export class UsersHomePage extends Component {
                                 <td key={"_td" + 111}>{item.talent}</td>
                                 <td key={"_td" + 17}>{item.city}</td>
                                 <td key={"_td" + 12}>{item.email}</td>
-                                <td key={"_td" + 14}>{item.contactPhone} <button className ="btn btn-success" onClick={() => this.watsup(item.contactPhone)}>Whatsaap💬</button></td>
-                                <td key={"_td" + 15}><button className="btn btn-secondary" onClick={() => this.toggleDetails(item.userId, index)}>More </button>
+                                <td key={"_td" + 14}>{item.contactPhone} <button className="btn btn-success" onClick={() => this.watsup(item.contactPhone)}>Whatsaap💬</button></td>
+                                <td> <button className="btn btn-secondary" onClick={() => this.toggleDetails(item.userId, index)}>More </button></td>
+                                <td  className= "card" key={"_td" + 15}>
                                         {this.state.currentItem == index && this.state.clickForMoreDetails && < span style={{ display: "flex", justifyContent: "center" }}>
                                             <span> <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /> </span>
                                             <span>{rowsMore}</span>
@@ -220,7 +235,8 @@ export class UsersHomePage extends Component {
             alert(e.message)
         }
     }
-    //mange pagination
+    //-----------------------------------------------------------------------------------------------------
+    
     showPagination = () => {
         const { postsPerPage, filterdArr } = this.state;
         const pageNumbers = [];
@@ -253,6 +269,7 @@ export class UsersHomePage extends Component {
     handleRefresh = () => {
         window.location.reload();
     };
+
     render() {
         let {  loading } = this.state
         if (loading)

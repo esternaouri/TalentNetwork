@@ -34,15 +34,11 @@ export class NavMenu extends Component {
             <ul className="navbar-nav flex-grow">
                         <NavItem>
                             <NavLink style={{color:"red"}} tag={Link} className="text-dark" to="/">About</NavLink>
-
                         </NavItem>
                     
                         <NavItem>
                             <NavLink style={{ color: "red" }}  tag={Link} className="text-dark" to="/login">Home</NavLink>
-
-
-              </NavItem>
-                  
+                        </NavItem>
                         <NavItem>
                         </NavItem>
                     </ul>

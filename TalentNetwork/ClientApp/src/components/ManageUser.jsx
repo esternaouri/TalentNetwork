@@ -36,32 +36,27 @@ const ManageUser = (props) => {
     const [answer, setAnswer] = useState("");
 
 
-    //bollen click for edit project
-    const handleEdit = (id) => {
-        setEditproject(!editProject);
-        setIdtoEdit(id);
-    }
-    //fetching all datas
-    const fetchUserData = async () => {
+    
 
-        fetch(`${REACT_APP_API_URL}/ProjectsForTalents/` + props.id).then(res => res.json()).
-            then(json => setProjData(json)).
-            catch(err => console.error(err));
+    //------------------------------------------ --------------------------------------------------------------------------------------------//
+    //------------------------------------------ manging Projects---------------------------------------------------------------------------//
+    //------------------------------------------ -------------------------------------------------------------------------------------------//
+    let rowsProj = ProjsData.map((p, i) => {
+        return (
 
-        fetch(`${REACT_APP_API_URL}/Faqs/` + props.id).then(res => res.json()).
-            then(json => setFaqs(json)).
-            catch(err => console.error(err));
+            <tr key={"p_data" + i} >
+                <td> {p.projectName}</td>
+                <td> {p.projectPrice.toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD'
+                })}</td>
+                <td> <button className="btn btn-success" onClick={() => handleEdit(p.projectId)}>🖊️</button></td>
 
+                <td>   <button className="btn btn-danger" onClick={() => DelProject(p.projectId)} >🗑️</button></td>
+            </tr>
 
-        fetch(`${REACT_APP_API_URL}/TalentUsers/` + props.id).then(res => res.json()).
-            then(json => setUserData(json)).
-            catch(err => console.error(err));
-
-
-
-    }
-
-    // add project 
+        );
+    });
     const addProject = async (e) => {
         e.preventDefault();
 
@@ -95,7 +90,6 @@ const ManageUser = (props) => {
                 alert("not okay ")
             });
     }
-    // edit project
     const postEditProject = async (e) => {
         e.preventDefault();
 
@@ -117,7 +111,6 @@ const ManageUser = (props) => {
                 alert("Title Not Okay-Must Be Less Than 10 Characters")
             });
     }
-    //delete project
     const DelProject = (projectId) => {
         axios
             .delete(`${REACT_APP_API_URL}/ProjectsForTalents/` + projectId)
@@ -131,7 +124,68 @@ const ManageUser = (props) => {
             });
 
     }
-    // add faq
+    const handleAddProject = () => {
+        setAddProject(!AddProject);
+    }
+    const handleEdit = (id) => {
+        setEditproject(!editProject);
+        setIdtoEdit(id);
+    }
+
+    //------------------------------------------ --------------------------------------------------------------------------------------------//
+    //------------------------------------------ manging Faqs------------------------------------------------------------------------------//
+    //------------------------------------------ -------------------------------------------------------------------------------------------//
+    const handleAddFaq = () => {
+        setAddFaq(!addFaq);
+    }
+    let rowsFaqs = faqsData.map((p, i) => {
+        return (<tr key={"f_data" + i}>
+            <td> {p.question}</td>
+            <td>{p.answer}</td>
+            <td>  <button className="btn btn-success" onClick={() => editFaqs(p.faqId)}>🖊️</button></td>
+            <td><button className="btn btn-danger" onClick={() => delFaq(p.faqId)}>🗑️</button></td>
+
+
+        </tr>);
+    });
+    const editFaqs = (id) => {
+        setEditFaq(!editFaq);
+        setIdtoEdit(id);
+    }
+    const delFaq = (FaqId) => {
+
+        axios
+            .delete(`${REACT_APP_API_URL}/Faqs/` + FaqId)
+            .then((res) => {
+                alert("OK");
+                fetchUserData();
+
+
+            })
+            .catch((err) => {
+            });
+
+    }
+    const editFaqHandleSub = (e) => {
+
+        e.preventDefault();
+        setEditFaq(!editFaq)
+        const post = {
+            FaqId: idToEdit,
+            UserId: userId,
+            Question: qestion,
+            Answer: answer
+        }
+
+        axios.put(`${REACT_APP_API_URL}/Faqs/` + idToEdit, post)
+            .then(response => {
+                alert("Saved");
+                fetchUserData();
+
+            })
+            .catch(error => {
+            });
+    }
     const addFaqHandle = (e) => {
         e.preventDefault();
 
@@ -160,84 +214,11 @@ const ManageUser = (props) => {
                 // Handle the error
             });
     }
-    // delete faq
-    const delFaq = (FaqId) => {
-
-        axios
-            .delete(`${REACT_APP_API_URL}/Faqs/` + FaqId)
-            .then((res) => {
-                alert("OK");
-                fetchUserData();
-
-               
-            })
-            .catch((err) => {
-            });
-
-    }
-    // edit faq
-    const editFaqHandleSub = (e) => {
-
-        e.preventDefault();
-        setEditFaq(!editFaq)
-        const post = {
-            FaqId: idToEdit,
-            UserId: userId,
-            Question: qestion,
-            Answer: answer
-        }
-
-        axios.put(`${REACT_APP_API_URL}/Faqs/` + idToEdit, post)
-            .then(response => {
-                alert("Saved");
-                fetchUserData();
-
-            })
-            .catch(error => {
-            });
-    }
-    // bloean to edit faq
-    const editFaqs = (id) => {
-        setEditFaq(!editFaq);
-        setIdtoEdit(id);
-    }
-    // array of projects rows
-    let rowsProj = ProjsData.map((p, i) => {
-        return (
-
-            <tr key={"p_data"+i} >
-                <td> {p.projectName}</td>
-                <td> {p.projectPrice.toLocaleString('en-US', {
-                    style: 'currency',
-                    currency: 'USD'
-                })}</td>
-                <td> <button className="btn btn-success" onClick={() => handleEdit(p.projectId)}>🖊️</button></td>
-
-                <td>   <button className="btn btn-danger" onClick={() => DelProject(p.projectId)} >🗑️</button></td>
-            </tr>
-
-        );
-    });
-    // array of faqs rows
-    let rowsFaqs = faqsData.map((p, i) => {
-        return (<tr key={"f_data"+i }>
-            <td> {p.question}</td>
-            <td>{p.answer}</td>
-            <td>  <button className="btn btn-success" onClick={() => editFaqs(p.faqId)}>🖊️</button></td>
-            <td><button className="btn btn-danger" onClick={() => delFaq(p.faqId)}>🗑️</button></td>
 
 
-        </tr>);
-    });
-    // bolean add project
-    const handleAddProject = () => {
-        setAddProject(!AddProject);
-    }
-    // boleab add faq
-    const handleAddFaq = () => {
-        setAddFaq(!addFaq);
-    }
-    // images 
+    //------------------------------------------ --------------------------------------------------------------------------------------------//
+    //------------------------------------------ manging image------------------------------------------------------------------------------//
+    //------------------------------------------ -------------------------------------------------------------------------------------------//
     async function saveImage(e) {
         e.preventDefault();
         {
@@ -261,10 +242,13 @@ const ManageUser = (props) => {
 
         }
     }
-    // basic information
+    //------------------------------------------ -------------------------------------------------------------------------------------------//
+    //------------------------------------------ basic information-------------------------------------------------------------------------//
+    //------------------------------------------ -----------------------------------------------------------------------------------------//
+
     const basicInfo = async (e) => {
         e.preventDefault();
-       
+        
         const post = {
             Talent: talent,
             ContactPhone: phone,
@@ -287,6 +271,23 @@ const ManageUser = (props) => {
         }
     }
     //
+    const fetchUserData = async () => {
+
+        fetch(`${REACT_APP_API_URL}/ProjectsForTalents/` + props.id).then(res => res.json()).
+            then(json => setProjData(json)).
+            catch(err => console.error(err));
+
+        fetch(`${REACT_APP_API_URL}/Faqs/` + props.id).then(res => res.json()).
+            then(json => setFaqs(json)).
+            catch(err => console.error(err));
+
+
+        fetch(`${REACT_APP_API_URL}/TalentUsers/` + props.id).then(res => res.json()).
+            then(json => setUserData(json)).
+            catch(err => console.error(err));
+
+
+    }
     useEffect(() => {
         // Fetch the image data from the API endpoint
         fetch(`${REACT_APP_API_URL}/TalentUsers/Image/` + userId)
@@ -303,7 +304,6 @@ const ManageUser = (props) => {
 
     useEffect(() => {
         fetchUserData();
-        
     }, [])
 
 
@@ -313,12 +313,14 @@ const ManageUser = (props) => {
     return (
 
         <div>
+            {/* -------------------------------------------------------------------------------------------------------------------------------*/}
+            {/* -----------------------------For  managing basic information------------ ------------------------------------------------------*/}
+            {/* -------------------------------------------------------------------------------------------------------------------------------*/}
+
             <div >
 
                 <img src="BEAR green.png" style={{
-                    width: "5%", height: "5%", float: "right" }} />
-
-                
+                    width: "5%", height: "5%", float: "right" }} />             
                 <div style={{
                     display: "flex",
                     justifyContent: "space-between"
@@ -354,38 +356,39 @@ const ManageUser = (props) => {
                         <button type="submit">edit!</button>
 
                     </form>}
-              
-
                 <hr></hr>
                 <h5 className="card-title">Project <button className="btn btn-outline-success" onClick={handleAddProject}> + </button></h5>
-              
+                {/* -------------------------------------------------------------------------------------------------------------------------------*/}
+                {/* -----------------------------------------For Manging Projects------------------------------------------------------------------*/}
+                {/* -------------------------------------------------------------------------------------------------------------------------------*/}
+
+
                 {AddProject &&
                     <form onSubmit={(e) => addProject(e)} >
-                        <lable>
+                        <span>
                             Project Name
                             <input type="text" onChange={(e) => setAddProjectName(e.target.value)} />
-                        </lable>
-                        <lable>
+                        </span>
+                        <span>
                             Project price
                             <input type="number" onChange={(e) => setAddProjectPrice(e.target.value)} />
-
-                        </lable>
+                        </span>
                         <button type="submit">add</button>
                     </form>
                 }<></>
 
                 {editProject &&
-                    <form onSubmit={postEditProject}>
-                        <div>
+                    <form className="form-inline" onSubmit={postEditProject} >
+                        <div className="form-group mb-2">
                             Project New Name
-                            <input type="text"  onChange={(e) => setAddProjectName(e.target.value)} />
+                            <input type="text" className="form-control" onChange={(e) => setAddProjectName(e.target.value)} />
                         </div>
-                        <div>
+                        <div className="form-group">
                             Project New price
-                            <input type="number"  onChange={(e) => setAddProjectPrice(e.target.value)} />
+                            <input className="form-control" type="number"  onChange={(e) => setAddProjectPrice(e.target.value)} />
 
                         </div>
-                        <button type="submit">edit</button>
+                        <button className="btn btn-primary mb-2" type="submit">edit</button>
                     </form>
                 }
                 {rowsProj.length > 0 && <div className="container">
@@ -404,57 +407,60 @@ const ManageUser = (props) => {
                     </table>
                 </div>}
                 {rowsProj.length == 0 && <h3 style={{ textAlign: "center", color: "red" }}> No Projects Data, Add Project  </h3>}
+                {/* -------------------------------------------------------------------------------------------------------------------------------*/}
+                {/* -----------------------------------------For Manging Faqs----------------------------------------------------------------------*/}
+                {/* -------------------------------------------------------------------------------------------------------------------------------*/}
 
 
                 <h5 className="card-title">Faq <button className="btn btn-outline-success" onClick={handleAddFaq}>  + </button></h5>
                
                 {addFaq &&
                     <form onSubmit={addFaqHandle} >
-                        <lable>
+                        <span>
                             Question
                             <input type="text" onChange={(e) => setquestion(e.target.value)} />
-                        </lable>
-                        <lable>
+                        </span>
+                        <span>
                             Answer
                             <input type="text" onChange={(e) => setAnswer(e.target.value)} />
 
-                        </lable>
+                        </span>
                         <button type="submit">add</button>
                     </form>
                 }<></>
                 {editFaq &&
-                    <form onSubmit={editFaqHandleSub}>
-                        <div>
+                    <form onSubmit={editFaqHandleSub} >
+                        <div className="form-group">
                             Faq New Qeustion
-                            <input type="text" onChange={(e) => setquestion(e.target.value)} />
+                            <input className="form-control" type="text" onChange={(e) => setquestion(e.target.value)} />
                         </div>
-                        <div>
+                        <div className="form-group" >
                             faq New Answer
-                            <input type="text"  onChange={(e) => setAnswer(e.target.value)} />
+                            <input className="form-control" type="text"  onChange={(e) => setAnswer(e.target.value)} />
 
                         </div>
-                        <button type="submit">edit</button>
+                        <button className="btn btn-success btn-block btn-lg" type="submit">edit</button>
                     </form>
                 }<></>
 
                 {rowsFaqs.length > 0 && <div className="container">
                     <table className=" table table table-striped ">
-
                         <thead className="table table-info">
                             <tr>
                                 <th >Question</th>
                                 <th > Answer</th>
                                 <th ></th>
                                 <th ></th>
-
                             </tr>
                         </thead>
                         <tbody className="table table-striped">{rowsFaqs}</tbody>
                     </table>
                 </div>}
                 {rowsFaqs.length == 0 && <h3 style={{ textAlign: "center", color: "red" }}> No Projects Data, Add Faq </h3>}
-
             </div>
+            {/* -------------------------------------------------------------------------------------------------------------------------------*/}
+            {/* -----------------------------------------For Manging Image---------------------------------------------------------------------*/}
+            {/* -------------------------------------------------------------------------------------------------------------------------------*/}
 
 
             <div className="form-group">
@@ -466,7 +472,6 @@ const ManageUser = (props) => {
                 />
                 <button type="submit" className="btn btn-success"  onClick={saveImage}>Save Image</button>
                 <img style={{ height: "100px" }} src={imageUrl} alt="Image" />
-
             </div>
         </div>
 

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using MessagePack;
-using Microsoft.AspNetCore.Authorization;
+﻿
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -50,8 +44,7 @@ namespace TalentNetwork.Controllers
         public IActionResult Register(UserRegist user)
         {
             var userInDb = _context.Users.FirstOrDefault(u => u.UserId == user.UserId);
-            // var maxId = _context.Users.Max(u=>u.UserId);
-
+            
             if (userInDb == null)
             {
                 var ph = new PasswordHasher<UserRegist>();
@@ -88,15 +81,12 @@ namespace TalentNetwork.Controllers
             {
                 var ph = new PasswordHasher<User>();
                 var result = ph.VerifyHashedPassword(userInDb, userInDb.Password, user.Password);
-                //var userInDb = _ShopDbContext.Users.FirstOrDefault(u => u.UserName == user.UserName && u.Password == user.Password);
-                //if (userInDb == null)
+         
                 if (userInDb == null || result == PasswordVerificationResult.Failed)
                     return Unauthorized("invalid user name or password");
                 else
                 {
-
                     TokensData td = td = CreateTokens(userInDb);
-
                     return Ok(userInDb);
                 }
             }
@@ -126,20 +116,6 @@ namespace TalentNetwork.Controllers
                 return Ok(td);
             }
         }
-
-        [HttpGet("test1")]
-        public string Test()
-        {
-            return "Hello World test1";
-        }
-
-        [HttpGet("test2")]
-        [Authorize]
-        public string Test2()
-        {
-            return "Hello World test2";
-        }
-
 
         TokensData CreateTokens(User user)
         {

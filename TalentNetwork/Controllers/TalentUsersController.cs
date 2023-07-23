@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TalentNetworDAL.Models;
-using System.IO;
 using TalentNetwork.DTO;
-using System.Runtime.InteropServices;
-using System.Net;
+
 
 namespace TalentNetwork.Controllers
 {

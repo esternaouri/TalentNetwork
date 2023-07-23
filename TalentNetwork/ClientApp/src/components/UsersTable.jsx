@@ -1,8 +1,5 @@
 ﻿import { Component } from "react";
-import { NavLink } from "react-router-dom";
 import axios from 'axios';
-import Table from 'react-bootstrap/Table';
-import Row from "../../../../node_modules/react-bootstrap/esm/Row";
 import 'bootstrap/dist/css/bootstrap.css'; // Import Bootstrap CSS
 const { REACT_APP_API_URL } = process.env;
 
@@ -26,6 +23,8 @@ export class UsersTable extends Component {
         };
         
     }
+           //--------------------------------------FOR Delete DATA-----------------------------------------------------//
+
     async del(id) {
         try {
             let res = await axios.delete(`${REACT_APP_API_URL}/Users/` + id);
@@ -39,6 +38,8 @@ export class UsersTable extends Component {
         }
     }
 
+
+       //--------------------------------------FOR EDIT DATA-----------------------------------------------------//
     async handleEditClick(id, name, password, isadmin) {
         window.scrollTo({
             top: 0,
@@ -51,7 +52,6 @@ export class UsersTable extends Component {
         this.setState({ newUserName: name });
 
     }
-
     async onSubEdit(e) {
         e.preventDefault();
 
@@ -81,9 +81,8 @@ export class UsersTable extends Component {
                 console.error(error);
             });
     }
-    componentDidMount() {
-        this.populateProductsData();
-    }
+ 
+   //-----------------------------------FOR FOLTERING DATA-----------------------------------------------------//
 
     handleFilterName = (e) =>
     {
@@ -99,25 +98,28 @@ export class UsersTable extends Component {
     handleFilterId = (e) => {
         this.setState({ filterById: e.target.value });
         const filter = this.state.items.filter(item =>
-            item.userId==e.target.value
+            item.userId == e.target.value
 
         );
         if (e.target.value == 0) {
             this.setState({ filterdArr: this.state.items })
         }
-        else
-        {
+        else {
             this.setState({ filterdArr: filter });
 
         }
-        
+
     }
+
+    //--------------------------------------------------------------------------------------------------------//
+    componentDidMount() {
+        this.populateProductsData();
+    }
+    //----------------------------------------------------------------------------------------------------------//
     render() {
-        let { items, loading, filterdArr } = this.state
+        let {  loading, filterdArr } = this.state
         if (loading)
             return (<div>no users</div>);
-
-
         let rows = filterdArr.map((p, i) => {
             return (<tr key={"f_tr_"+i }>
                 <td >{p.userId}</td>
