@@ -142,9 +142,9 @@ export class UsersHomePage extends Component {
         const indexOfFirstPage = indexOfLastPage - postsPerPage;
         const currentPosts = items.slice(indexOfFirstPage, indexOfLastPage)
         let rowsMore = this.state.moreDetailsProj.map((p, i) => {
-            return (<span key={"proj_"+i}>
-                <span>{p.projectName}</span>
-                <span> {p.projectPrice.toLocaleString('en-US', {
+            return (<span key={"proj_" + i} style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ color: "black"}}>{p.projectName}</span>
+                <span style={{ color: "black"}}> {p.projectPrice.toLocaleString('en-US', {
                         style: 'currency',
                         currency: 'USD'
                     })}</span><hr></hr>
@@ -152,11 +152,14 @@ export class UsersHomePage extends Component {
         });
         //
         let rowsMoreFaq = this.state.moreDetailsFaqs.map((p, i) => {
-            return (<span key={"faq_"+i}>
-                <li key={"faq_li" + i}>🆎 Q: {p.question}
+            return (<span key={"faq_" + i} style={{ display: "flex", justifyContent: "space-between" }}>
+                <span key={"faq_li" + i}> {p.question}
+                
+                    <span>
                     <button className=" btn btn-light" onClick={() => this.toggleAnswer(p.faqId)}>answer</button><br></br>
-                    {this.state.clickForAnswer && this.state.currentFaq == p.faqId && <> {p.answer}</>}
-                </li>
+                        {this.state.clickForAnswer && this.state.currentFaq == p.faqId && <> {p.answer}</>}
+                    </span>
+                </span>
                 <hr></hr>
             </span>);
         });
@@ -181,12 +184,28 @@ export class UsersHomePage extends Component {
                                 <td key={"f_td" + 17}>{item.contactPhone}</td>
                                 <td key={"f_td" + 18}> <button className="btn btn-success" onClick={() => this.watsup(item.contactPhone)}>Whatsaap💬</button></td>
                                 <td className="card" key={"f_td" + 19}><button className="btn btn-secondary" onClick={() => this.toggleDetails(item.userId, index)}>More </button>
-                                    {this.state.currentItem == index && this.state.clickForMoreDetails && < span style={{ display: "flex", justifyContent:"center" }}>
-                                        <span> <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /> </span>
-                                        <span>{rowsMore}</span>
+                                    {this.state.currentItem == index && this.state.clickForMoreDetails && < span className=" modal " tabIndex="-1" role="dialog"
+                                        style={{ display: "flex", justifyContent: "sapce-between", backgroundColor:"rgba(0, 0, 0, 0.4)" }}>
+                                        <span 
+                                            className="modal-dialog" role="document" >
+                                            <span style={{ "boxShadow": "0 4px 8px 0 rgba(10, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.02)" }} className="modal-content">
+                                                <span className="modal-header">
+                                                    <span className="modal-body">
+                                                    <span> <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /> </span>
+                                                        <hr></hr>
+                                                        <p style={{ color: "blue", fontSize: "18px", fontWeight: "bold" }}> Projects and Prices</p>
+                                                        <hr></hr>
+                                                        <span>{rowsMore}</span>
+                                                        <hr></hr>
+                                                        <p style={{ color: "blue", fontSize: "18px", fontWeight: "bold" }}>  Question and Answers</p>
+                                                        <hr></hr>
+                                                        <span>{rowsMoreFaq}</span>
+                                                     </span>
+                                                </span>
+                                                <button className="btn btn-outline-success" onClick={() => this.toggleDetails(item.userId, index)}>less </button>
 
-                                            <span>{rowsMoreFaq}</span>
-
+                                            </span>
+                                        </span>
                                         </span>}
 
                                     </td>
@@ -214,14 +233,29 @@ export class UsersHomePage extends Component {
                                 <td key={"_td" + 14}>{item.contactPhone} <button className="btn btn-success" onClick={() => this.watsup(item.contactPhone)}>Whatsaap💬</button></td>
                                 <td> <button className="btn btn-secondary" onClick={() => this.toggleDetails(item.userId, index)}>More </button></td>
                                 <td  className= "card" key={"_td" + 15}>
-                                        {this.state.currentItem == index && this.state.clickForMoreDetails && < span style={{ display: "flex", justifyContent: "center" }}>
-                                            <span> <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /> </span>
-                                            <span>{rowsMore}</span>
+                                      {this.state.currentItem == index && this.state.clickForMoreDetails && < span className=" modal " tabIndex="-1" role="dialog"
+                                        style={{ display: "flex", justifyContent: "sapce-between", backgroundColor:"rgba(0, 0, 0, 0.4)" }}>
+                                        <span 
+                                            className="modal-dialog" role="document" >
+                                            <span style={{ "boxShadow": "0 4px 8px 0 rgba(10, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.02)" }} className="modal-content">
+                                                <span className="modal-header">
+                                                    <span className="modal-body">
+                                                    <span> <img style={{ borderRadius: "50%", width: "150px", height: "120px" }} src={this.state.imageUrl} alt="Image" /> </span>
+                                                        <hr></hr>
+                                                        <p style={{ color: "blue", fontSize: "18px", fontWeight: "bold" }}> Projects and Prices</p>
+                                                        <hr></hr>
+                                                        <span>{rowsMore}</span>
+                                                        <hr></hr>
+                                                        <p style={{ color: "blue", fontSize: "18px", fontWeight: "bold" }}>  Question and Answers</p>
+                                                        <hr></hr>
+                                                        <span>{rowsMoreFaq}</span>
+                                                     </span>
+                                                </span>
+                                                <button className="btn btn-outline-success" onClick={() => this.toggleDetails(item.userId, index)}>less </button>
 
-                                            <span>{rowsMoreFaq}</span>
-
+                                            </span>
+                                        </span>
                                         </span>}
-
                                     </td>
                                 </tr>
                             </tbody >

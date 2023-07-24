@@ -271,6 +271,15 @@ const ManageUser = (props) => {
         }
     }
     //
+    const h = (talent, city, phone, email, name) =>
+    {
+        setEmail(email);
+        setPhone(phone);
+        setTalent(talent);
+        setCity(city);
+        setFirstInfo(!firstInfo)
+    }
+    //
     const fetchUserData = async () => {
 
         fetch(`${REACT_APP_API_URL}/ProjectsForTalents/` + props.id).then(res => res.json()).
@@ -331,7 +340,7 @@ const ManageUser = (props) => {
                     <span>Name :  </span>{UserData.userName} 
                     <span> Email : </span> {UserData.email} 
                     <div className="d-flex justify-content-end">
-                        <button className="btn btn-outline-success" onClick={() => setFirstInfo(!firstInfo)}>🖊️</button>
+                        <button className="btn btn-outline-success" onClick={(t) => h(UserData.talent, UserData.city, UserData.contactPhone, UserData.email, UserData.userName)}>🖊️</button>
                     </div>
                 </div>
 
@@ -340,18 +349,18 @@ const ManageUser = (props) => {
                     <form onSubmit={(e) => basicInfo(e)}>
                         <label>
                             Talent:
-                            <input type="text" placeholder={UserData.talent} onChange={(e) => setTalent(e.target.value)} />
+                            <input type="text" value={talent} onChange={(e) => setTalent(e.target.value)} />
                         </label>
                         <label>
                             City:
-                            <input type="text" placeholder={UserData.city} onChange={(e) => setCity(e.target.value)} />
+                            <input type="text" value={city} onChange={(e) => setCity(e.target.value)} />
                         </label> <label>
                             Phone:
-                            <input type="number" placeholder={UserData.contactPhone} onChange={(e) => setPhone(e.target.value)} />
+                            <input type="number" value={phone} onChange={(e) => setPhone(e.target.value)} />
                         </label>
                         <label>
                             Email:
-                            <input type="email" placeholder={UserData.email} onChange={(e) => setEmail(e.target.value)} />
+                            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                         </label>
                         <button type="submit">edit!</button>
 
