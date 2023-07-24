@@ -112,6 +112,9 @@ nCrunchTemp_*
 # MightyMoose
 *.mm.*
 AutoTest.Net/
+# Ignore  appSettings
+appsettings.json
+appsettings.Development.json
 
 # Web workbench (sass)
 .sass-cache/
