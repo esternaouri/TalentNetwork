@@ -2,7 +2,7 @@
 using TalentNetwork.DTO;
 using Microsoft.AspNetCore.StaticFiles;
 
-namespace TalentNetwork
+namespace TalentNetwork.BACK
 {
     public class FilesManager
     {
@@ -25,8 +25,8 @@ namespace TalentNetwork
         public void DeleteFile(string fileName)
         {
             var fullPath = Path + "\\" + fileName;
-            if (System.IO.File.Exists(fullPath))
-                System.IO.File.Delete(fullPath);
+            if (File.Exists(fullPath))
+                File.Delete(fullPath);
             else
                 throw new Exception("File not found.");
         }
@@ -34,9 +34,9 @@ namespace TalentNetwork
         public HttpFile GetHttpFile(string fileName)
         {
             var fullPath = Path + "\\" + fileName;
-            if (System.IO.File.Exists(fullPath))
+            if (File.Exists(fullPath))
             {
-                var fileContent = System.IO.File.ReadAllBytes(fullPath);
+                var fileContent = File.ReadAllBytes(fullPath);
                 return new HttpFile(fileContent, fileName);
             }
             else
@@ -47,7 +47,7 @@ namespace TalentNetwork
 
         public bool Exists(string fileName)
         {
-            return (System.IO.File.Exists(Path + "\\" + fileName));
+            return File.Exists(Path + "\\" + fileName);
         }
 
         public string GetImageString(string fileName, byte[] fileBytes)

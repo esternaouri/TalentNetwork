@@ -5,8 +5,9 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using TalentNetworDAL.Models;
+using TalentNetwork.BACK.Controllers;
 
-namespace TalentNetwork
+namespace TalentNetwork.BACK
 {
     public class TokensManager
     {

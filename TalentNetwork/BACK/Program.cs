@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 
-namespace TalentNetwork
+namespace TalentNetwork.BACK
 {
     public class Program
     {
@@ -39,7 +39,7 @@ namespace TalentNetwork
                     pol.AllowAnyOrigin();
                 });
             });
-            builder.Services.AddSingleton<TokensManager>(new TokensManager()
+            builder.Services.AddSingleton(new TokensManager()
             {
                 Issuer = issuer,
                 Audience = audience,
@@ -62,7 +62,7 @@ namespace TalentNetwork
                     IssuerSigningKey = new SymmetricSecurityKey
                     (Encoding.UTF8.GetBytes(key)),
                     ValidateLifetime = true,
-                    ClockSkew = System.TimeSpan.Zero,
+                    ClockSkew = TimeSpan.Zero,
                     ValidateIssuerSigningKey = true
                 };
             });

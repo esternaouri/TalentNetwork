@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TalentNetworDAL.Models;
+using TalentNetwork.BACK;
+using TalentNetwork.BACK.Controllers;
 using TalentNetwork.DTO;
 namespace TalentNetwork.Controllers
 {

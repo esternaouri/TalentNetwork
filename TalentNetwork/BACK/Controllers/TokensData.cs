@@ -1,4 +1,4 @@
-﻿namespace TalentNetwork
+﻿namespace TalentNetwork.BACK.Controllers
 {
     public class TokensData
     {
