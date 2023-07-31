@@ -20,9 +20,9 @@ namespace TalentNetwork.BACK
             var TalentNetworkCS = builder.Configuration.GetConnectionString("TalentNetwork");
 
             int expiresInSeconds = 60;
-            string key = builder.Configuration.GetSection("Jwt:Key").Value;
-            string issuer = builder.Configuration.GetSection("Jwt:Issuer").Value;
-            string audience = builder.Configuration.GetSection("Jwt:Audience").Value;
+            string key = "This is a sample secret key - please don't use in production environment.'";
+            string issuer = "https://server-domain";
+            string audience = "https://client-domain";
 
             builder.Services.AddDbContext<TalentNetworkContext>(cfg => cfg.UseSqlServer(TalentNetworkCS));
             builder.Services.AddLogging(configure => configure.AddConsole());
