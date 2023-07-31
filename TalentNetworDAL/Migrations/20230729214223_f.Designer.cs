@@ -12,8 +12,8 @@ using TalentNetworDAL.Models;
 namespace TalentNetworDAL.Migrations
 {
     [DbContext(typeof(TalentNetworkContext))]
-    [Migration("20230728123248_5")]
-    partial class _5
+    [Migration("20230729214223_f")]
+    partial class f
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,12 +33,12 @@ namespace TalentNetworDAL.Migrations
 
                     b.Property<string>("Answer")
                         .HasMaxLength(1213565468)
-                        .HasColumnType("nchar(1213565468)")
+                        .HasColumnType("nvarchar(max)")
                         .IsFixedLength();
 
                     b.Property<string>("Question")
                         .HasMaxLength(1213565468)
-                        .HasColumnType("nchar(1213565468)")
+                        .HasColumnType("nvarchar(max)")
                         .IsFixedLength();
 
                     b.Property<int>("UserId")
@@ -95,7 +95,7 @@ namespace TalentNetworDAL.Migrations
 
                     b.Property<string>("ProjectName")
                         .HasMaxLength(1423654)
-                        .HasColumnType("nchar(1423654)")
+                        .HasColumnType("nvarchar(max)")
                         .IsFixedLength();
 
                     b.Property<int?>("ProjectPrice")
