@@ -75,9 +75,6 @@ JWT Authentication.
 * Authorization: 2  user roles - [IsAdmin/ ! IsAdmin].
 * Identity Core usage
 
-* Caching custom Middleware: responses are saved in cache for 10 seconds.
-Api Versioning for possiable future development.
-
 
 
 
