@@ -19,7 +19,6 @@ git clone https://github.com/esternaouri/TalentNetwork
 Open the solution file TalentNetwork.sln in Visual Studio.
 
 Build the solution to restore NuGet packages and compile the project.
-
 Create a new Microsoft SQL Server database to store the application data.
 
 Open the file appsettings.json located in the TalentNetwork project folder and modify the following connection string with your own Microsoft SQL Server database connection string:
@@ -29,6 +28,7 @@ Open the file appsettings.json located in the TalentNetwork project folder and m
 Open the Package Manager Console in Visual Studio, select the TalentNetworkDAL project, and run the following command to create the database schema:
 Update-Database
 Run the project in Visual Studio, The API server should now be running on your local machine.
+
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 usage: 
 to run without installation, the app is hosted on a private server, please go here - https://talentnetwork20230728135054.azurewebsites.net/{any api endpoint }.
