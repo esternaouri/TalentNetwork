@@ -21,7 +21,7 @@ Open the solution file TalentNetwork.sln in Visual Studio.
 Build the solution to restore NuGet packages and compile the project.
 
 Create a new Microsoft SQL Server database to store the application data.
-**
+
 Open the file appsettings.json located in the TalentNetwork project folder and modify the following connection string with your own Microsoft SQL Server database connection string:
 "ConnectionStrings": {
   "TalentNetwork": "Server=<your-server-name>;Database=<your-database-name>;Trusted_Connection=True;MultipleActiveResultSets=true"
