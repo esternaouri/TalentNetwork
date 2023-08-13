@@ -73,7 +73,7 @@ The program is divided into 3 projects implementing the N-Tiers Architecture.
 * Global Exception Handling custom Middleware for Auth Controller with custom exceptions.
 JWT Authentication.
 * Authorization: 2  user roles - [IsAdmin/ ! IsAdmin].
-* Identity Core usage.
+* Identity Core usage
 
 * Caching custom Middleware: responses are saved in cache for 10 seconds.
 Api Versioning for possiable future development.
