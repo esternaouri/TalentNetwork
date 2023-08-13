@@ -39,7 +39,7 @@ Run the project in Visual Studio, The API server should now be running on your l
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 usage: 
-**to run without installation, the app is hosted on a private server, please go here - https://talentnetwork20230728135054.azurewebsites.net/{ any api endpoint that apear in controllers }.
+**to run without installation, the app is hosted on a private server, please go here - https://talentnetwork20230728135054.azurewebsites.net/{ any api endpoint that apear in controllers }.**
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 To use the API, you can send HTTP requests to the API's endpoints using a tool such as Postman .
 for looging in you have to be autorized. 
