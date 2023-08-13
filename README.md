@@ -28,7 +28,7 @@ Open the file appsettings.json located in the TalentNetwork project folder and m
 }
 Open the Package Manager Console in Visual Studio, select the TalentNetworkDAL project, and run the following command to create the database schema:
 Update-Database
-Run the project in Visual Studio, The API server should now be running on your local machine.**
+Run the project in Visual Studio, The API server should now be running on your local machine.
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 usage: 
 to run without installation, the app is hosted on a private server, please go here - https://talentnetwork20230728135054.azurewebsites.net/{any api endpoint }.
