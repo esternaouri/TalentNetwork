@@ -4,7 +4,7 @@ The TalentNetwork is a web API application that provides users with access to Su
 
 the API allows users to search for workers  by name , category & more users data.
 this application is kind of Social Media
-it also allows Creators & Admin to access, create, edit & delete users.
+it also allows Admin to access, create, edit & delete users.
 
 the fronted application can be find here : https://github.com/esternaouri/ClientApp.
 
@@ -31,7 +31,7 @@ Run the project in Visual Studio, The API server should now be running on your l
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 usage: 
-to run without installation, the app is hosted on a private server, please go here - https://talentnetwork20230728135054.azurewebsites.net/{any api endpoint }.
+to run without installation, the app is hosted on a private server, please go here - https://talentnetwork20230728135054.azurewebsites.net/{any api endpoint that apear in controllers }.
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 To use the API, you can send HTTP requests to the API's endpoints using a tool such as Postman .
 for looging in you have to be autorized. 
