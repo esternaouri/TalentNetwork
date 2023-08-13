@@ -9,7 +9,7 @@ it also allows Creators & Admin to access, create, edit & delete users.
 the fronted application can be find here : https://github.com/esternaouri/ClientApp.
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**instalation :
+instalation :
 
 To install the TalentNetwork API, follow these steps:
 
@@ -30,8 +30,8 @@ Open the Package Manager Console in Visual Studio, select the TalentNetworkDAL p
 Update-Database
 Run the project in Visual Studio, The API server should now be running on your local machine.
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**usage: 
-**to run without installation, the app is hosted on a private server, please go here - https://talentnetwork20230728135054.azurewebsites.net/{any api endpoint }.
+usage: 
+to run without installation, the app is hosted on a private server, please go here - https://talentnetwork20230728135054.azurewebsites.net/{any api endpoint }.
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 To use the API, you can send HTTP requests to the API's endpoints using a tool such as Postman .
 for looging in you have to be autorized. 
@@ -51,23 +51,14 @@ Admmin: can mange users data like password reset, or editing and more CRUD actio
 The program is divided into 3 projects implementing the N-Tiers Architecture.
 
 Database is created with Entity Framework Code First.
-
 Data is seeded on installation.
-
 queries are written in LINQ.
-
 Usage of Repository Pattern & implementation of dependency injection.
-
 Usage of AutoMapper & DTO's.
-
 Usage of OData queries for filtering/ordering/sorting.
-
 Global Exception Handling custom Middleware for Auth Controller with custom exceptions.
-
 JWT Authentication.
-
 Authorization: 2  user roles - [IsAdmin/ ! IsAdmin].
-
 Identity Core usage.
 
 Caching custom Middleware: responses are saved in cache for 10 seconds.
