@@ -32,8 +32,8 @@ folder and modify the following connection string with your own Microsoft SQL Se
 }
 
 Open the Package Manager Console in Visual Studio, select the TalentNetworkDAL project, and run the following command to create the database schema:
-add-migration :"your migration name"
-Update-Database
+* add-migration :"your migration name"
+* Update-Database
 
 Run the project in Visual Studio, The API server should now be running on your local machine.
 
