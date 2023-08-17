@@ -7,6 +7,7 @@ this application is kind of Social Media
 it also allows Admin to access, create, edit & delete users.
 
 the fronted application can be find here : https://github.com/esternaouri/ClientApp.
+
 Demo video : https://clipchamp.com/watch/ZuTIbMmywa2
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
